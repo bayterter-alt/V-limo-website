@@ -1,9 +1,6 @@
 name = "limo-website"
+main = "index.js"
 compatibility_date = "2025-09-17"
-main = "workers-site/index.js"
 
 [site]
 bucket = "."
-
-[build]
-command = "npx workers-site"
