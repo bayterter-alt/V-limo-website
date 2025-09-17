@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>交通接送車型介紹 | 利盟租車</title>
+  <meta name="description" content="利盟租車提供多款頂級交通接送車輛，包含豪華保母車、商務車、高級房車等，滿足各種接送需求。" />
+  <meta name="theme-color" content="#1D4ED8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+
+  <!-- === 全新排版樣式 Start === -->
+  <style>
+    /* --- 全域變數與基本設定 --- */
+    :root {
+      --primary-color: #1D4ED8;
+      --primary-hover: #1E40AF;
+      --secondary-color: #111827;
+      --text-color: #374151;
+      --light-text-color: #6B7280;
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --border-color: #E5E7EB;
+      --accent-gold: #D97706;
+      --accent-blue: #3B82F6;
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Noto Sans TC', sans-serif;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --border-radius: 0.75rem;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: var(--bg-color);
+      font-family: var(--font-body);
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* --- Hero Section --- */
+    .hero-section {
+      background: linear-gradient(45deg, rgba(29, 78, 216, 0.9), rgba(30, 64, 175, 0.95)), url('/img/uploads/rt-hero.jpg') no-repeat center center/cover;
+      padding: 6rem 0;
+      text-align: center;
+      color: white;
+    }
+    .hero-section .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-section .eyebrow {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent-blue);
+      background-color: rgba(255, 255, 255, 0.1);
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+    .hero-section h1 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .hero-section p {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* --- 車輛展示區塊已移至style.css --- */
+    
+    /* vehicles-showcase 相關樣式已移至 style.css */
+    .vehicle-detail-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 4rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .vehicle-detail-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+    .vehicle-hero {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+      padding: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background-color: #f8f9fa;
+    }
+    /* 偶數卡片反轉排版 */
+    .vehicle-detail-card:nth-child(even) .vehicle-hero {
+        grid-template-columns: 1.2fr 1fr;
+    }
+    .vehicle-detail-card:nth-child(even) .vehicle-image-placeholder {
+        order: 2;
+    }
+    .vehicle-detail-card:nth-child(even) .vehicle-hero-info {
+        order: 1;
+    }
+
+    /* --- 圖片展示區域改進 --- */
+    .vehicle-image-container {
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .image-tabs {
+      display: flex;
+      background: #f8f9fa;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .image-tab {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--light-text-color);
+      border: none;
+      background: transparent;
+    }
+    
+    .image-tab:hover {
+      background: rgba(29, 78, 216, 0.1);
+      color: var(--primary-color);
+    }
+    
+    .image-tab.active {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .image-tab i {
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .image-content {
+      min-height: 370px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .image-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    
+    .image-slide.active {
+      opacity: 1;
+    }
+    
+    /* 實際圖片樣式 */
+    .vehicle-image {
+      width: 100%;
+      max-width: 400px; /* 桌面版固定最大寬度確保一致性 */
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      display: block;
+      margin: 0 auto 0.5rem auto; /* 居中顯示 */
+    }
+    
+    .vehicle-image:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Placeholder 樣式（當沒有圖片時使用） */
+    .vehicle-image-placeholder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-text-color);
+      width: 100%;
+      max-width: 400px; /* 與實際圖片相同的最大寬度 */
+      aspect-ratio: 4/3;
+      transition: all 0.3s ease;
+      margin: 0 auto; /* 居中顯示 */
+    }
+    
+    .vehicle-image-placeholder:hover {
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+    }
+    
+    .vehicle-image-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .placeholder-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--light-text-color);
+    }
+    
+    .image-description {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--light-text-color);
+      text-align: center;
+      line-height: 1.4;
+      padding: 0 0.5rem;
+      flex-shrink: 0;
+    }
+    .vehicle-hero-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .vehicle-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+    .vehicle-category i {
+        color: #FFD700;
+    }
+    .vehicle-detail-card h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--secondary-color);
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+    }
+    .vehicle-slogan {
+      font-size: 1.1rem;
+      color: var(--light-text-color);
+      margin: 0 0 1.5rem 0;
+      font-weight: 500;
+    }
+    .vehicle-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+    .spec-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .spec-item i {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      width: 30px;
+      text-align: center;
+    }
+    .spec-label {
+      font-size: 0.875rem;
+      color: var(--light-text-color);
+      display: block;
+    }
+    .spec-value {
+      font-weight: 700;
+      color: var(--secondary-color);
+    }
+    .vehicle-details {
+      padding: 2.5rem;
+    }
+    .detail-section h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    .detail-section h3 i {
+      color: var(--primary-color);
+    }
+    .feature-highlights, .tech-grid, .safety-grid, .luxury-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .feature-item, .tech-item, .safety-item, .luxury-item, .comfort-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: #F9FAFB;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+    .feature-item i, .tech-item i, .safety-item i, .luxury-item i, .comfort-item i {
+      font-size: 1.25rem;
+      color: var(--accent-blue);
+      margin-top: 0.25rem;
+      min-width: 20px;
+      text-align: center;
+    }
+    .feature-item p, .tech-item p, .comfort-item p {
+      margin: 0.25rem 0 0 0;
+      color: var(--light-text-color);
+      font-size: 0.95rem;
+    }
+    .safety-item, .luxury-item {
+        align-items: center;
+    }
+    .route-info {
+        margin-top: 2rem;
+        background: #f0f9ff;
+        border-left: 4px solid var(--accent-blue);
+        padding: 1rem 1.5rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+    }
+    .route-info h4 {
+        margin: 0 0 1rem 0;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .route-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .route-tag {
+        background-color: var(--accent-blue);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.875rem;
+    }
+
+    /* --- 重要提醒區塊已移至style.css --- */
+    
+    /* testimonials-section 相關樣式已移至 style.css */
+    .notice-card {
+      background-color: #FFFBEB;
+      border-left: 5px solid var(--accent-gold);
+      border-radius: 0.5rem;
+      padding: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .notice-icon i {
+      font-size: 2.5rem;
+      color: var(--accent-gold);
+    }
+    .notice-content h3 {
+      font-family: var(--font-heading);
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      color: #92400E;
+    }
+    .notice-content p {
+      margin: 0;
+      font-size: 1rem;
+      color: #B45309;
+    }
+
+    /* --- CTA 區塊 --- */
+    .cta-section {
+      background: var(--secondary-color);
+      color: white;
+      padding: 5rem 0;
+      text-align: center;
+    }
+    .cta-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      margin-bottom: 1rem;
+    }
+    .cta-content p {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .cta-buttons .btn {
+      padding: 0.875rem 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cta-buttons .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    .cta-buttons .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-3px);
+    }
+    .cta-buttons .btn-secondary {
+      background-color: transparent;
+      color: white;
+      border-color: white;
+    }
+    .cta-buttons .btn-secondary:hover {
+      background-color: white;
+      color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    /* --- 響應式設計 --- */
+    @media (max-width: 992px) {
+      .vehicle-hero,
+      .vehicle-detail-card:nth-child(even) .vehicle-hero {
+        grid-template-columns: 1fr;
+      }
+      .vehicle-detail-card:nth-child(even) .vehicle-image-container {
+        order: 0;
+      }
+      .vehicle-detail-card:nth-child(even) .vehicle-hero-info {
+        order: 1;
+      }
+      .vehicle-hero {
+          padding: 1.5rem;
+      }
+      .vehicle-details {
+          padding: 1.5rem;
+      }
+      .image-content {
+        min-height: 270px;
+      }
+      
+      /* 平板版：使用3:2比例，適合中等螢幕 */
+      .vehicle-image,
+      .vehicle-image-placeholder {
+        aspect-ratio: 3/2;
+        max-width: none; /* 平板版移除固定最大寬度 */
+      }
+      
+      /* 平板版背景優化 */
+      .vehicles-showcase {
+        background-attachment: scroll; /* 平板也使用 scroll 以確保兼容性 */
+      }
+    }
+    @media (max-width: 768px) {
+        .hero-section { padding: 4rem 0; }
+        .vehicles-showcase { 
+          padding: 3rem 0; 
+          /* 移動設備使用 scroll 代替 fixed，以提升性能 */
+          background-attachment: scroll;
+        }
+        .vehicle-detail-card { margin-bottom: 2rem; }
+        
+        .image-tab {
+          padding: 0.6rem 0.8rem;
+          font-size: 0.85rem;
+        }
+        
+        .image-content {
+          min-height: 230px;
+        }
+        
+        .image-slide {
+          padding: 1rem;
+        }
+        
+        /* 手機版容器高度調整配合16:9比例 */
+        
+        .vehicle-image-placeholder i {
+          font-size: 2.5rem;
+        }
+        
+        /* 手機版：使用16:9比例，適合窄螢幕 */
+        .vehicle-image,
+        .vehicle-image-placeholder {
+          aspect-ratio: 16/9;
+          max-width: none; /* 手機版移除固定最大寬度 */
+        }
+        
+        /* 手機版相關樣式已移至 style.css */
+    }
+  </style>
+  <!-- === 全新排版樣式 End === -->
+</head>
+<body>
+
+  <!-- ======================= 頁首 (未更動) ======================= -->
+  <header class="main-header" role="banner">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="利盟租車首頁">
+        <img src="img/logo.png" alt="利盟租車 Logo" />
+      </a>
+      <nav class="main-nav" aria-label="主選單">
+        <ul class="nav-list">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="https://v-limo.app/">線上訂車</a></li>
+          <li><a href="貨車出租.html">貨車出租</a></li>
+          <li><a href="露營車出租.html">露營車出租</a></li>
+          <li><a href="聯絡我們.html">聯絡我們</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-menu" aria-label="行動版選單">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-brand-logo">
+          <img src="img/logo.png" alt="利盟租車 Logo" />
+        </a>
+        <button class="mobile-nav-close" aria-label="關閉選單">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html"><i class="fas fa-home"></i>首頁</a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i>線上訂車</a></li>
+        <li><a href="貨車出租.html"><i class="fas fa-truck"></i>貨車出租</a></li>
+        <li><a href="露營車出租.html"><i class="fas fa-campground"></i>露營車出租</a></li>
+        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i>聯絡我們</a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <div class="mobile-contact-info">
+          <div class="mobile-contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:+886425208777">04-2520-8777</a>
+          </div>
+          <div class="mobile-contact-item">
+            <i class="fas fa-clock"></i>
+            <span>09:00 - 18:00</span>
+          </div>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary mobile-cta-btn">
+          <i class="fas fa-calendar-check"></i> 立即預約
+        </a>
+      </div>
+    </nav>
+  </div>
+  <!-- ======================= 頁首 End ======================= -->
+
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <div class="section-head">
+            <div class="eyebrow">Premium Transportation</div>
+            <h1>交通接送車型介紹</h1>
+            <p>頂級車隊陣容，滿足各種接送需求。從豪華保母車到商務房車，我們提供最舒適、安全的交通接送服務。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vehicle Showcase -->
+    <section class="vehicles-showcase">
+      <div class="container">
+        
+        <!-- Vehicle 1: Volkswagen Crafter 2022 -->
+        <article class="vehicle-detail-card luxury" data-category="luxury">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-couch"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/Volkswagen-Crafter-2022.jpg" alt="豪華保母車 Volkswagen Crafter 2022 外觀" class="vehicle-image">
+                  <p class="image-description">展示豪華保母車外觀設計與整體造型</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/Volkswagen-Crafter-2022IN.jpg" alt="豪華保母車 Volkswagen Crafter 2022 內裝" class="vehicle-image">
+                  <p class="image-description">展示陸上頭等艙級別的豪華內裝空間</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-crown"></i>
+                <span>頂級豪華</span>
+              </div>
+              <h2>豪華保母車 Volkswagen Crafter 2022</h2>
+              <p class="vehicle-slogan">陸上頂級豪華頭等艙</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">8人 (含行李)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-ruler-combined"></i>
+                  <div>
+                    <span class="spec-label">車身尺寸</span>
+                    <span class="spec-value">5,986-6,836mm</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-snowflake"></i>
+                  <div>
+                    <span class="spec-label">空調設備</span>
+                    <span class="spec-value">後艙獨立空調</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-info-circle"></i> 車輛特色</h3>
+              <div class="feature-highlights">
+                <div class="feature-item">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                  <div>
+                    <strong>超寬敞空間</strong>
+                    <p>後艙空間長達3,201-4,051mm，身高190cm成年男子也能輕鬆行走</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-chair"></i>
+                  <div>
+                    <strong>聰明變座椅系統</strong>
+                    <p>鋁合金無段式滑軌地板，6組快拆單人獨立座椅可彈性調整</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-eye"></i>
+                  <div>
+                    <strong>全景車窗</strong>
+                    <p>兩側大面積固定式車窗，為乘客帶來更多旅途風景</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-archive"></i>
+                  <div>
+                    <strong>駕駛艙置物</strong>
+                    <p>車頂置物空間設計，方便收納隨身物品</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 2: Volkswagen Crafter 2015 -->
+        <article class="vehicle-detail-card luxury" data-category="luxury">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-chair"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/Volkswagen-Crafter-2015.jpg" alt="豪華保母車 Volkswagen Crafter 2015 外觀" class="vehicle-image">
+                  <p class="image-description">明星保母車尊榮外觀設計</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/Volkswagen-Crafter-2015IN.jpg" alt="豪華保母車 Volkswagen Crafter 2015 內裝" class="vehicle-image">
+                  <p class="image-description">九人座豪華座椅與寬敞行李空間</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-star"></i>
+                <span>尊榮首選</span>
+              </div>
+              <h2>豪華保母車 Volkswagen Crafter 2015</h2>
+              <p class="vehicle-slogan">移動式豪華頭等艙</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">8人 (含行李)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-suitcase"></i>
+                  <div>
+                    <span class="spec-label">行李空間</span>
+                    <span class="spec-value">超寬敞大型行李艙</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-crown"></i> 明星保母車特色</h3>
+              <p>明星保母車尊榮首選，Crafter擁有傲視車壇的乘客艙空間，提供寬敞舒適的九人座座椅，成為明星保母車及頂級旅遊專車的首選車款。除了九人座配置外，還擁有超寬敞的行李空間，可以輕鬆容納所有乘客的大型行李。</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 3: Volkswagen T6 -->
+        <article class="vehicle-detail-card premium" data-category="premium">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-shield-alt"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/Volkswagen-T6.jpg" alt="Volkswagen T6 外觀" class="vehicle-image">
+                  <p class="image-description">包車首選頂級車種外觀</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/Volkswagen-T6IN.jpg" alt="Volkswagen T6 內裝" class="vehicle-image">
+                  <p class="image-description">寬敞明亮座艙與頂級安全配備</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-medal"></i>
+                <span>包車首選</span>
+              </div>
+              <h2>Volkswagen T6</h2>
+              <p class="vehicle-slogan">包車首選頂級車種</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">7人</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-shield-alt"></i>
+                  <div>
+                    <span class="spec-label">安全配備</span>
+                    <span class="spec-value">全頂級安全系統</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-shield-alt"></i> 安全配備</h3>
+              <div class="safety-features">
+                <div class="safety-grid">
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>電子行車穩定系統</span>
+                  </div>
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>防鎖死煞車系統</span>
+                  </div>
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>電子煞車力道分配系統</span>
+                  </div>
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>電子防滑差速器</span>
+                  </div>
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>加速循跡控制系統</span>
+                  </div>
+                  <div class="safety-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>減速循跡控制系統</span>
+                  </div>
+                </div>
+              </div>
+              <p>寬敞、明亮的福斯T6座艙，配載全最頂級的安全配備，讓每一趟旅程都安全舒適。</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 4: Toyota Granvia -->
+        <article class="vehicle-detail-card premium" data-category="premium">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-sofa"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/Toyota-Granvia.jpg" alt="Toyota Granvia 外觀" class="vehicle-image">
+                  <p class="image-description">禮遇不凡的豪華外觀設計</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/Toyota-GranviaIN.jpg" alt="Toyota Granvia 內裝" class="vehicle-image">
+                  <p class="image-description">Captain豪華皮質座椅與舒適懸吊</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-gem"></i>
+                <span>禮遇不凡</span>
+              </div>
+              <h2>Toyota Granvia</h2>
+              <p class="vehicle-slogan">禮遇不凡的豪華體驗</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">5人 (含行李)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-chair"></i>
+                  <div>
+                    <span class="spec-label">座椅配置</span>
+                    <span class="spec-value">Captain豪華皮質座椅</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-sofa"></i> 豪華座艙</h3>
+              <p>為滿足急速成長的高品質旅遊需求，Granvia全車系標配後座第1、2排Captain豪華皮質座椅，獨立的座椅與扶手讓乘客擁有個人專屬的乘坐空間，賦予如家一般自在、舒適的安全感，降低長時間乘車的負擔與疲勞。</p>
+              
+              <div class="comfort-features">
+                <div class="comfort-item">
+                  <i class="fas fa-leaf"></i>
+                  <div>
+                    <strong>前麥花臣後四連桿懸吊</strong>
+                    <p>有效減緩來自路面的震動，帶給後座乘客舒適的乘坐體驗</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 5: IVECO 中型客車 -->
+        <article class="vehicle-detail-card group" data-category="group">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-bus"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-chair"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/IVECO.jpg" alt="歐系 IVECO 中型客車 外觀" class="vehicle-image">
+                  <p class="image-description">歐系IVECO中型客車專業外觀</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/IVECOIN.jpg" alt="歐系 IVECO 中型客車 內裝" class="vehicle-image">
+                  <p class="image-description">豪華三排大座椅與專業配備</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-mountain"></i>
+                <span>山區專用</span>
+              </div>
+              <h2>歐系 IVECO 中型客車</h2>
+              <p class="vehicle-slogan">豪華寬敞的舒適乘坐體驗</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">23人 (含專業司機)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-road"></i>
+                  <div>
+                    <span class="spec-label">適用路線</span>
+                    <span class="spec-value">特定山區路線</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-cog"></i> 專業配備</h3>
+              <div class="feature-highlights">
+                <div class="feature-item">
+                  <i class="fas fa-chair"></i>
+                  <div>
+                    <strong>豪華三排大座椅</strong>
+                    <p>寬敞舒適的乘坐空間</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-wind"></i>
+                  <div>
+                    <strong>氣壓式懸吊系統</strong>
+                    <p>提供更穩定舒適的行駛體驗</p>
+                  </div>
+                </div>
+                <div class="feature-item">
+                  <i class="fas fa-thermometer-quarter"></i>
+                  <div>
+                    <strong>油壓減速器</strong>
+                    <p>避免山區煞車溫度過高，確保安全</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="route-info">
+                <h4><i class="fas fa-map-marked-alt"></i> 特定路線服務</h4>
+                <div class="route-list">
+                  <span class="route-tag">司馬庫斯</span>
+                  <span class="route-tag">大雪山</span>
+                  <span class="route-tag">嘉義梅山</span>
+                  <span class="route-tag">明池森林遊樂區</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 6: Mercedes V250D -->
+        <article class="vehicle-detail-card luxury" data-category="luxury">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-star"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/V250D.jpg" alt="Mercedes-Benz V250D 外觀" class="vehicle-image">
+                  <p class="image-description">豪華舒適的選擇</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/V250DIN.jpeg" alt="Mercedes-Benz V250D 內裝" class="vehicle-image">
+                  <p class="image-description">M-Benz V-Class V250d</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-crown"></i>
+                <span>舒適奢華</span>
+              </div>
+              <h2>Mercedes V250D</h2>
+              <p class="vehicle-slogan">新時代的智慧奢華行車體驗</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">6人 (含專業司機)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-suitcase"></i>
+                  <div>
+                    <span class="spec-label">行李數</span>
+                    <span class="spec-value">4件 (27吋)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-star"></i> Maybach 級奢華配備</h3>
+              <p>M-BENZ V-CLASS V250D 是一款豪華六人座廂型車，擁有寬敞舒適的內裝與高質感配備，非常適合商務接送與家庭旅遊使用。</p>
+              
+              <div class="luxury-features">
+                <div class="luxury-grid">
+                  <div class="luxury-item">
+                    <i class="fas fa-chair"></i>
+                    <span>頂級航太座椅</span>
+                  </div>
+                  <div class="luxury-item">
+                    <i class="fas fa-tv"></i>
+                    <span>娛樂系統</span>
+                  </div>
+                  <div class="luxury-item">
+                    <i class="fas fa-sun"></i>
+                    <span>全景式電動天窗</span>
+                  </div>
+                  <div class="luxury-item">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Burmester 3D環繞音響</span>
+                  </div>
+                  <div class="luxury-item">
+                    <i class="fas fa-seedling"></i>
+                    <span>電動門</span>
+                  </div>
+                  <div class="luxury-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>室內環景照明系統</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vehicle 7: Toyota Camry Hybrid -->
+        <article class="vehicle-detail-card business" data-category="business">
+          <div class="vehicle-hero">
+            <div class="vehicle-image-container">
+              <div class="image-tabs">
+                <button class="image-tab active" data-tab="exterior">
+                  <i class="fas fa-car"></i>外觀
+                </button>
+                <button class="image-tab" data-tab="interior">
+                  <i class="fas fa-microchip"></i>內裝
+                </button>
+              </div>
+              <div class="image-content">
+                <div class="image-slide active" data-slide="exterior">
+                  <img src="/img/vehicles/camry-hybrid.jpg" alt="Toyota Camry Hybrid 外觀" class="vehicle-image">
+                  <p class="image-description">雅致舒適的高級房車外觀</p>
+                </div>
+                <div class="image-slide" data-slide="interior">
+                  <img src="/img/vehicles/camry-hybridIN.png" alt="Toyota Camry Hybrid 內裝" class="vehicle-image">
+                  <p class="image-description">Toyota Safety Sense 2.0智能內裝</p>
+                </div>
+              </div>
+            </div>
+            <div class="vehicle-hero-info">
+              <div class="vehicle-category">
+                <i class="fas fa-leaf"></i>
+                <span>環保節能</span>
+              </div>
+              <h2>Toyota Camry Hybrid</h2>
+              <p class="vehicle-slogan">雅致舒適的高級房車</p>
+              
+              <div class="vehicle-specs-grid">
+                <div class="spec-item">
+                  <i class="fas fa-users"></i>
+                  <div>
+                    <span class="spec-label">乘載人數</span>
+                    <span class="spec-value">3人 (含專業司機)</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <i class="fas fa-suitcase"></i>
+                  <div>
+                    <span class="spec-label">行李數</span>
+                    <span class="spec-value">2件 (27吋)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="vehicle-details">
+            <div class="detail-section">
+              <h3><i class="fas fa-microchip"></i> Toyota Safety Sense 2.0</h3>
+              <p>升級「Toyota Safety Sense 2.0智動駕駛輔助系統」，全車最高搭載34項主、被動安全防護系統，提供駕駛與乘客更完整的安全防護。</p>
+              
+              <div class="tech-features">
+                <div class="tech-grid">
+                  <div class="tech-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>AHB智慧型遠光燈自動切換</span>
+                  </div>
+                  <div class="tech-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>PCS預警式防護系統</span>
+                  </div>
+                  <div class="tech-item">
+                    <i class="fas fa-random"></i>
+                    <span>緊急閃避轉向輔助</span>
+                  </div>
+                  <div class="tech-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>ACC全速域主動式車距維持</span>
+                  </div>
+                  <div class="tech-item">
+                    <i class="fas fa-road"></i>
+                    <span>LTA車道循跡輔助系統</span>
+                  </div>
+                  <div class="tech-item">
+                    <i class="fas fa-pause"></i>
+                    <span>Stop & Go功能</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Important Notice -->
+    <section class="notice-section">
+      <div class="container">
+        <div class="notice-card">
+          <div class="notice-icon">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="notice-content">
+            <h3>重要提醒</h3>
+            <p>以上車型內裝僅供參考，實際內裝依現場車輛為主。我們保證提供的每一輛車都經過嚴格檢查，確保安全舒適。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>立即預約您的專屬座駕</h2>
+          <p>專業司機、頂級車款、貼心服務，讓每一段旅程都成為美好回憶</p>
+          <div class="cta-buttons">
+            <a href="https://v-limo.app/" class="btn btn-primary" target="_blank">
+              <i class="fas fa-mouse-pointer"></i> 線上預約
+            </a>
+            <a href="tel:+886425208777" class="btn btn-secondary">
+              <i class="fas fa-phone"></i> 立即來電
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= 頁尾 (未更動) ======================= -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <!-- 聯絡資訊 -->
+          <section class="footer-contact">
+            <h3><i class="fas fa-phone" aria-hidden="true"></i> 聯絡我們</h3>
+            <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: var(--primary);">利盟小客車租賃有限公司</h4>
+            <p>電話：<a href="tel:+886425208777">04-2520-8777</a></p>
+            <p>傳真：04-2520-8207</p>
+            <p>聯絡信箱：<a href="mailto:tcs-info@chuteng.com.tw">tcs-info@chuteng.com.tw</a></p>
+            <p><i class="fas fa-clock" aria-hidden="true"></i> 營業時間：09:00-18:00</p>
+            
+            <ul class="footer-social" aria-label="社群媒體">
+              <li><a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+              <li><a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+            </ul>
+          </section>
+
+          <!-- 導覽 -->
+          <nav class="footer-nav" aria-label="頁尾導覽">
+            <div class="nav-col">
+              <h3>探索</h3>
+              <ul>
+                <li><a href="https://v-limo.app/">線上訂車</a></li>
+                <li><a href="交通接送車型介紹.html">交通接送車型介紹</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3>支援</h3>
+              <ul>
+                <li><a href="聯絡我們.html">聯絡我們</a></li>
+                <li><a href="隱私權政策.html">隱私權政策</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3>快速操作</h3>
+              <ul>
+                <li><a href="tel:+886425208777">立即來電預約</a></li>
+                <li><a href="聯絡我們.html#form">線上留言</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <!-- CTA 按鈕 -->
+          <section class="footer-cta">
+            <a class="btn btn-accent" href="tel:+886425208777" aria-label="撥打電話 04-2520-8777">立即來電</a>
+            <a class="btn btn-ghost" href="聯絡我們.html">聯絡我們</a>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部版權與輔助連結 -->
+    <div class="footer-meta">
+      <div class="container">
+        <div class="meta-inner">
+          <p class="copyright">Copyright © 利盟小客車租賃有限公司</p>
+          <ul class="meta-links">
+            <li><a href="隱私權政策.html">隱私權政策</a></li>
+            <li><a href="服務條款.html">服務條款</a></li>
+            <li><button class="back-to-top" type="button" aria-label="回到頂端" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回到頂端 ↑</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="floating-actions">
+    <a href="tel:+886425208777" class="floating-btn" aria-label="撥打電話">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="floating-btn back-to-top" aria-label="回到頂端">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+  <div class="sticky-bar">
+    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> 一鍵快速預約</a>
+  </div>
+  <!-- ======================= 頁尾 End ======================= -->
+
+  <script src="script.js"></script>
+  
+  <!-- 圖片切換功能 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化所有圖片切換功能
+      const imageContainers = document.querySelectorAll('.vehicle-image-container');
+      
+      imageContainers.forEach(container => {
+        const tabs = container.querySelectorAll('.image-tab');
+        const slides = container.querySelectorAll('.image-slide');
+        
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            const targetTab = this.dataset.tab;
+            
+            // 移除所有active狀態
+            tabs.forEach(t => t.classList.remove('active'));
+            slides.forEach(s => s.classList.remove('active'));
+            
+            // 添加active狀態到點擊的tab
+            this.classList.add('active');
+            
+            // 顯示對應的slide
+            const targetSlide = container.querySelector(`[data-slide="${targetTab}"]`);
+            if (targetSlide) {
+              targetSlide.classList.add('active');
+            }
+          });
+        });
+      });
+      
+      // 添加鍵盤導航支持
+      document.addEventListener('keydown', function(e) {
+        if (e.target.classList.contains('image-tab')) {
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            const container = e.target.closest('.vehicle-image-container');
+            const tabs = container.querySelectorAll('.image-tab');
+            const currentIndex = Array.from(tabs).indexOf(e.target);
+            
+            let nextIndex;
+            if (e.key === 'ArrowLeft') {
+              nextIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+            } else {
+              nextIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+            }
+            
+            tabs[nextIndex].click();
+            tabs[nextIndex].focus();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

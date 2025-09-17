@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>訊息已送出 | 利盟租車</title>
+  <meta name="description" content="感謝您與利盟租車聯絡，我們會盡快回覆您的訊息。" />
+  <meta name="theme-color" content="#1D4ED8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .thank-you-section {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .thank-you-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .thank-you-icon {
+      font-size: 4rem;
+      color: #4CAF50;
+      margin-bottom: 2rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .thank-you-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+    .thank-you-message {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .thank-you-details {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #4CAF50;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .back-home-btn:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (簡化版) -->
+  <header class="main-header" role="banner" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="利盟租車首頁">
+        <img src="img/logo.png" alt="利盟租車 Logo" />
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="thank-you-section">
+      <div class="container">
+        <div class="thank-you-content">
+          <div class="thank-you-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          
+          <h1 class="thank-you-title">訊息提交成功！</h1>
+          
+          <div class="thank-you-message">
+            <p>感謝您與利盟租車聯絡！</p>
+            <p>我們已收到您的訊息，將會在 <strong>24小時內</strong> 回覆您的諮詢。</p>
+          </div>
+          
+          <div class="thank-you-details">
+            <h3><i class="fas fa-info-circle"></i> 接下來的步驟</h3>
+            <ul style="text-align: left; max-width: 400px; margin: 1rem auto;">
+              <li>我們的客服專員會盡快回覆您的訊息</li>
+              <li>針對您的需求提供詳細說明</li>
+              <li>如有預約需求，會與您確認詳細資訊</li>
+              <li>提供最適合的服務建議與報價</li>
+            </ul>
+          </div>
+          
+          <div style="margin-bottom: 2rem;">
+            <h3><i class="fas fa-phone"></i> 如有急需，請直接來電</h3>
+            <p style="font-size: 1.5rem; font-weight: 600;">
+              <a href="tel:+886425208777" style="color: #FFD700;">04-2520-8777</a>
+            </p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">營業時間：09:00 - 18:00</p>
+          </div>
+          
+          <a href="index.html" class="back-home-btn">
+            <i class="fas fa-home"></i>
+            返回首頁
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 簡化版 Footer -->
+  <footer style="background: #2c3e50; color: white; text-align: center; padding: 2rem 0;">
+    <div class="container">
+      <p><strong>利盟小客車租賃有限公司</strong></p>
+      <p>Copyright © 利盟小客車租賃有限公司</p>
+      <p>
+        <a href="tel:+886425208777" style="color: #3498db;">04-2520-8777</a> | 
+        <a href="mailto:tcs-info@chuteng.com.tw" style="color: #3498db;">tcs-info@chuteng.com.tw</a>
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+        <i class="fas fa-clock"></i> 營業時間：09:00-18:00
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 成功提交追蹤
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const isSuccess = urlParams.get('success');
+      
+      if (isSuccess) {
+        // 記錄成功提交
+        const successData = {
+          timestamp: new Date().toISOString(),
+          source: document.referrer || 'direct',
+          userAgent: navigator.userAgent,
+          sessionId: sessionStorage.getItem('formStartTime')
+        };
+        
+        // 儲存成功記錄
+        const successLogs = JSON.parse(localStorage.getItem('formSuccessLogs') || '[]');
+        successLogs.push(successData);
+        
+        // 只保留最近30筆成功記錄
+        if (successLogs.length > 30) {
+          successLogs.splice(0, successLogs.length - 30);
+        }
+        
+        localStorage.setItem('formSuccessLogs', JSON.stringify(successLogs));
+        
+        // 清除表單相關的 sessionStorage
+        sessionStorage.removeItem('formStartTime');
+        
+        console.log('表單提交成功記錄已保存');
+      }
+      
+      // 自動在 15 秒後重定向到首頁 (可選)
+      // setTimeout(() => {
+      //   window.location.href = 'index.html';
+      // }, 15000);
+    });
+    
+    // 錯誤處理
+    window.addEventListener('error', function(event) {
+      const errorInfo = {
+        message: event.message,
+        source: event.source,
+        line: event.lineno,
+        column: event.colno,
+        timestamp: new Date().toISOString(),
+        page: 'thank-you'
+      };
+      
+      const errors = JSON.parse(localStorage.getItem('jsErrors') || '[]');
+      errors.push(errorInfo);
+      
+      if (errors.length > 10) {
+        errors.splice(0, errors.length - 10);
+      }
+      
+      localStorage.setItem('jsErrors', JSON.stringify(errors));
+    });
+  </script>
+</body>
+</html>

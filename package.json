@@ -1,0 +1,28 @@
+{
+  "name": "limo-website",
+  "version": "1.0.0",
+  "description": "利盟租車官方網站",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Build completed'",
+    "start": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "rental",
+    "car",
+    "limo",
+    "website"
+  ],
+  "author": "利盟租車",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

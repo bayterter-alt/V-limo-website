@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>露營車出租 - 開啟您的自由旅程 | 利盟租車</title>
+  <meta name="description" content="利盟租車提供高品質露營車出租服務，配備完善的中華菱利A180露營車，適合家庭旅遊、情侶出遊。專業維護，24H支援。" />
+  <meta name="theme-color" content="#1D4ED8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="main-header" role="banner">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="利盟租車首頁">
+        <img src="img/logo.png" alt="利盟租車 Logo" />
+      </a>
+      <nav class="main-nav" aria-label="主選單">
+        <ul class="nav-list">
+          <li><a href="index.html">首頁</a></li>
+          <li><a href="https://v-limo.app/">線上訂車</a></li>
+          <li><a href="貨車出租.html">貨車出租</a></li>
+          <li><a href="露營車出租.html" class="active">露營車出租</a></li>
+          <li><a href="聯絡我們.html">聯絡我們</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-menu" aria-label="行動版選單">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-brand-logo">
+          <img src="img/logo.png" alt="利盟租車 Logo" />
+        </a>
+        <button class="mobile-nav-close" aria-label="關閉選單">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html"><i class="fas fa-home"></i>首頁</a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i>線上訂車</a></li>
+        <li><a href="貨車出租.html"><i class="fas fa-truck"></i>貨車出租</a></li>
+        <li><a href="露營車出租.html" class="active"><i class="fas fa-campground"></i>露營車出租</a></li>
+        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i>聯絡我們</a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <div class="mobile-contact-info">
+          <div class="mobile-contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:+886425208777">04-2520-8777</a>
+          </div>
+          <div class="mobile-contact-item">
+            <i class="fas fa-clock"></i>
+            <span>09:00 - 18:00</span>
+          </div>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary mobile-cta-btn">
+          <i class="fas fa-calendar-check"></i> 立即預約
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <section class="hero hero-rv-rental">
+      <div class="container">
+        <h1>開啟您的<span style="color:var(--accent)">自由旅程</span> 🚐</h1>
+        <p>駕駛著家，探索台灣每個角落。專業配備的露營車，讓您的旅程充滿無限可能。家庭出遊、情侶旅行、朋友探險，都能找到最適合的選擇。</p>
+        <div class="actions">
+          <a href="#vehicles" class="btn btn-primary">查看車款</a>
+          <a href="露營車出租規範.html" class="btn btn-secondary">租賃規範</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section" style="background-color: var(--light);">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Why Choose Us</div>
+          <h2>為什麼選擇我們的露營車</h2>
+          <p>專業配備，貼心服務，讓您的旅程安心無憂</p>
+        </div>
+        <div class="grid-cards">
+          <div class="card">
+            <div class="card-content" style="text-align:center;">
+              <i class="fas fa-home" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+              <h3 class="title">移動的家</h3>
+              <p>床鋪、空調、露營器具一應俱全，讓您在旅途中享受家的溫馨舒適。</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content" style="text-align:center;">
+              <i class="fas fa-route" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+              <h3 class="title">自由行程</h3>
+              <p>不受飯店預訂限制，想去哪就去哪，隨心所欲規劃專屬旅程。</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content" style="text-align:center;">
+              <i class="fas fa-tools" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
+              <h3 class="title">專業維護</h3>
+              <p>定期保養檢查，確保車況良好，讓您的旅程安全又安心。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vehicles" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Our Fleet</div>
+          <h2>精選露營車款</h2>
+          <p>每台車都是您冒險旅程的完美夥伴</p>
+        </div>
+
+        <!-- A180-快樂版 -->
+        <article class="vehicle-detail-card">
+          <div class="vehicle-header">
+            <div class="vehicle-main-info">
+              <div class="vehicle-image-placeholder">
+                <img src="/img/uploads/A18001.jpg" alt="A180-快樂版外觀" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22 viewBox=%220 0 400 250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22200%22 y=%22125%22 font-family=%22Arial,sans-serif%22 font-size=%2214%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E車輛外觀照片%3C/text%3E%3C/svg%3E'" />
+              </div>
+              <div class="vehicle-info">
+                <h3 class="vehicle-title">A180-快樂版</h3>
+                <p class="vehicle-slogan">可愛外型，萬全裝備，上山下海，唯我獨尊!</p>
+                <div class="vehicle-specs-grid">
+                  <div class="spec-item">
+                    <i class="fas fa-car"></i>
+                    <span>車型：A180</span>
+                  </div>
+                  <div class="spec-item">
+                    <i class="fas fa-road"></i>
+                    <span>里程：400km/日</span>
+                  </div>
+                  <div class="spec-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>押金：10,000元</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vehicle-content">
+            <!-- 租用據點 -->
+            <div class="info-section">
+              <h4><i class="fas fa-map-marker-alt"></i> 租用據點</h4>
+              <div class="location-list">
+                <div class="location-item">
+                  <strong>台中取車點：</strong>台中市神岡區神洲路131巷22號<br>
+                  <small>（Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點）</small>
+                </div>
+                <div class="location-item">
+                  <strong>新竹竹東取車點：</strong>新竹縣竹東鎮中興路一段142號（新竹匯豐汽車）
+                </div>
+              </div>
+            </div>
+
+            <!-- 價格資訊 -->
+            <div class="info-section">
+              <h4><i class="fas fa-dollar-sign"></i> 租賃價格</h4>
+              <div class="pricing-grid">
+                <div class="price-item">
+                  <div class="price-label">平日租金</div>
+                  <div class="price-value">NT$ 3,980 <small>/24H（兩天一夜）</small></div>
+                  <div class="price-note">星期一至星期四</div>
+                </div>
+                <div class="price-item">
+                  <div class="price-label">假日租金</div>
+                  <div class="price-value">NT$ 4,380 <small>/24H（兩天一夜）</small></div>
+                  <div class="price-note">星期五六日，政府公告之國定假日及連續假日</div>
+                </div>
+              </div>
+              <div class="additional-fees">
+                <p><strong>逾時還車計價：</strong>400元/每小時</p>
+                <p><strong>逾期加收費用：</strong>逾時未滿1小時以1小時計價，逾時超過6小時以24小時計價</p>
+                <p><strong>保險：</strong>需額外收費，本公司只提供強制險</p>
+              </div>
+            </div>
+
+            <!-- 內裝照片區 -->
+            <div class="info-section">
+              <h4><i class="fas fa-images"></i> 內裝配備展示</h4>
+              <div class="interior-gallery">
+                <div class="interior-image">
+                  <img src="/img/uploads/A18001A.jpg" alt="A180-快樂版內裝1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片1%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A18001B.jpg" alt="A180-快樂版內裝2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片2%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A18001C.jpg" alt="A180-快樂版內裝3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片3%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A18001D.jpg" alt="A180-快樂版內裝4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片4%3C/text%3E%3C/svg%3E'" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 隨車配件 -->
+            <div class="info-section">
+              <h4><i class="fas fa-cogs"></i> 隨車配件</h4>
+              <div class="equipment-grid">
+                <div class="equipment-category">
+                  <h5>基礎設備</h5>
+                  <ul>
+                    <li>Travellife 靜音型車頂置放架</li>
+                    <li>FIMMA 車邊帳</li>
+                    <li>平整化中後排床鋪/客廳區</li>
+                    <li>雙折型床椅</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>電力系統</h5>
+                  <ul>
+                    <li>12V 280A 鋰鐵電池</li>
+                    <li>50A 鋰鐵充電器</li>
+                    <li>市電取電插座/線</li>
+                    <li>駐車空調</li>
+                    <li>AC 110V 2000W 逆變器</li>
+                    <li>特斯拉充電樁慢衝轉接頭</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>照明系統</h5>
+                  <ul>
+                    <li>多功能型控置面板/點菸器/USB PD充電器/庫侖計/全車控制開關</li>
+                    <li>室內燈×6</li>
+                    <li>車尾燈×2</li>
+                    <li>車內氛圍燈/夜燈</li>
+                    <li>多用型插座×2 AC 110V/USB/PD</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>露營用品</h5>
+                  <ul>
+                    <li>15L車用冰箱</li>
+                    <li>USB 復古手提LED露營燈×2</li>
+                    <li>AC 110V 電磁爐×1</li>
+                    <li>整套式鍋具/鍋鏟/湯勺/面勺</li>
+                    <li>不銹鋼杯×4</li>
+                    <li>車尾外掛桌/簡易水槽</li>
+                    <li>輕便型水桶/輕便型電動水龍頭</li>
+                    <li>蛋捲桌×1/高背椅×2</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="vehicle-actions">
+              <a href="聯絡我們.html" class="btn btn-primary">
+                <i class="fas fa-phone"></i> 立即預約
+              </a>
+              <a href="露營車出租規範.html" class="btn btn-secondary">
+                <i class="fas fa-file-contract"></i> 查看規範
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 中華菱利A180-輕鬆版 -->
+        <article class="vehicle-detail-card">
+          <div class="vehicle-header">
+            <div class="vehicle-main-info">
+              <div class="vehicle-image-placeholder">
+                <img src="/img/uploads/A180002.jpg" alt="中華菱利A180-輕鬆版外觀" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22 viewBox=%220 0 400 250%22%3E%3Crect width=%22400%22 height=%22250%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22200%22 y=%22125%22 font-family=%22Arial,sans-serif%22 font-size=%2214%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E車輛外觀照片%3C/text%3E%3C/svg%3E'" />
+              </div>
+              <div class="vehicle-info">
+                <h3 class="vehicle-title">中華菱利A180-輕鬆版</h3>
+                <p class="vehicle-slogan">可愛外型，萬全裝備，上山下海，唯我獨尊!</p>
+                <div class="vehicle-specs-grid">
+                  <div class="spec-item">
+                    <i class="fas fa-car"></i>
+                    <span>車型：中華凌利A180</span>
+                  </div>
+                  <div class="spec-item">
+                    <i class="fas fa-road"></i>
+                    <span>里程：400KM/日</span>
+                  </div>
+                  <div class="spec-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>押金：10,000元</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vehicle-content">
+            <!-- 租用據點 -->
+            <div class="info-section">
+              <h4><i class="fas fa-map-marker-alt"></i> 租用據點</h4>
+              <div class="location-list">
+                <div class="location-item">
+                  <strong>台中取車點：</strong>台中市神岡區神洲路131巷22號<br>
+                  <small>（Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點）</small>
+                </div>
+                <div class="location-item">
+                  <strong>新竹竹東取車點：</strong>新竹縣竹東鎮中興路一段142號（新竹匯豐汽車）
+                </div>
+              </div>
+            </div>
+
+            <!-- 價格資訊 -->
+            <div class="info-section">
+              <h4><i class="fas fa-dollar-sign"></i> 租賃價格</h4>
+              <div class="pricing-grid">
+                <div class="price-item">
+                  <div class="price-label">平日租金</div>
+                  <div class="price-value">NT$ 3,980 <small>/24H（兩天一夜）</small></div>
+                  <div class="price-note">星期一至星期四</div>
+                </div>
+                <div class="price-item">
+                  <div class="price-label">假日租金</div>
+                  <div class="price-value">NT$ 4,380 <small>/24H（兩天一夜）</small></div>
+                  <div class="price-note">星期五六日，政府公告之國定假日及連續假日</div>
+                </div>
+              </div>
+              <div class="additional-fees">
+                <p><strong>逾時還車計價：</strong>400元/每小時</p>
+                <p><strong>逾期加收費用：</strong>逾時未滿1小時以1小時計價，逾時超過6小時以24小時計價</p>
+                <p><strong>保險：</strong>需額外收費，本公司只提供強制險</p>
+              </div>
+            </div>
+
+            <!-- 內裝照片區 -->
+            <div class="info-section">
+              <h4><i class="fas fa-images"></i> 內裝配備展示</h4>
+              <div class="interior-gallery">
+                <div class="interior-image">
+                  <img src="/img/uploads/A180002A.jpg" alt="中華菱利A180-輕鬆版內裝1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片1%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A180002B.jpg" alt="中華菱利A180-輕鬆版內裝2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片2%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A180002C.jpg" alt="中華菱利A180-輕鬆版內裝3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片3%3C/text%3E%3C/svg%3E'" />
+                </div>
+                <div class="interior-image">
+                  <img src="/img/uploads/A180002D.jpg" alt="中華菱利A180-輕鬆版內裝4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22250%22 height=%22200%22 viewBox=%220 0 250 200%22%3E%3Crect width=%22250%22 height=%22200%22 fill=%22%23f3f4f6%22/%3E%3Ctext x=%22125%22 y=%22100%22 font-family=%22Arial,sans-serif%22 font-size=%2212%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%225%22%3E內裝照片4%3C/text%3E%3C/svg%3E'" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 隨車配件 -->
+            <div class="info-section">
+              <h4><i class="fas fa-cogs"></i> 隨車配件</h4>
+              <div class="equipment-grid">
+                <div class="equipment-category">
+                  <h5>基礎設備</h5>
+                  <ul>
+                    <li>Travellife 靜音型車頂置放架</li>
+                    <li>FIMMA 車邊帳</li>
+                    <li>平整化中後排床鋪/客廳區</li>
+                    <li>雙折型床椅</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>電力系統</h5>
+                  <ul>
+                    <li>12V 280A 鋰鐵電池</li>
+                    <li>50A 鋰鐵充電器</li>
+                    <li>市電取電插座/線</li>
+                    <li>駐車空調</li>
+                    <li>AC 110V 2000W 逆變器</li>
+                    <li>特斯拉充電樁慢衝轉接頭</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>照明系統</h5>
+                  <ul>
+                    <li>多功能型控置面板/點菸器/USB PD充電器/庫侖計/全車控制開關</li>
+                    <li>室內燈×6</li>
+                    <li>車尾燈×2</li>
+                    <li>車內氛圍燈/夜燈</li>
+                    <li>多用型插座×2 AC 110V/USB/PD</li>
+                  </ul>
+                </div>
+                <div class="equipment-category">
+                  <h5>露營用品</h5>
+                  <ul>
+                    <li>15L車用冰箱</li>
+                    <li>USB 復古手提LED露營燈×2</li>
+                    <li>AC 110V 電磁爐×1</li>
+                    <li>整套式鍋具/鍋鏟/湯勺/面勺</li>
+                    <li>不銹鋼杯×4</li>
+                    <li>車尾外掛桌/簡易水槽</li>
+                    <li>輕便型水桶/輕便型電動水龍頭</li>
+                    <li>蛋捲桌×1/高背椅×2</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="vehicle-actions">
+              <a href="聯絡我們.html" class="btn btn-primary">
+                <i class="fas fa-phone"></i> 立即預約
+              </a>
+              <a href="露營車出租規範.html" class="btn btn-secondary">
+                <i class="fas fa-file-contract"></i> 查看規範
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" style="background-color: var(--light);">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Pricing</div>
+          <h2>租賃價格</h2>
+          <p>透明合理的價格，多種方案任您選擇</p>
+        </div>
+        <div class="grid-cards">
+          <div class="card">
+            <div class="card-content pricing">
+              <h3>平日租賃</h3>
+              <div class="price"><small>NT$</small>3,980<span class="period">/日</span></div>
+              <p>週一至週四，適合平日出遊</p>
+              <div class="actions"><a href="聯絡我們.html" class="btn btn-primary">預約平日</a></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content pricing">
+              <h3>假日租賃</h3>
+              <div class="price"><small>NT$</small>4,380<span class="period">/日</span></div>
+              <p>週五至週日、國定假日</p>
+              <div class="actions"><a href="聯絡我們.html" class="btn btn-primary">預約假日</a></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content pricing">
+              <h3>長期租賃</h3>
+              <div class="price"><small>NT$</small>????<span class="period">/日</span></div>
+              <p>多天以上享優惠價格</p>
+              <div class="actions"><a href="聯絡我們.html" class="btn btn-primary">聯繫專員</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <!-- 聯絡資訊 -->
+          <section class="footer-contact">
+            <h3><i class="fas fa-phone" aria-hidden="true"></i> 聯絡我們</h3>
+            <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: var(--primary);">利盟小客車租賃有限公司</h4>
+            <p>電話：<a href="tel:+886425208777">04-2520-8777</a></p>
+            <p>傳真：04-2520-8207</p>
+            <p>聯絡信箱：<a href="mailto:tcs-info@chuteng.com.tw">tcs-info@chuteng.com.tw</a></p>
+            <p><i class="fas fa-clock" aria-hidden="true"></i> 營業時間：09:00-18:00</p>
+            
+            <ul class="footer-social" aria-label="社群媒體">
+              <li><a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+              <li><a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+            </ul>
+          </section>
+
+          <!-- 導覽 -->
+          <nav class="footer-nav" aria-label="頁尾導覽">
+            <div class="nav-col">
+              <h3>探索</h3>
+              <ul>
+                <li><a href="https://v-limo.app/">線上訂車</a></li>
+                <li><a href="交通接送車型介紹.html">交通接送車型介紹</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3>支援</h3>
+              <ul>
+                <li><a href="聯絡我們.html">聯絡我們</a></li>
+                <li><a href="隱私權政策.html">隱私權政策</a></li>
+                <li><a href="服務條款.html">服務條款</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3>快速操作</h3>
+              <ul>
+                <li><a href="tel:+886425208777">立即來電預約</a></li>
+                <li><a href="聯絡我們.html#form">線上留言</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <!-- CTA 按鈕 -->
+          <section class="footer-cta">
+            <a class="btn btn-accent" href="tel:+886425208777" aria-label="撥打電話 04-2520-8777">立即來電</a>
+            <a class="btn btn-ghost" href="聯絡我們.html">聯絡我們</a>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部版權與輔助連結 -->
+    <div class="footer-meta">
+      <div class="container">
+        <div class="meta-inner">
+          <p class="copyright">Copyright © 利盟小客車租賃有限公司</p>
+          <ul class="meta-links">
+            <li><a href="隱私權政策.html">隱私權政策</a></li>
+            <li><a href="服務條款.html">服務條款</a></li>
+            <li><button class="back-to-top" type="button" aria-label="回到頂端" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">回到頂端 ↑</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <a href="tel:+886425208777" class="floating-btn" aria-label="撥打電話">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="floating-btn back-to-top" aria-label="回到頂端">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+  
+  <!-- Mobile Sticky Bar -->
+  <div class="sticky-bar">
+    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> 一鍵快速預約</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
