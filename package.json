@@ -21,7 +21,9 @@
   "author": "利盟租車",
   "license": "ISC",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@cloudflare/workers-site": "^2.0.0"
+  },
   "engines": {
     "node": ">=14.0.0"
   }
