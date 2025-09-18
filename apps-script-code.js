@@ -28,9 +28,9 @@ const CONFIG = {
       cc: ['tcs-info@chuteng.com.tw']
     },
     '其他諮詢': {
-      email: 'tcs-info@chuteng.com.tw',
+      email: 'rayterter@hotmail.com',
       name: '客服中心',
-      cc: ['amy@chuteng.com.tw']
+      cc: []
     }
   },
   
@@ -92,19 +92,49 @@ function onFormSubmit(e) {
  * 從表單事件中提取資料
  */
 function extractFormData(e) {
-  const values = e.values;
-  const timestamp = values[0];
-  
-  return {
-    timestamp: timestamp,
-    name: values[1] || '',
-    email: values[2] || '',
-    phone: values[3] || '',
-    service: values[4] || '',
-    subject: values[5] || '',
-    message: values[6] || '',
-    source: CONFIG.COMPANY.website
-  };
+  // 增加日誌記錄，幫助我們看到底收到了什麼
+  console.log('收到的原始事件物件: ' + JSON.stringify(e, null, 2));
+
+  // 防彈檢查：確保 e 物件存在
+  if (!e) {
+    throw new Error('事件物件 (e) 是 undefined。觸發器沒有正確傳遞事件資料。');
+  }
+
+  // 情況一：來自 Google Form 的標準觸發器 (e.response 存在)
+  if (e.response) {
+    console.log('偵測到 Form 觸發器 (e.response)');
+    const itemResponses = e.response.getItemResponses();
+    const values = itemResponses.map(itemResponse => itemResponse.getResponse());
+    return {
+      timestamp: e.response.getTimestamp(),
+      name: values[0] || '',
+      email: values[1] || '',
+      phone: values[2] || '',
+      service: values[3] || '',
+      subject: values[4] || '',
+      message: values[5] || '',
+      source: CONFIG.COMPANY.website
+    };
+  } 
+  // 情況二：來自 Google Sheet 的舊式觸發器 (e.values 存在)
+  else if (e.values) {
+    console.log('偵測到 Sheet 觸發器 (e.values)');
+    const values = e.values;
+    return {
+      timestamp: values[0] ? new Date(values[0]) : new Date(),
+      name: values[1] || '',
+      email: values[2] || '',
+      phone: values[3] || '',
+      service: values[4] || '',
+      subject: values[5] || '',
+      message: values[6] || '', // 假設在試算表中有7個欄位
+      source: CONFIG.COMPANY.website
+    };
+  }
+  // 情況三：收到了無法識別的事件物件
+  else {
+    throw new Error('收到的事件物件 (e) 結構無法識別，它既不包含 "response" 也不包含 "values" 屬性。');
+  }
 }
 
 /**
@@ -398,12 +428,12 @@ function installTriggers() {
   triggers.forEach(trigger => ScriptApp.deleteTrigger(trigger));
   
   // 取得表單（請替換為您的表單 ID）
-  const FORM_ID = 'YOUR_FORM_ID_HERE'; // 請替換為實際的表單 ID
+  const FORM_ID = '1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A'; // 請替換為實際的表單 ID
   const form = FormApp.openById(FORM_ID);
   
   // 安裝新的觸發器
   ScriptApp.newTrigger('onFormSubmit')
-    .for(form)
+    .forForm(form)
     .onFormSubmit()
     .create();
     
