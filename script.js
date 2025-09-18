@@ -234,10 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== 表單處理系統 =====
 const FORM_CONFIG = {
-  endpoint: 'https://formspree.io/f/YOUR_FORM_ID', // 稍後需要替換實際的 Form ID
+  endpoint: 'https://formspree.io/f/xgvljzgp',
   recipients: {
-    primary: 'tcs-info@chuteng.com.tw',
-    cc: ['amy@chuteng.com.tw', 'rayterter@hotmail.com']
+    primary: 'rayterter@hotmail.com',
+    cc: ['tcs-info@chuteng.com.tw', 'amy@chuteng.com.tw']
   }
 };
 
