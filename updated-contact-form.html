@@ -1,0 +1,52 @@
+<!-- 更新後的聯絡我們表單 HTML（僅表單部分）-->
+<!-- 替換原本的 form 標籤和內容 -->
+
+<form id="contactForm" class="contact-form" method="POST" action="[GOOGLE_FORM_ACTION_URL]">
+    <!-- Google 表單隱藏欄位 -->
+    <input type="hidden" name="entry.TIMESTAMP" id="timestampField">
+    
+    <div class="form-group">
+        <label for="name">您的姓名</label>
+        <input type="text" id="name" name="entry.NAME_ENTRY_ID" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">電子郵件</label>
+        <input type="email" id="email" name="entry.EMAIL_ENTRY_ID" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="phone">聯絡電話</label>
+        <input type="tel" id="phone" name="entry.PHONE_ENTRY_ID">
+    </div>
+    
+    <div class="form-group">
+        <label for="service">服務類型</label>
+        <select id="service" name="entry.SERVICE_ENTRY_ID">
+            <option value="">請選擇服務類型</option>
+            <option value="機場接送">機場接送</option>
+            <option value="旅遊包車">旅遊包車</option>
+            <option value="露營車出租">露營車出租</option>
+            <option value="貨車出租">貨車出租</option>
+            <option value="其他諮詢">其他諮詢</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="subject">主旨</label>
+        <input type="text" id="subject" name="entry.SUBJECT_ENTRY_ID" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="message">訊息內容</label>
+        <textarea id="message" name="entry.MESSAGE_ENTRY_ID" rows="5" required placeholder="請詳細描述您的需求，包含日期、時間、地點等資訊"></textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" style="width: 100%;">確認送出</button>
+</form>
+
+<!-- 注意事項：
+1. [GOOGLE_FORM_ACTION_URL] 需要替換為實際的 Google 表單提交網址
+2. entry.NAME_ENTRY_ID 等需要替換為實際的 Google 表單欄位 ID
+3. 這些 ID 可以從 Google 表單的原始碼中取得
+-->

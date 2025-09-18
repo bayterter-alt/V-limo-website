@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Forms 整合測試</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        .btn:hover { background: #0056b3; }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .config-table th, .config-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .config-table th {
+            background-color: #f2f2f2;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Google Forms 整合測試工具</h1>
+        <p>此工具用於測試 Google Forms 整合是否正常運作</p>
+        
+        <div id="status"></div>
+        
+        <button class="btn" onclick="runAllTests()">🚀 執行完整測試</button>
+        <button class="btn" onclick="testFormConfig()">⚙️ 檢查配置</button>
+        <button class="btn" onclick="testFormConnection()">🔗 測試連接</button>
+        <button class="btn" onclick="openGoogleForm()">📋 開啟 Google 表單</button>
+        <button class="btn" onclick="fillTestData()">📝 填入測試資料</button>
+    </div>
+
+    <div class="test-container">
+        <h2>📊 表單配置資訊</h2>
+        <table class="config-table">
+            <tr><th>項目</th><th>值</th></tr>
+            <tr><td>表單 ID</td><td><code id="formId">-</code></td></tr>
+            <tr><td>試算表 ID</td><td><code id="sheetId">-</code></td></tr>
+            <tr><td>提交 URL</td><td><code id="actionUrl">-</code></td></tr>
+        </table>
+
+        <h3>🎯 欄位映射</h3>
+        <table class="config-table">
+            <tr><th>表單欄位</th><th>Google Forms Entry ID</th></tr>
+            <tbody id="fieldsMapping"></tbody>
+        </table>
+    </div>
+
+    <div class="test-container">
+        <h2>📋 測試表單</h2>
+        <form id="testForm" style="max-width: 500px;">
+            <div style="margin: 15px 0;">
+                <label for="name">姓名：</label><br>
+                <input type="text" id="name" name="name" style="width: 100%; padding: 8px; margin-top: 5px;" required>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="email">電子郵件：</label><br>
+                <input type="email" id="email" name="email" style="width: 100%; padding: 8px; margin-top: 5px;" required>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="phone">聯絡電話：</label><br>
+                <input type="tel" id="phone" name="phone" style="width: 100%; padding: 8px; margin-top: 5px;">
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="service">服務類型：</label><br>
+                <select id="service" name="service" style="width: 100%; padding: 8px; margin-top: 5px;">
+                    <option value="">請選擇服務類型</option>
+                    <option value="機場接送">機場接送</option>
+                    <option value="旅遊包車">旅遊包車</option>
+                    <option value="露營車出租">露營車出租</option>
+                    <option value="貨車出租">貨車出租</option>
+                    <option value="其他諮詢">其他諮詢</option>
+                </select>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="subject">主旨：</label><br>
+                <input type="text" id="subject" name="subject" style="width: 100%; padding: 8px; margin-top: 5px;" required>
+            </div>
+            <div style="margin: 15px 0;">
+                <label for="message">訊息內容：</label><br>
+                <textarea id="message" name="message" rows="4" style="width: 100%; padding: 8px; margin-top: 5px;" required></textarea>
+            </div>
+            <button type="submit" class="btn">🚀 測試提交</button>
+        </form>
+    </div>
+
+    <div class="test-container">
+        <h2>📝 測試紀錄</h2>
+        <div id="testLogs"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let testLogs = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleString('zh-TW');
+            testLogs.push({ timestamp, message, type });
+            updateLogsDisplay();
+            
+            const statusDiv = document.getElementById('status');
+            const statusClass = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            statusDiv.innerHTML = `<div class="${statusClass}">${message}</div>`;
+            
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function updateLogsDisplay() {
+            const logsDiv = document.getElementById('testLogs');
+            logsDiv.innerHTML = testLogs.slice(-10).map(log => 
+                `<div class="${log.type}" style="font-size: 14px; margin: 5px 0; padding: 8px;">
+                    <strong>${log.timestamp}</strong> - ${log.message}
+                </div>`
+            ).join('');
+        }
+
+        function testFormConfig() {
+            log('🔍 檢查表單配置...', 'info');
+            
+            if (typeof GOOGLE_FORM_CONFIG === 'undefined') {
+                log('❌ GOOGLE_FORM_CONFIG 未定義', 'error');
+                return false;
+            }
+
+            // 顯示配置資訊
+            document.getElementById('formId').textContent = GOOGLE_FORM_CONFIG.formId || '未設定';
+            document.getElementById('sheetId').textContent = GOOGLE_FORM_CONFIG.sheetId || '未設定';
+            document.getElementById('actionUrl').textContent = GOOGLE_FORM_CONFIG.actionUrl || '未設定';
+
+            // 顯示欄位映射
+            const fieldsMapping = document.getElementById('fieldsMapping');
+            fieldsMapping.innerHTML = '';
+            
+            if (GOOGLE_FORM_CONFIG.fields) {
+                Object.entries(GOOGLE_FORM_CONFIG.fields).forEach(([field, entryId]) => {
+                    const row = fieldsMapping.insertRow();
+                    row.insertCell(0).innerHTML = `<code>${field}</code>`;
+                    row.insertCell(1).innerHTML = `<code>${entryId}</code>`;
+                });
+            }
+
+            // 驗證必要欄位
+            const requiredFields = ['formId', 'actionUrl', 'fields'];
+            const missingFields = requiredFields.filter(field => !GOOGLE_FORM_CONFIG[field]);
+            
+            if (missingFields.length > 0) {
+                log(`❌ 缺少必要配置: ${missingFields.join(', ')}`, 'error');
+                return false;
+            }
+
+            log('✅ 表單配置檢查完成', 'success');
+            return true;
+        }
+
+        function testFormConnection() {
+            log('🔗 測試 Google 表單連接...', 'info');
+            
+            if (!GOOGLE_FORM_CONFIG.formId) {
+                log('❌ 表單 ID 未設定', 'error');
+                return;
+            }
+
+            const testUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/viewform`;
+            
+            // 嘗試在新視窗開啟表單來測試連接
+            const testWindow = window.open(testUrl, '_blank', 'width=800,height=600');
+            
+            if (testWindow) {
+                log('✅ Google 表單連接測試 - 已在新視窗開啟', 'success');
+                log(`📋 表單網址: ${testUrl}`, 'info');
+            } else {
+                log('⚠️ 無法開啟新視窗，請檢查瀏覽器彈出視窗設定', 'error');
+            }
+        }
+
+        function openGoogleForm() {
+            if (!GOOGLE_FORM_CONFIG.formId) {
+                log('❌ 表單 ID 未設定', 'error');
+                return;
+            }
+            
+            const formUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/viewform`;
+            window.open(formUrl, '_blank');
+            log('📋 已開啟 Google 表單', 'info');
+        }
+
+        function fillTestData() {
+            log('📝 填入測試資料...', 'info');
+            
+            const testData = {
+                name: '測試客戶',
+                email: 'test@example.com',
+                phone: '0912345678',
+                service: '機場接送',
+                subject: 'Google 表單整合測試',
+                message: `這是一個 Google 表單整合的功能測試。\n測試時間：${new Date().toLocaleString('zh-TW')}\n測試來源：測試工具`
+            };
+
+            Object.entries(testData).forEach(([key, value]) => {
+                const field = document.getElementById(key);
+                if (field) {
+                    field.value = value;
+                }
+            });
+
+            log('✅ 測試資料已填入', 'success');
+        }
+
+        function runAllTests() {
+            log('🚀 開始執行完整測試...', 'info');
+            testLogs = []; // 清空舊的紀錄
+            
+            setTimeout(() => {
+                const configOk = testFormConfig();
+                
+                setTimeout(() => {
+                    testFormConnection();
+                    
+                    setTimeout(() => {
+                        fillTestData();
+                        
+                        if (configOk) {
+                            log('🎉 所有測試已完成！表單已準備好進行提交測試', 'success');
+                        } else {
+                            log('⚠️ 發現配置問題，請修正後再進行提交測試', 'error');
+                        }
+                    }, 1000);
+                }, 1000);
+            }, 500);
+        }
+
+        // 表單提交處理
+        document.getElementById('testForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            log('🧪 開始測試表單提交...', 'info');
+            
+            // 使用主要網站的表單處理函數
+            if (typeof handleFormSubmit === 'function') {
+                handleFormSubmit(event);
+            } else {
+                log('❌ handleFormSubmit 函數未找到', 'error');
+            }
+        });
+
+        // 頁面載入完成後執行初始檢查
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                log('🎯 Google Forms 整合測試工具已載入', 'info');
+                testFormConfig();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
