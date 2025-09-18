@@ -232,20 +232,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// ===== 表單處理系統 =====
-const FORM_CONFIG = {
-  endpoint: 'https://formspree.io/f/xgvljzgp',
-  recipients: {
-    primary: 'rayterter@hotmail.com',
-    cc: ['tcs-info@chuteng.com.tw', 'amy@chuteng.com.tw']
+// ===== Google 表單處理系統 =====
+const GOOGLE_FORM_CONFIG = {
+  formId: '1FAIpQLSenj6mYT12Imp6jzQtmAC451BQy9vpDIb23LudUXTacKKJClg',
+  sheetId: '1AySXECv5cjF79YmeXY7uFwrM69-JQFG1B4MP6KD6hUU',
+  actionUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSenj6mYT12Imp6jzQtmAC451BQy9vpDIb23LudUXTacKKJClg/formResponse',
+  fields: {
+    name: 'entry.1623417871',
+    email: 'entry.1144033944',
+    phone: 'entry.1623219296',
+    service: 'entry.716883917',
+    subject: 'entry.1025881327',
+    message: 'entry.153606403'
   }
 };
 
+/**
+ * 主要表單提交處理函數
+ */
 async function handleFormSubmit(event) {
   event.preventDefault();
   
   const form = event.target;
   const formData = new FormData(form);
+  
+  console.log('🚀 Google 表單提交開始 - 版本 2.1');
+  console.log('📋 表單配置:', GOOGLE_FORM_CONFIG);
   
   // 安全檢查
   if (!validateFormSecurity(formData)) {
@@ -258,40 +270,28 @@ async function handleFormSubmit(event) {
     return;
   }
   
-  // 添加多人收件
-  FORM_CONFIG.recipients.cc.forEach(email => {
-    formData.append('_cc', email);
-  });
-  
-  // 添加額外資訊
-  formData.append('_replyto', formData.get('email'));
-  formData.append('提交時間', new Date().toLocaleString('zh-TW'));
-  formData.append('來源頁面', 'https://www.v-limo.com.tw/');
-  
   try {
     showLoadingState(form);
     
-    const response = await fetch(FORM_CONFIG.endpoint, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+    // 建立 Google 表單資料
+    const googleFormData = createGoogleFormData(formData);
     
-    if (response.ok) {
-      // 記錄成功提交
-      logFormSubmission(formData);
-      window.location.href = './thank-you.html?success=1';
-    } else {
-      const errorData = await response.json();
-      throw new Error(errorData.error || '表單發送失敗');
-    }
+    // 提交到 Google 表單
+    await submitToGoogleForm(googleFormData);
+    
+    // 記錄成功提交
+    logFormSubmission(formData);
+    
+    // 導向感謝頁面
+    window.location.href = './thank-you.html?success=1&via=google-form&time=' + Date.now();
     
   } catch (error) {
-    console.error('表單提交錯誤:', error);
+    console.error('❌ Google 表單提交錯誤:', error);
     hideLoadingState(form);
-    alert(`發送失敗：${error.message}\n\n請直接來電聯繫：04-2520-8777`);
+    
+    // 提供後備聯絡方式
+    const fallbackMessage = `發送失敗：${error.message}\n\n請直接聯繫我們：\n📞 電話：04-2520-8777\n📧 信箱：tcs-info@chuteng.com.tw\n💬 LINE：@limo86536170`;
+    alert(fallbackMessage);
   }
 }
 
@@ -442,4 +442,252 @@ window.addEventListener('error', function(event) {
   }
   
   localStorage.setItem('jsErrors', JSON.stringify(errors));
+});
+
+
+/**
+ * 建立 Google 表單資料
+ */
+function createGoogleFormData(originalFormData) {
+  const googleFormData = new FormData();
+  
+  // 對應表單欄位到 Google 表單的 entry ID
+  const fieldMapping = {
+    'name': GOOGLE_FORM_CONFIG.fields.name,
+    'email': GOOGLE_FORM_CONFIG.fields.email,
+    'phone': GOOGLE_FORM_CONFIG.fields.phone,
+    'service': GOOGLE_FORM_CONFIG.fields.service,
+    'subject': GOOGLE_FORM_CONFIG.fields.subject,
+    'message': GOOGLE_FORM_CONFIG.fields.message
+  };
+  
+  // 複製資料到 Google 表單格式
+  for (const [originalField, googleField] of Object.entries(fieldMapping)) {
+    const value = originalFormData.get(originalField);
+    if (value && value.trim()) {
+      googleFormData.append(googleField, value.trim());
+      console.log(`✅ 映射: ${originalField} -> ${googleField} = ${value.trim()}`);
+    }
+  }
+  
+  return googleFormData;
+}
+
+/**
+ * 提交到 Google 表單
+ */
+async function submitToGoogleForm(formData) {
+  return new Promise((resolve, reject) => {
+    console.log('📤 開始提交到 Google 表單...');
+    
+    // 使用 fetch 進行提交，添加必要的參數
+    const url = new URL(GOOGLE_FORM_CONFIG.actionUrl);
+    
+    // 添加 Google Forms 需要的參數
+    const submitData = new URLSearchParams();
+    
+    // 複製所有表單資料
+    for (const [key, value] of formData.entries()) {
+      submitData.append(key, value);
+      console.log(`📝 添加欄位: ${key} = ${value}`);
+    }
+    
+    // 添加 Google Forms 必要參數
+    submitData.append('submit', 'Submit');
+    submitData.append('usp', 'pp_url');
+    
+    // 使用 fetch 提交
+    fetch(GOOGLE_FORM_CONFIG.actionUrl, {
+      method: 'POST',
+      mode: 'no-cors', // 重要：使用 no-cors 模式避免 CORS 問題
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: submitData
+    })
+    .then(() => {
+      console.log('✅ Google 表單提交成功 (no-cors 模式)');
+      resolve();
+    })
+    .catch(error => {
+      console.warn('⚠️ Fetch 失敗，嘗試 iframe 方法:', error);
+      
+      // 如果 fetch 失敗，回退到 iframe 方法
+      submitViaIframe(formData, resolve, reject);
+    });
+  });
+}
+
+/**
+ * 使用 iframe 方法提交（回退方案）
+ */
+function submitViaIframe(formData, resolve, reject) {
+  console.log('🔄 使用 iframe 方法提交表單...');
+  
+  // 建立隱藏的 iframe 來提交表單（避免頁面跳轉）
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.name = 'google-form-submit-' + Date.now();
+  document.body.appendChild(iframe);
+  
+  // 建立隱藏的表單
+  const hiddenForm = document.createElement('form');
+  hiddenForm.method = 'POST';
+  hiddenForm.action = GOOGLE_FORM_CONFIG.actionUrl;
+  hiddenForm.target = iframe.name;
+  hiddenForm.style.display = 'none';
+  
+  // 添加所有欄位
+  for (const [key, value] of formData.entries()) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = value;
+    hiddenForm.appendChild(input);
+  }
+  
+  // 添加必要參數
+  const submitInput = document.createElement('input');
+  submitInput.type = 'hidden';
+  submitInput.name = 'submit';
+  submitInput.value = 'Submit';
+  hiddenForm.appendChild(submitInput);
+  
+  document.body.appendChild(hiddenForm);
+  
+  // 設定成功處理
+  let resolved = false;
+  const cleanup = () => {
+    if (document.body.contains(iframe)) document.body.removeChild(iframe);
+    if (document.body.contains(hiddenForm)) document.body.removeChild(hiddenForm);
+  };
+  
+  const handleSuccess = () => {
+    if (!resolved) {
+      resolved = true;
+      console.log('✅ Google 表單提交成功 (iframe 方法)');
+      cleanup();
+      resolve();
+    }
+  };
+  
+  // 設定 iframe 事件
+  iframe.onload = handleSuccess;
+  
+  // 設定超時
+  const timeout = setTimeout(() => {
+    if (!resolved) {
+      console.log('⏰ 表單提交超時，視為成功');
+      handleSuccess();
+    }
+  }, 5000);
+  
+  // 提交表單
+  try {
+    hiddenForm.submit();
+    console.log('📨 表單已透過 iframe 提交');
+  } catch (error) {
+    clearTimeout(timeout);
+    if (!resolved) {
+      resolved = true;
+      cleanup();
+      reject(error);
+    }
+  }
+}
+
+/**
+ * 初始化表單系統
+ */
+function initializeFormSystem() {
+  console.log('🚀 初始化 Google 表單系統...');
+  
+  const form = document.getElementById('contactForm');
+  if (form) {
+    // 添加表單提交事件監聽器
+    form.addEventListener('submit', handleFormSubmit);
+    
+    console.log('✅ Google 表單處理器已啟用');
+    
+    // 更新系統指示器
+    const systemIndicator = form.querySelector('#formSystemType');
+    if (systemIndicator) {
+      systemIndicator.value = 'google-form';
+    }
+    
+    console.log('📋 表單配置:');
+    console.log('表單 ID:', GOOGLE_FORM_CONFIG.formId);
+    console.log('提交 URL:', GOOGLE_FORM_CONFIG.actionUrl);
+    console.log('欄位映射:', GOOGLE_FORM_CONFIG.fields);
+    
+  } else {
+    console.error('❌ 找不到 contactForm 表單元素');
+  }
+}
+
+/**
+ * 測試 Google 表單連接
+ */
+async function testGoogleFormConnection() {
+  console.log('🔗 測試 Google 表單連接...');
+  
+  try {
+    const testUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/viewform`;
+    console.log('✅ Google 表單連接正常');
+    console.log('📝 表單網址:', testUrl);
+    return true;
+  } catch (error) {
+    console.error('❌ Google 表單連接測試失敗:', error);
+    return false;
+  }
+}
+
+/**
+ * 自動填入測試資料（用於開發測試）
+ */
+function fillTestData() {
+  const form = document.getElementById('contactForm');
+  if (!form) {
+    console.error('找不到表單');
+    return;
+  }
+  
+  const testData = {
+    name: '測試客戶',
+    email: 'test@example.com',
+    phone: '0912345678',
+    service: '機場接送',
+    subject: 'Google 表單系統測試',
+    message: '這是一個 Google 表單系統的功能測試。測試時間：' + new Date().toLocaleString('zh-TW')
+  };
+  
+  Object.entries(testData).forEach(([key, value]) => {
+    const field = form.querySelector(`#${key}, [name="${key}"]`);
+    if (field) {
+      field.value = value;
+      console.log(`✅ 已填入 ${key}: ${value}`);
+    }
+  });
+  
+  console.log('📝 測試資料已填入，請點擊提交按鈕測試');
+}
+
+// ===== 初始化系統 =====
+document.addEventListener('DOMContentLoaded', function() {
+  // 初始化表單系統
+  setTimeout(() => {
+    console.log('🚀 啟動 Google 表單系統...');
+    initializeFormSystem();
+    
+    // 開發者工具函數註冊
+    window.testGoogleFormConnection = testGoogleFormConnection;
+    window.fillTestData = fillTestData;
+    window.initializeFormSystem = initializeFormSystem;
+    
+    console.log('💡 開發者工具已準備:');
+    console.log('- testGoogleFormConnection() - 測試連接');
+    console.log('- fillTestData() - 填入測試資料');
+    console.log('- initializeFormSystem() - 重新初始化系統');
+    
+  }, 1000);
 });

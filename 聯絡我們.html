@@ -127,12 +127,10 @@
                     </div>
                 </div>
                 <div class="contact-form-container">
-                    <form id="contactForm" class="contact-form" method="POST">
-                        <input type="hidden" name="_next" value="./thank-you.html">
-                        <input type="hidden" name="_subject" value="利盟租車 - 新客戶諮詢">
-                        <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off">
-                        
-                        <!-- Formspree 防垃圾郵件欄位 -->
+                    <form id="contactForm" class="contact-form">
+                        <!-- Google 表單系統 - 由 JavaScript 處理提交 -->
+                        <input type="hidden" id="formSystemType" value="google-form">
+                        <input type="hidden" id="formVersion" value="2.0">
                         
                         <div class="form-group">
                             <label for="name">您的姓名</label>
@@ -258,16 +256,36 @@
     <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> 一鍵快速預約</a>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2.1"></script>
   
   <script>
-  // 表單開始時間記錄（用於 Bot 檢測）
+  // 清除可能的舊事件監聽器
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 初始化聯絡表單系統 v2.1');
+    
     sessionStorage.setItem('formStartTime', Date.now().toString());
     
     const form = document.getElementById('contactForm');
     if (form) {
-      form.addEventListener('submit', handleFormSubmit);
+      // 移除所有可能的舊事件監聽器
+      const newForm = form.cloneNode(true);
+      form.parentNode.replaceChild(newForm, form);
+      
+      // 重新獲取新表單並添加事件監聽器
+      const cleanForm = document.getElementById('contactForm');
+      if (cleanForm && typeof handleFormSubmit === 'function') {
+        // 添加更強的事件處理以確保阻止默認提交
+        cleanForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('🛡️ 表單提交被攔截，使用 Google 表單系統');
+          return handleFormSubmit(e);
+        }, true);
+        console.log('✅ Google 表單處理器已綁定 (強化版)');
+      } else {
+        console.error('❌ handleFormSubmit 函數未找到');
+      }
     }
   });
   </script>
