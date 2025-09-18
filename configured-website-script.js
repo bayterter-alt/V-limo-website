@@ -2,14 +2,14 @@
 
 const GOOGLE_FORM_CONFIG = {
   // 您的實際 Google 表單設定
-  formId: '1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A',
+  formId: '1FAIpQLSenj6mYT12Imp6jzQtmAC451BQy9vpDIb23LudUXTacKKJClg',
   sheetId: '1AySXECv5cjF79YmeXY7uFwrM69-JQFG1B4MP6KD6hUU',
   
   // Google 表單提交 URL（已根據您的表單 ID 生成）
-  actionUrl: 'https://docs.google.com/forms/d/e/1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A/formResponse',
+  actionUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSenj6mYT12Imp6jzQtmAC451BQy9vpDIb23LudUXTacKKJClg/formResponse',
   
   // 表單檢視 URL（用於測試）
-  viewUrl: 'https://docs.google.com/forms/d/e/1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A/viewform',
+  viewUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSenj6mYT12Imp6jzQtmAC451BQy9vpDIb23LudUXTacKKJClg/viewform',
   
   // 表單欄位對應 - 這些 entry ID 需要從您的實際表單中取得
   // ⚠️ 重要：請按照下面的指南取得實際的 entry ID
