@@ -266,7 +266,7 @@ async function handleFormSubmit(event) {
   // 添加額外資訊
   formData.append('_replyto', formData.get('email'));
   formData.append('提交時間', new Date().toLocaleString('zh-TW'));
-  formData.append('來源頁面', window.location.href);
+  formData.append('來源頁面', 'https://www.v-limo.com.tw/');
   
   try {
     showLoadingState(form);
@@ -408,7 +408,7 @@ function logFormSubmission(formData) {
     email: formData.get('email'),
     phone: formData.get('phone') || '',
     subject: formData.get('subject') || '',
-    source: window.location.href
+    source: 'https://www.v-limo.com.tw/'
   };
   
   const submissions = JSON.parse(localStorage.getItem('formSubmissions') || '[]');
