@@ -132,6 +132,9 @@
                         <input type="hidden" id="formSystemType" value="google-form">
                         <input type="hidden" id="formVersion" value="2.0">
                         
+                        <!-- 蜜罐欄位 - 機器人檢測 -->
+                        <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        
                         <div class="form-group">
                             <label for="name">您的姓名</label>
                             <input type="text" id="name" name="name" required>
@@ -257,6 +260,7 @@
   </div>
 
   <script src="script.js?v=2.1"></script>
+  <script src="enhanced-spam-protection.js"></script>
   
   <script>
   // 清除可能的舊事件監聽器

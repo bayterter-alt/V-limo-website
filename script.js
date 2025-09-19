@@ -276,6 +276,13 @@ async function handleFormSubmit(event) {
     return;
   }
   
+  // 垃圾訊息檢測
+  if (typeof window.spamProtection !== 'undefined') {
+    if (!window.spamProtection.enhancedValidateFormData(formData)) {
+      return; // 被垃圾訊息過濾器阻擋
+    }
+  }
+  
   try {
     showLoadingState(form);
     
