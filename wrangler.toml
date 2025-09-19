@@ -1,6 +1,0 @@
-name = "v-limo-website"
-compatibility_date = "2025-09-17"
-pages_build_output_dir = "."
-
-[site]
-bucket = "."
