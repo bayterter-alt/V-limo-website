@@ -241,9 +241,9 @@ const GOOGLE_FORM_CONFIG = {
     name: 'entry.1623417871',
     email: 'entry.1144033944',
     phone: 'entry.1623219296',
-    service: 'entry.716883917',
-    subject: 'entry.1025881327',
-    message: 'entry.153606403'
+    service: 'entry.153606403',
+    subject: 'entry.716883917',
+    message: 'entry.1025881327'
   }
 };
 
