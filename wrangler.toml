@@ -1,6 +1,6 @@
 name = "v-limo-website"
-main = "index.js"
 compatibility_date = "2025-09-17"
+pages_build_output_dir = "."
 
 [site]
 bucket = "."
