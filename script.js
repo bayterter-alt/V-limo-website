@@ -256,8 +256,14 @@ async function handleFormSubmit(event) {
   const form = event.target;
   const formData = new FormData(form);
   
-  console.log('🚀 Google 表單提交開始 - 版本 2.1');
+  console.log('🚀 Google 表單提交開始 - 版本 2.2 (診斷模式)');
   console.log('📋 表單配置:', GOOGLE_FORM_CONFIG);
+  
+  // 診斷：記錄原始表單資料
+  console.log('📝 原始表單資料:');
+  for (const [key, value] of formData.entries()) {
+    console.log(`  ${key}: ${value}`);
+  }
   
   // 安全檢查
   if (!validateFormSecurity(formData)) {

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Forms Entry ID 檢查器</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-container { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .result { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .error { background: #ffe8e8; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; }
+        button { background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1557b0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Google Forms Entry ID 檢查器</h1>
+    
+    <div class="form-container">
+        <h2>步驟 1：檢查當前表單</h2>
+        <p>點擊按鈕來檢查表單 ID: <code>1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A</code></p>
+        <button onclick="checkFormStructure()">檢查表單結構</button>
+        <div id="formCheck"></div>
+    </div>
+
+    <div class="form-container">
+        <h2>步驟 2：測試當前 Entry IDs</h2>
+        <p>使用當前配置的 Entry IDs 進行測試提交：</p>
+        <ul>
+            <li>name: <code>entry.1623417871</code></li>
+            <li>email: <code>entry.1144033944</code></li>
+            <li>phone: <code>entry.1623219296</code></li>
+            <li>service: <code>entry.153606403</code></li>
+            <li>subject: <code>entry.716883917</code></li>
+            <li>message: <code>entry.1025881327</code></li>
+        </ul>
+        
+        <form id="testForm">
+            <div style="margin: 10px 0;">
+                <label>姓名: <input type="text" name="name" value="測試用戶" required></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>電子郵件: <input type="email" name="email" value="test@example.com" required></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>聯絡電話: <input type="tel" name="phone" value="0912345678"></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>服務類型: 
+                    <select name="service" required>
+                        <option value="其他諮詢">其他諮詢</option>
+                        <option value="機場接送">機場接送</option>
+                        <option value="旅遊包車">旅遊包車</option>
+                        <option value="露營車出租">露營車出租</option>
+                        <option value="貨車出租">貨車出租</option>
+                    </select>
+                </label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>主旨: <input type="text" name="subject" value="Entry ID 測試"></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>訊息: <textarea name="message" rows="3">這是一個 Entry ID 正確性測試</textarea></label>
+            </div>
+            <button type="submit">測試提交</button>
+        </form>
+        <div id="testResult"></div>
+    </div>
+
+    <div class="form-container">
+        <h2>步驟 3：診斷資訊</h2>
+        <div id="diagnostics"></div>
+    </div>
+
+    <script>
+        const GOOGLE_FORM_CONFIG = {
+            formId: '1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A',
+            actionUrl: 'https://docs.google.com/forms/d/e/1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A/formResponse',
+            fields: {
+                name: 'entry.1623417871',
+                email: 'entry.1144033944',
+                phone: 'entry.1623219296',
+                service: 'entry.153606403',
+                subject: 'entry.716883917',
+                message: 'entry.1025881327'
+            }
+        };
+
+        function checkFormStructure() {
+            const checkDiv = document.getElementById('formCheck');
+            checkDiv.innerHTML = '<p>🔍 檢查中...</p>';
+            
+            const formUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/viewform`;
+            
+            checkDiv.innerHTML = `
+                <div class="result">
+                    <h3>✅ 表單資訊</h3>
+                    <p><strong>表單 ID:</strong> <code>${GOOGLE_FORM_CONFIG.formId}</code></p>
+                    <p><strong>預覽網址:</strong> <a href="${formUrl}" target="_blank">${formUrl}</a></p>
+                    <p><strong>提交網址:</strong> <code>${GOOGLE_FORM_CONFIG.actionUrl}</code></p>
+                    
+                    <h4>📋 檢查步驟:</h4>
+                    <ol>
+                        <li>點擊上方預覽網址開啟表單</li>
+                        <li>按 F12 開啟開發者工具</li>
+                        <li>檢查每個輸入欄位的 <code>name</code> 屬性</li>
+                        <li>確認是否與下方配置相符</li>
+                    </ol>
+                    
+                    <h4>🔧 當前配置:</h4>
+                    <pre>${JSON.stringify(GOOGLE_FORM_CONFIG.fields, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        function createGoogleFormData(originalFormData) {
+            const googleFormData = new FormData();
+            
+            for (const [originalField, googleField] of Object.entries(GOOGLE_FORM_CONFIG.fields)) {
+                const value = originalFormData.get(originalField);
+                if (value && value.trim()) {
+                    googleFormData.append(googleField, value.trim());
+                    console.log(`✅ 映射: ${originalField} -> ${googleField} = ${value.trim()}`);
+                }
+            }
+            
+            googleFormData.append('submit', 'Submit');
+            googleFormData.append('usp', 'pp_url');
+            
+            return googleFormData;
+        }
+
+        async function submitToGoogleForm(formData) {
+            const submitData = new URLSearchParams();
+            
+            for (const [key, value] of formData.entries()) {
+                submitData.append(key, value);
+                console.log(`📝 提交欄位: ${key} = ${value}`);
+            }
+            
+            try {
+                const response = await fetch(GOOGLE_FORM_CONFIG.actionUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: submitData
+                });
+                
+                console.log('✅ 表單提交完成 (no-cors 模式)');
+                return true;
+            } catch (error) {
+                console.error('❌ 提交失敗:', error);
+                throw error;
+            }
+        }
+
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('testResult');
+            resultDiv.innerHTML = '<p>📤 提交中...</p>';
+            
+            try {
+                const formData = new FormData(this);
+                
+                console.log('🚀 開始測試提交...');
+                console.log('📝 原始表單資料:');
+                for (const [key, value] of formData.entries()) {
+                    console.log(`  ${key}: ${value}`);
+                }
+                
+                const googleFormData = createGoogleFormData(formData);
+                
+                console.log('📤 Google 表單資料:');
+                for (const [key, value] of googleFormData.entries()) {
+                    console.log(`  ${key}: ${value}`);
+                }
+                
+                await submitToGoogleForm(googleFormData);
+                
+                resultDiv.innerHTML = `
+                    <div class="result">
+                        <h3>✅ 測試提交完成</h3>
+                        <p>請檢查以下位置：</p>
+                        <ol>
+                            <li><strong>Google Sheets:</strong> 確認是否有新的資料行</li>
+                            <li><strong>Apps Script 日誌:</strong> 檢查是否有觸發器執行記錄</li>
+                            <li><strong>電子郵件:</strong> 檢查 rayterter@hotmail.com 是否收到郵件</li>
+                        </ol>
+                        <p><strong>時間戳記:</strong> ${new Date().toLocaleString('zh-TW')}</p>
+                    </div>
+                `;
+                
+                updateDiagnostics();
+                
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ 測試提交失敗</h3>
+                        <p><strong>錯誤:</strong> ${error.message}</p>
+                        <p>請檢查 Entry IDs 是否正確，或表單是否可正常存取。</p>
+                    </div>
+                `;
+            }
+        });
+
+        function updateDiagnostics() {
+            const diagnosticsDiv = document.getElementById('diagnostics');
+            diagnosticsDiv.innerHTML = `
+                <div class="result">
+                    <h3>🔍 診斷檢查清單</h3>
+                    <h4>1. Google Forms 檢查</h4>
+                    <ul>
+                        <li>✅ 表單 ID: ${GOOGLE_FORM_CONFIG.formId}</li>
+                        <li>❓ Entry IDs 是否正確（需手動驗證）</li>
+                        <li>❓ 表單是否連接到 Google Sheets</li>
+                    </ul>
+                    
+                    <h4>2. Apps Script 檢查</h4>
+                    <ul>
+                        <li>❓ 觸發器是否設置為「表單提交時」</li>
+                        <li>❓ 觸發器事件來源是否為正確的試算表</li>
+                        <li>❓ Apps Script 權限是否已授權</li>
+                    </ul>
+                    
+                    <h4>3. 郵件系統檢查</h4>
+                    <ul>
+                        <li>✅ 測試函數可以發送郵件</li>
+                        <li>❓ 實際表單提交是否觸發郵件</li>
+                        <li>❓ 收件人信箱是否正確</li>
+                    </ul>
+                    
+                    <h4>📊 檢查建議</h4>
+                    <ol>
+                        <li>在 Google Sheets 中檢查「表單回應」分頁是否有新資料</li>
+                        <li>在 Apps Script 中查看「執行」記錄是否有觸發</li>
+                        <li>檢查 Apps Script 的「觸發器」設置</li>
+                        <li>確認網站表單和 Apps Script 使用相同的 Google 帳號</li>
+                    </ol>
+                </div>
+            `;
+        }
+
+        // 頁面載入時更新診斷資訊
+        updateDiagnostics();
+    </script>
+</body>
+</html>
