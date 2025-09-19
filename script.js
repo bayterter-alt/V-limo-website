@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== Google 表單處理系統 =====
 const GOOGLE_FORM_CONFIG = {
   formId: '1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A',
-  sheetId: '1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A',
+  sheetId: '1AySXECv5cjF79YmeXY7uFwrM69-JQFG1B4MP6KD6hUU',
   actionUrl: 'https://docs.google.com/forms/d/e/1EcP0lRyBuZP8LUPHdlgrZYzBoHANATrVwgK7QEpou0A/formResponse',
   fields: {
     name: 'entry.1623417871',
