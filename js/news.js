@@ -215,7 +215,9 @@ class NewsManager {
       <div class="news-modal-content">
         <div class="news-modal-header">
           <h2>${news.title}</h2>
-          <button class="news-modal-close">&times;</button>
+          <button class="news-modal-close" aria-label="關閉消息視窗">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
         <div class="news-modal-body">
           <div class="news-modal-meta">
@@ -237,20 +239,108 @@ class NewsManager {
 
     document.body.appendChild(modal);
 
-    // 綁定關閉事件
+    // 獲取當前真實的滾動位置（在添加 modal 之後，修改 body 之前）
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // 保存原始樣式（只保存非空值）
+    const originalStyles = {
+      overflow: document.body.style.overflow || '',
+      position: document.body.style.position || '',
+      top: document.body.style.top || '',
+      left: document.body.style.left || '',
+      right: document.body.style.right || '',
+      width: document.body.style.width || ''
+    };
+    
+    // 阻止背景滾動（行動裝置優化）
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+
+    // 清理標記
+    let isClosing = false;
+    let escapeHandler = null;
+
+    // 關閉模態視窗的函數
+    const closeModal = () => {
+      // 防止重複關閉
+      if (isClosing) return;
+      isClosing = true;
+
+      // 移除 ESC 鍵監聽器
+      if (escapeHandler) {
+        document.removeEventListener('keydown', escapeHandler);
+        escapeHandler = null;
+      }
+
+      // 開始關閉動畫
+      modal.classList.add('closing');
+      
+      // 在彈窗淡出的同時立即恢復滾動
+      const html = document.documentElement;
+      const body = document.body;
+      
+      // 暫時禁用平滑滾動（關鍵！）
+      const originalScrollBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      
+      // 移除所有鎖定樣式
+      body.style.overflow = '';
+      body.style.position = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.width = '';
+      body.style.top = '';
+      
+      // 立即設置滾動位置（瞬間跳轉，無動畫）
+      html.scrollTop = scrollY;
+      body.scrollTop = scrollY;
+      
+      // 恢復平滑滾動設置
+      setTimeout(() => {
+        html.style.scrollBehavior = originalScrollBehavior;
+      }, 50);
+      
+      // 在動畫結束後移除 DOM（縮短到 200ms，與 CSS 一致）
+      setTimeout(() => {
+        if (document.body.contains(modal)) {
+          document.body.removeChild(modal);
+        }
+      }, 200);
+    };
+
+    // 綁定關閉按鈕事件
+    const closeBtn = modal.querySelector('.news-modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+      });
+    }
+
+    // 點擊背景關閉
     modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target.classList.contains('news-modal-close')) {
-        document.body.removeChild(modal);
+      if (e.target === modal) {
+        closeModal();
       }
     });
 
-    // 阻止背景滾動
-    document.body.style.overflow = 'hidden';
-    
-    // 關閉時恢復滾動
-    modal.addEventListener('remove', () => {
-      document.body.style.overflow = '';
-    });
+    // ESC 鍵關閉
+    escapeHandler = (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', escapeHandler);
+
+    // 添加開啟動畫
+    setTimeout(() => {
+      modal.classList.add('active');
+    }, 10);
   }
 
   formatDate(dateString) {
