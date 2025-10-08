@@ -61,10 +61,38 @@ a:hover { color: var(--primary-dark); }
 .header-cta { display: flex; align-items: center; gap: 15px; }
 
 /* 語言切換器 */
-.language-switcher { display: flex; gap: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 4px; }
-.lang-btn { background: transparent; border: none; color: var(--white); padding: 6px 12px; border-radius: 16px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; font-family: "Noto Sans TC", sans-serif; }
-.lang-btn:hover { background: rgba(255, 255, 255, 0.15); }
-.lang-btn.active { background: var(--accent); color: var(--dark); }
+/* Language Switcher */
+.language-switcher {
+  display: flex;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  font-family: "Noto Sans TC", sans-serif;
+  min-width: 40px;
+  text-align: center;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.lang-btn.active {
+  background: var(--accent);
+  color: var(--dark);
+}
 
 .mobile-nav-toggle { display: block; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--white); transition: transform 0.3s ease; }
 .mobile-nav-toggle:hover { transform: scale(1.1); }
@@ -808,7 +836,16 @@ a:hover { color: var(--primary-dark); }
   .header-cta .btn { display: none; }
   
   /* 手機版語言切換器調整 */
-  .language-switcher { order: -1; }
+  .language-switcher { 
+    order: -1;
+  }
+  
+  /* 確保手機版語言切換器也能正常顯示 */
+  .lang-btn {
+    min-width: 36px;
+    padding: 5px 10px;
+    font-size: 13px;
+  }
 }
 
 /* --- 最新消息樣式 --- */
