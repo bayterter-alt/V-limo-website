@@ -21,15 +21,19 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html">貨車出租</a></li>
-          <li><a href="露營車出租.html">露營車出租</a></li>
-          <li><a href="聯絡我們.html" class="active">聯絡我們</a></li>
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" class="active" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -49,11 +53,11 @@
         </button>
       </div>
       <ul class="mobile-nav-list">
-        <li><a href="index.html"><i class="fas fa-home"></i>首頁</a></li>
-        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i>線上訂車</a></li>
-        <li><a href="貨車出租.html"><i class="fas fa-truck"></i>貨車出租</a></li>
-        <li><a href="露營車出租.html"><i class="fas fa-campground"></i>露營車出租</a></li>
-        <li><a href="聯絡我們.html" class="active"><i class="fas fa-envelope"></i>聯絡我們</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i><span data-i18n="nav.home">首頁</span></a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i><span data-i18n="nav.booking">線上訂車</span></a></li>
+        <li><a href="貨車出租.html"><i class="fas fa-truck"></i><span data-i18n="nav.truck">貨車出租</span></a></li>
+        <li><a href="露營車出租.html"><i class="fas fa-campground"></i><span data-i18n="nav.rv">露營車出租</span></a></li>
+        <li><a href="聯絡我們.html" class="active"><i class="fas fa-envelope"></i><span data-i18n="nav.contact">聯絡我們</span></a></li>
       </ul>
       <div class="mobile-nav-footer">
         <div class="mobile-contact-info">
@@ -67,7 +71,7 @@
           </div>
         </div>
         <a href="聯絡我們.html" class="btn btn-primary mobile-cta-btn">
-          <i class="fas fa-calendar-check"></i> 立即預約
+          <i class="fas fa-calendar-check"></i> <span data-i18n="nav.book-now">立即預約</span>
         </a>
       </div>
     </nav>
@@ -76,8 +80,8 @@
   <main>
     <section class="page-hero">
         <div class="container">
-            <h1>與我們聯繫</h1>
-            <p>我們很樂意聽見您的聲音，歡迎透過以下方式與我們聯繫。</p>
+            <h1 data-i18n="contact.hero.title">與我們聯繫</h1>
+            <p data-i18n="contact.hero.subtitle">我們很樂意聽見您的聲音，歡迎透過以下方式與我們聯繫。</p>
         </div>
     </section>
 
@@ -86,31 +90,31 @@
             <div class="contact-info-grid">
                 <div class="contact-info-card">
                     <i class="fas fa-phone-alt"></i>
-                    <h3>客服專線</h3>
+                    <h3 data-i18n="contact.info.phone.title">客服專線</h3>
                     <p><a href="tel:+886425208777">+886-4-25208777</a></p>
-                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;">營業時間：09:00 - 18:00</p>
+                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;" data-i18n="contact.info.phone.hours">營業時間：09:00 - 18:00</p>
                 </div>
                 <div class="contact-info-card">
                     <i class="fas fa-envelope"></i>
-                    <h3>電子郵件</h3>
+                    <h3 data-i18n="contact.info.email.title">電子郵件</h3>
                     <p><a href="mailto:tcs-info@chuteng.com.tw">tcs-info@chuteng.com.tw</a></p>
                 </div>
                 <div class="contact-info-card">
                     <i class="fab fa-line"></i>
-                    <h3>LINE 官方帳號</h3>
+                    <h3 data-i18n="contact.info.line.title">LINE 官方帳號</h3>
                     <p><a href="https://line.me/R/ti/p/@limo86536170" target="_blank">@limo86536170</a></p>
-                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;">快速預約服務</p>
+                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;" data-i18n="contact.info.line.service">快速預約服務</p>
                 </div>
                 <div class="contact-info-card">
                     <i class="fas fa-map-marker-alt"></i>
-                    <h3>公司地址</h3>
-                    <p>台中市豐原區豐原大道七段66號</p>
+                    <h3 data-i18n="contact.info.address.title">公司地址</h3>
+                    <p data-i18n="contact.info.address.detail">台中市豐原區豐原大道七段66號</p>
                 </div>
                 <div class="contact-info-card">
                     <i class="fas fa-globe"></i>
-                    <h3>線上訂車系統</h3>
+                    <h3 data-i18n="contact.info.website.title">線上訂車系統</h3>
                     <p><a href="https://v-limo.app/" target="_blank">v-limo.app</a></p>
-                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;">24小時線上預約</p>
+                    <p style="font-size: 14px; color: #6B7280; margin-top: 8px;" data-i18n="contact.info.website.available">24小時線上預約</p>
                 </div>
             </div>
         </div>
@@ -120,8 +124,8 @@
         <div class="container">
             <div class="contact-form-layout">
                 <div>
-                    <h2>傳送訊息給我們</h2>
-                    <p>有任何問題或建議，請填寫右方表單，我們的客服團隊將會盡快回覆您。</p>
+                    <h2 data-i18n="contact.form.title">傳送訊息給我們</h2>
+                    <p data-i18n="contact.form.subtitle">有任何問題或建議，請填寫右方表單，我們的客服團隊將會盡快回覆您。</p>
                     <div class="contact-map" style="margin-top: 2rem;">
                         <iframe title="利盟租車 位置地圖" style="border:0; border-radius: 12px; width: 100%; height: 350px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=%E5%8F%B0%E4%B8%AD%E5%B8%82%E8%B1%90%E5%8E%9F%E5%8D%80%E8%B1%90%E5%8E%9F%E5%A4%A7%E9%81%93%E4%B8%83%E6%AE%B566%E8%99%9F&output=embed"></iframe>
                     </div>
@@ -136,37 +140,37 @@
                         <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
                         
                         <div class="form-group">
-                            <label for="name">您的姓名</label>
+                            <label for="name" data-i18n="contact.form.name">您的姓名</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">電子郵件</label>
+                            <label for="email" data-i18n="contact.form.email">電子郵件</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="phone">聯絡電話</label>
+                            <label for="phone" data-i18n="contact.form.phone">聯絡電話</label>
                             <input type="tel" id="phone" name="phone">
                         </div>
                         <div class="form-group">
-                            <label for="service">服務類型</label>
+                            <label for="service" data-i18n="contact.form.service">服務類型</label>
                             <select id="service" name="service">
-                                <option value="">請選擇服務類型</option>
-                                <option value="機場接送">機場接送</option>
-                                <option value="旅遊包車">旅遊包車</option>
-                                <option value="露營車出租">露營車出租</option>
-                                <option value="貨車出租">貨車出租</option>
-                                <option value="其他諮詢">其他諮詢</option>
+                                <option value="" data-i18n="contact.form.service.placeholder">請選擇服務類型</option>
+                                <option value="機場接送" data-i18n="contact.form.service.airport">機場接送</option>
+                                <option value="旅遊包車" data-i18n="contact.form.service.tour">旅遊包車</option>
+                                <option value="露營車出租" data-i18n="contact.form.service.rv">露營車出租</option>
+                                <option value="貨車出租" data-i18n="contact.form.service.truck">貨車出租</option>
+                                <option value="其他諮詢" data-i18n="contact.form.service.other">其他諮詢</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="subject">主旨</label>
+                            <label for="subject" data-i18n="contact.form.subject">主旨</label>
                             <input type="text" id="subject" name="subject" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">訊息內容</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="請詳細描述您的需求，包含日期、時間、地點等資訊"></textarea>
+                            <label for="message" data-i18n="contact.form.message">訊息內容</label>
+                            <textarea id="message" name="message" rows="5" required data-i18n-placeholder="contact.form.message.placeholder"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">確認送出</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="contact.form.submit">確認送出</button>
                     </form>
                 </div>
             </div>

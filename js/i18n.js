@@ -42,6 +42,7 @@ class I18nManager {
   }
 
   applyTranslations() {
+    // 處理普通文字翻譯
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(el => {
       const key = el.dataset.i18n;
@@ -53,6 +54,16 @@ class I18nManager {
         } else {
           el.textContent = translation;
         }
+      }
+    });
+
+    // 處理 placeholder 翻譯
+    const placeholderElements = document.querySelectorAll('[data-i18n-placeholder]');
+    placeholderElements.forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      const translation = this.getTranslation(key);
+      if (translation) {
+        el.placeholder = translation;
       }
     });
   }
@@ -400,6 +411,53 @@ class I18nManager {
             cta1: '查看車款與價目',
             cta2: '了解租賃規範'
           }
+        },
+
+        // 聯絡我們頁面
+        contact: {
+          hero: {
+            title: '與我們聯繫',
+            subtitle: '我們很樂意聽見您的聲音，歡迎透過以下方式與我們聯繫。'
+          },
+          info: {
+            phone: {
+              title: '客服專線',
+              hours: '營業時間：09:00 - 18:00'
+            },
+            email: {
+              title: '電子郵件'
+            },
+            line: {
+              title: 'LINE 官方帳號',
+              service: '快速預約服務'
+            },
+            address: {
+              title: '公司地址',
+              detail: '台中市豐原區豐原大道七段66號'
+            },
+            website: {
+              title: '線上訂車系統',
+              available: '24小時線上預約'
+            }
+          },
+          form: {
+            title: '傳送訊息給我們',
+            subtitle: '有任何問題或建議，請填寫右方表單，我們的客服團隊將會盡快回覆您。',
+            name: '您的姓名',
+            email: '電子郵件',
+            phone: '聯絡電話',
+            service: '服務類型',
+            'service.placeholder': '請選擇服務類型',
+            'service.airport': '機場接送',
+            'service.tour': '旅遊包車',
+            'service.rv': '露營車出租',
+            'service.truck': '貨車出租',
+            'service.other': '其他諮詢',
+            subject: '主旨',
+            message: '訊息內容',
+            'message.placeholder': '請詳細描述您的需求，包含日期、時間、地點等資訊',
+            submit: '確認送出'
+          }
         }
       },
 
@@ -700,6 +758,53 @@ class I18nManager {
             subtitle: 'Whether for bulk cargo transport, deliveries, temporary transfers, or short-term projects, we are ready to serve you. With various vans, cargo trucks, and 3.5T large trucks, flexible rental periods provide the most efficient solution for you.',
             cta1: 'View Vehicles & Pricing',
             cta2: 'Rental Terms'
+          }
+        },
+
+        // Contact Us Page
+        contact: {
+          hero: {
+            title: 'Contact Us',
+            subtitle: 'We\'d love to hear from you. Feel free to reach out through any of the following methods.'
+          },
+          info: {
+            phone: {
+              title: 'Customer Service',
+              hours: 'Business Hours: 09:00 - 18:00'
+            },
+            email: {
+              title: 'Email'
+            },
+            line: {
+              title: 'LINE Official Account',
+              service: 'Quick Booking Service'
+            },
+            address: {
+              title: 'Address',
+              detail: 'No. 66, Sec. 7, Fengyuan Ave., Fengyuan Dist., Taichung City'
+            },
+            website: {
+              title: 'Online Booking System',
+              available: '24/7 Online Reservations'
+            }
+          },
+          form: {
+            title: 'Send Us a Message',
+            subtitle: 'If you have any questions or suggestions, please fill out the form and our customer service team will respond as soon as possible.',
+            name: 'Your Name',
+            email: 'Email',
+            phone: 'Phone Number',
+            service: 'Service Type',
+            'service.placeholder': 'Please select service type',
+            'service.airport': 'Airport Transfer',
+            'service.tour': 'Charter Service',
+            'service.rv': 'RV Rental',
+            'service.truck': 'Truck Rental',
+            'service.other': 'Other Inquiry',
+            subject: 'Subject',
+            message: 'Message',
+            'message.placeholder': 'Please describe your needs in detail, including date, time, location, etc.',
+            submit: 'Submit'
           }
         }
       }
