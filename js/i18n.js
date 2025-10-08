@@ -321,6 +321,46 @@ class I18nManager {
         // 手機底部固定按鈕
         sticky: {
           book: '一鍵快速預約'
+        },
+
+        // 露營車頁面
+        rv: {
+          hero: {
+            title: '開啟您的<span style="color:var(--accent)">自由旅程</span> 🚐',
+            subtitle: '駕駛著家，探索台灣每個角落。專業配備的露營車，讓您的旅程充滿無限可能。家庭出遊、情侶旅行、朋友探險，都能找到最適合的選擇。',
+            cta1: '查看車款',
+            cta2: '租賃規範'
+          },
+          features: {
+            title: '為什麼選擇我們的露營車',
+            subtitle: '專業配備，貼心服務，讓您的旅程安心無憂',
+            feature1: {
+              title: '移動的家',
+              desc: '床鋪、空調、露營器具一應俱全，讓您在旅途中享受家的溫馨舒適。'
+            },
+            feature2: {
+              title: '自由行程',
+              desc: '不受飯店預訂限制，想去哪就去哪，隨心所欲規劃專屬旅程。'
+            },
+            feature3: {
+              title: '專業維護',
+              desc: '定期保養檢查，確保車況良好，讓您的旅程安全又安心。'
+            }
+          },
+          vehicles: {
+            title: '精選露營車款',
+            subtitle: '每台車都是您冒險旅程的完美夥伴'
+          }
+        },
+
+        // 貨車頁面
+        truck: {
+          hero: {
+            title: '專業貨車出租服務',
+            subtitle: '無論是大量物品搬運、趟送貨物、臨時調車或短期專案，我們都為您準備就緒。備有多款廂車、貨卡與3.5T大貨車，租期彈性，為您提供最高效的解決方案。',
+            cta1: '查看車款與價目',
+            cta2: '了解租賃規範'
+          }
         }
       },
 
@@ -543,6 +583,46 @@ class I18nManager {
         // Mobile Sticky Bar
         sticky: {
           book: 'Quick Booking'
+        },
+
+        // RV Rental Page
+        rv: {
+          hero: {
+            title: 'Start Your <span style="color:var(--accent)">Freedom Journey</span> 🚐',
+            subtitle: 'Drive your home and explore every corner of Taiwan. Professionally equipped RVs make your journey full of possibilities. Perfect for family trips, couple travels, and friend adventures.',
+            cta1: 'View Vehicles',
+            cta2: 'Rental Terms'
+          },
+          features: {
+            title: 'Why Choose Our RVs',
+            subtitle: 'Professional equipment and thoughtful service for a worry-free journey',
+            feature1: {
+              title: 'Mobile Home',
+              desc: 'Equipped with beds, air conditioning, and camping gear for a cozy journey.'
+            },
+            feature2: {
+              title: 'Freedom Journey',
+              desc: 'No hotel booking restrictions. Go wherever you want with your own itinerary.'
+            },
+            feature3: {
+              title: 'Professional Maintenance',
+              desc: 'Regular maintenance and inspections ensure vehicle safety for peace of mind.'
+            }
+          },
+          vehicles: {
+            title: 'Featured RV Fleet',
+            subtitle: 'Every vehicle is your perfect adventure partner'
+          }
+        },
+
+        // Truck Rental Page
+        truck: {
+          hero: {
+            title: 'Professional Truck Rental Service',
+            subtitle: 'Whether for bulk cargo transport, deliveries, temporary transfers, or short-term projects, we are ready to serve you. With various vans, cargo trucks, and 3.5T large trucks, flexible rental periods provide the most efficient solution for you.',
+            cta1: 'View Vehicles & Pricing',
+            cta2: 'Rental Terms'
+          }
         }
       }
     };

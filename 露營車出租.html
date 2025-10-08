@@ -21,15 +21,19 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html">貨車出租</a></li>
-          <li><a href="露營車出租.html" class="active">露營車出租</a></li>
-          <li><a href="聯絡我們.html">聯絡我們</a></li>
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" class="active" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -49,11 +53,11 @@
         </button>
       </div>
       <ul class="mobile-nav-list">
-        <li><a href="index.html"><i class="fas fa-home"></i>首頁</a></li>
-        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i>線上訂車</a></li>
-        <li><a href="貨車出租.html"><i class="fas fa-truck"></i>貨車出租</a></li>
-        <li><a href="露營車出租.html" class="active"><i class="fas fa-campground"></i>露營車出租</a></li>
-        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i>聯絡我們</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i><span data-i18n="nav.home">首頁</span></a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i><span data-i18n="nav.booking">線上訂車</span></a></li>
+        <li><a href="貨車出租.html"><i class="fas fa-truck"></i><span data-i18n="nav.truck">貨車出租</span></a></li>
+        <li><a href="露營車出租.html" class="active"><i class="fas fa-campground"></i><span data-i18n="nav.rv">露營車出租</span></a></li>
+        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i><span data-i18n="nav.contact">聯絡我們</span></a></li>
       </ul>
       <div class="mobile-nav-footer">
         <div class="mobile-contact-info">
@@ -67,7 +71,7 @@
           </div>
         </div>
         <a href="聯絡我們.html" class="btn btn-primary mobile-cta-btn">
-          <i class="fas fa-calendar-check"></i> 立即預約
+          <i class="fas fa-calendar-check"></i> <span data-i18n="nav.book-now">立即預約</span>
         </a>
       </div>
     </nav>
@@ -76,11 +80,11 @@
   <main>
     <section class="hero hero-rv-rental">
       <div class="container">
-        <h1>開啟您的<span style="color:var(--accent)">自由旅程</span> 🚐</h1>
-        <p>駕駛著家，探索台灣每個角落。專業配備的露營車，讓您的旅程充滿無限可能。家庭出遊、情侶旅行、朋友探險，都能找到最適合的選擇。</p>
+        <h1 data-i18n="rv.hero.title">開啟您的<span style="color:var(--accent)">自由旅程</span> 🚐</h1>
+        <p data-i18n="rv.hero.subtitle">駕駛著家，探索台灣每個角落。專業配備的露營車，讓您的旅程充滿無限可能。家庭出遊、情侶旅行、朋友探險，都能找到最適合的選擇。</p>
         <div class="actions">
-          <a href="#vehicles" class="btn btn-primary">查看車款</a>
-          <a href="露營車出租規範.html" class="btn btn-secondary">租賃規範</a>
+          <a href="#vehicles" class="btn btn-primary" data-i18n="rv.hero.cta1">查看車款</a>
+          <a href="露營車出租規範.html" class="btn btn-secondary" data-i18n="rv.hero.cta2">租賃規範</a>
         </div>
       </div>
     </section>
@@ -89,29 +93,29 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Why Choose Us</div>
-          <h2>為什麼選擇我們的露營車</h2>
-          <p>專業配備，貼心服務，讓您的旅程安心無憂</p>
+          <h2 data-i18n="rv.features.title">為什麼選擇我們的露營車</h2>
+          <p data-i18n="rv.features.subtitle">專業配備，貼心服務，讓您的旅程安心無憂</p>
         </div>
         <div class="grid-cards">
           <div class="card">
             <div class="card-content" style="text-align:center;">
               <i class="fas fa-home" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
-              <h3 class="title">移動的家</h3>
-              <p>床鋪、空調、露營器具一應俱全，讓您在旅途中享受家的溫馨舒適。</p>
+              <h3 class="title" data-i18n="rv.features.feature1.title">移動的家</h3>
+              <p data-i18n="rv.features.feature1.desc">床鋪、空調、露營器具一應俱全，讓您在旅途中享受家的溫馨舒適。</p>
             </div>
           </div>
           <div class="card">
             <div class="card-content" style="text-align:center;">
               <i class="fas fa-route" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
-              <h3 class="title">自由行程</h3>
-              <p>不受飯店預訂限制，想去哪就去哪，隨心所欲規劃專屬旅程。</p>
+              <h3 class="title" data-i18n="rv.features.feature2.title">自由行程</h3>
+              <p data-i18n="rv.features.feature2.desc">不受飯店預訂限制，想去哪就去哪，隨心所欲規劃專屬旅程。</p>
             </div>
           </div>
           <div class="card">
             <div class="card-content" style="text-align:center;">
               <i class="fas fa-tools" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
-              <h3 class="title">專業維護</h3>
-              <p>定期保養檢查，確保車況良好，讓您的旅程安全又安心。</p>
+              <h3 class="title" data-i18n="rv.features.feature3.title">專業維護</h3>
+              <p data-i18n="rv.features.feature3.desc">定期保養檢查，確保車況良好，讓您的旅程安全又安心。</p>
             </div>
           </div>
         </div>
@@ -122,8 +126,8 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Our Fleet</div>
-          <h2>精選露營車款</h2>
-          <p>每台車都是您冒險旅程的完美夥伴</p>
+          <h2 data-i18n="rv.vehicles.title">精選露營車款</h2>
+          <p data-i18n="rv.vehicles.subtitle">每台車都是您冒險旅程的完美夥伴</p>
         </div>
 
         <!-- A180-快樂版 -->
@@ -537,9 +541,10 @@
   
   <!-- Mobile Sticky Bar -->
   <div class="sticky-bar">
-    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> 一鍵快速預約</a>
+    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> <span data-i18n="sticky.book">一鍵快速預約</span></a>
   </div>
 
   <script src="script.js"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>

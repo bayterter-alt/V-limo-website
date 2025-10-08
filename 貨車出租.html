@@ -21,15 +21,19 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html" class="active">貨車出租</a></li>
-          <li><a href="露營車出租.html">露營車出租</a></li>
-          <li><a href="聯絡我們.html">聯絡我們</a></li>
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" class="active" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -49,11 +53,11 @@
         </button>
       </div>
       <ul class="mobile-nav-list">
-        <li><a href="index.html"><i class="fas fa-home"></i>首頁</a></li>
-        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i>線上訂車</a></li>
-        <li><a href="貨車出租.html" class="active"><i class="fas fa-truck"></i>貨車出租</a></li>
-        <li><a href="露營車出租.html"><i class="fas fa-campground"></i>露營車出租</a></li>
-        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i>聯絡我們</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i><span data-i18n="nav.home">首頁</span></a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i><span data-i18n="nav.booking">線上訂車</span></a></li>
+        <li><a href="貨車出租.html" class="active"><i class="fas fa-truck"></i><span data-i18n="nav.truck">貨車出租</span></a></li>
+        <li><a href="露營車出租.html"><i class="fas fa-campground"></i><span data-i18n="nav.rv">露營車出租</span></a></li>
+        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i><span data-i18n="nav.contact">聯絡我們</span></a></li>
       </ul>
       <div class="mobile-nav-footer">
         <div class="mobile-contact-info">
@@ -78,14 +82,14 @@
       <div class="container">
         <div class="hero-layout">
             <div class="hero-text">
-                <h1 style="margin-bottom: 1rem;">專業貨車出租服務</h1>
-                <p style="font-size: 17px; line-height: 1.8;">
+                <h1 style="margin-bottom: 1rem;" data-i18n="truck.hero.title">專業貨車出租服務</h1>
+                <p style="font-size: 17px; line-height: 1.8;" data-i18n="truck.hero.subtitle">
                   無論是大量物品搬運、趟送貨物、臨時調車或短期專案，我們都為您準備就緒。
                   備有多款廂車、貨卡與3.5T大貨車，租期彈性，為您提供最高效的解決方案。
                 </p>
                 <div class="actions" style="margin-top: 2rem;">
-                  <a href="#pricing" class="btn btn-primary">查看車款與價目</a>
-                  <a href="貨車出租規範.html" class="btn btn-secondary">了解租賃規範</a>
+                  <a href="#pricing" class="btn btn-primary" data-i18n="truck.hero.cta1">查看車款與價目</a>
+                  <a href="貨車出租規範.html" class="btn btn-secondary" data-i18n="truck.hero.cta2">了解租賃規範</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -522,9 +526,10 @@
   
   <!-- Mobile Sticky Bar -->
   <div class="sticky-bar">
-    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> 一鍵快速預約</a>
+    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> <span data-i18n="sticky.book">一鍵快速預約</span></a>
   </div>
 
   <script src="script.js"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>
