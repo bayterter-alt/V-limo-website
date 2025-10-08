@@ -326,7 +326,8 @@ class I18nManager {
         // 露營車頁面
         rv: {
           hero: {
-            title: '開啟您的<span style="color:var(--accent)">自由旅程</span> 🚐',
+            title1: '開啟您的',
+            title2: '自由旅程',
             subtitle: '駕駛著家，探索台灣每個角落。專業配備的露營車，讓您的旅程充滿無限可能。家庭出遊、情侶旅行、朋友探險，都能找到最適合的選擇。',
             cta1: '查看車款',
             cta2: '租賃規範'
@@ -350,6 +351,44 @@ class I18nManager {
           vehicles: {
             title: '精選露營車款',
             subtitle: '每台車都是您冒險旅程的完美夥伴'
+          },
+          location: {
+            title: '租用據點',
+            taichung: '台中取車點：',
+            hsinchu: '新竹竹東取車點：',
+            search: 'Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點'
+          },
+          pricing: {
+            title: '租賃價格',
+            weekday: '平日租金',
+            weekend: '假日租金',
+            per24h: '/24H（兩天一夜）',
+            'weekday.note': '星期一至星期四',
+            'weekend.note': '星期五六日，政府公告之國定假日及連續假日',
+            overtime: '逾時還車計價：',
+            overdue: '逾期加收費用：',
+            'overdue.note': '逾時未滿1小時以1小時計價，逾時超過6小時以24小時計價',
+            insurance: '保險：',
+            'insurance.note': '需額外收費，本公司只提供強制險'
+          },
+          interior: {
+            title: '內裝配備展示'
+          },
+          equipment: {
+            title: '隨車配件',
+            basic: '基礎設備',
+            power: '電力系統',
+            kitchen: '廚房設備',
+            bathroom: '衛浴設備',
+            other: '其他配備'
+          },
+          specs: {
+            title: '車輛規格',
+            model: '車型：',
+            mileage: '里程：',
+            deposit: '押金：',
+            passengers: '乘客數：',
+            beds: '床位數：'
           }
         },
 
@@ -588,7 +627,8 @@ class I18nManager {
         // RV Rental Page
         rv: {
           hero: {
-            title: 'Start Your <span style="color:var(--accent)">Freedom Journey</span> 🚐',
+            title1: 'Start Your',
+            title2: 'Freedom Journey',
             subtitle: 'Drive your home and explore every corner of Taiwan. Professionally equipped RVs make your journey full of possibilities. Perfect for family trips, couple travels, and friend adventures.',
             cta1: 'View Vehicles',
             cta2: 'Rental Terms'
@@ -612,6 +652,44 @@ class I18nManager {
           vehicles: {
             title: 'Featured RV Fleet',
             subtitle: 'Every vehicle is your perfect adventure partner'
+          },
+          location: {
+            title: 'Pickup Locations',
+            taichung: 'Taichung Pickup:',
+            hsinchu: 'Hsinchu Zhudong Pickup:',
+            search: 'Google Maps Search: V-LIMO Car/Truck/Rutrip Rental Pickup Point'
+          },
+          pricing: {
+            title: 'Rental Pricing',
+            weekday: 'Weekday Rate',
+            weekend: 'Weekend Rate',
+            per24h: '/24H (2 Days 1 Night)',
+            'weekday.note': 'Monday to Thursday',
+            'weekend.note': 'Friday, Saturday, Sunday, and Public Holidays',
+            overtime: 'Late Return Fee:',
+            overdue: 'Overdue Fee:',
+            'overdue.note': 'Less than 1 hour charged as 1 hour, over 6 hours charged as 24 hours',
+            insurance: 'Insurance:',
+            'insurance.note': 'Additional charge required, we only provide compulsory insurance'
+          },
+          interior: {
+            title: 'Interior & Equipment'
+          },
+          equipment: {
+            title: 'Included Equipment',
+            basic: 'Basic Equipment',
+            power: 'Power System',
+            kitchen: 'Kitchen Equipment',
+            bathroom: 'Bathroom Facilities',
+            other: 'Other Equipment'
+          },
+          specs: {
+            title: 'Vehicle Specifications',
+            model: 'Model:',
+            mileage: 'Mileage:',
+            deposit: 'Deposit:',
+            passengers: 'Passengers:',
+            beds: 'Beds:'
           }
         },
 
