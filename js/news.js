@@ -259,6 +259,10 @@ class NewsManager {
     document.body.style.left = '0';
     document.body.style.right = '0';
     document.body.style.width = '100%';
+    
+    // 防止移動設備上的觸摸滾動
+    document.body.style.touchAction = 'none';
+    document.documentElement.style.touchAction = 'none';
 
     // 清理標記
     let isClosing = false;
@@ -279,32 +283,42 @@ class NewsManager {
       // 開始關閉動畫
       modal.classList.add('closing');
       
-      // 在彈窗淡出的同時立即恢復滾動
+      // 強化的滾動恢復機制（特別為移動設備優化）
       const html = document.documentElement;
       const body = document.body;
       
-      // 暫時禁用平滑滾動（關鍵！）
+      // 1. 暫時禁用平滑滾動
       const originalScrollBehavior = html.style.scrollBehavior;
       html.style.scrollBehavior = 'auto';
+      body.style.scrollBehavior = 'auto';
       
-      // 移除所有鎖定樣式
-      body.style.overflow = '';
-      body.style.position = '';
-      body.style.left = '';
-      body.style.right = '';
-      body.style.width = '';
-      body.style.top = '';
+      // 2. 完全移除所有鎖定樣式（使用 removeProperty 更徹底）
+      body.style.removeProperty('overflow');
+      body.style.removeProperty('position');
+      body.style.removeProperty('top');
+      body.style.removeProperty('left');
+      body.style.removeProperty('right');
+      body.style.removeProperty('width');
       
-      // 立即設置滾動位置（瞬間跳轉，無動畫）
+      // 3. 強制重新計算樣式（移動設備關鍵）
+      void body.offsetHeight;
+      
+      // 4. 多重方式恢復滾動位置
       html.scrollTop = scrollY;
       body.scrollTop = scrollY;
+      window.scrollTo(0, scrollY);
       
-      // 恢復平滑滾動設置
+      // 5. 確保觸摸事件正常（移動設備）
+      body.style.touchAction = '';
+      html.style.touchAction = '';
+      
+      // 6. 延遲恢復平滑滾動
       setTimeout(() => {
-        html.style.scrollBehavior = originalScrollBehavior;
-      }, 50);
+        html.style.scrollBehavior = originalScrollBehavior || '';
+        body.style.scrollBehavior = '';
+      }, 100);
       
-      // 在動畫結束後移除 DOM（縮短到 200ms，與 CSS 一致）
+      // 7. 移除 DOM
       setTimeout(() => {
         if (document.body.contains(modal)) {
           document.body.removeChild(modal);
