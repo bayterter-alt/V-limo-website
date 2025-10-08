@@ -1,33 +1,127 @@
 // js/i18n.js - 網站多語系管理系統
 class I18nManager {
-  constructor() {
-    this.currentLang = this.detectLanguage();
+  constructor(options = {}) {
+    // 選項：是否啟用 IP 地理位置偵測（預設關閉）
+    this.useIPDetection = options.useIPDetection || false;
+    
+    if (this.useIPDetection) {
+      this.initWithIPDetection();
+    } else {
+      this.currentLang = this.detectLanguage();
+      this.translations = this.getTranslations();
+      this.init();
+    }
+  }
+  
+  // IP 地理位置偵測初始化（可選功能）
+  async initWithIPDetection() {
+    this.currentLang = await this.detectLanguageWithIP();
     this.translations = this.getTranslations();
     this.init();
+  }
+  
+  // 使用 IP 地理位置 API 偵測語言
+  async detectLanguageWithIP() {
+    // 先檢查 URL 參數和 localStorage（優先級最高）
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+    if (langParam && this.isValidLang(langParam)) {
+      console.log('🌍 語言來源：URL 參數 -', langParam);
+      return langParam;
+    }
+    
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && this.isValidLang(savedLang)) {
+      console.log('🌍 語言來源：用戶偏好 -', savedLang);
+      return savedLang;
+    }
+    
+    // 使用 IP 偵測（免費 API）
+    try {
+      console.log('🌍 正在透過 IP 偵測地理位置...');
+      const response = await fetch('https://ipapi.co/json/', { timeout: 3000 });
+      const data = await response.json();
+      const countryCode = data.country_code; // 例如：TW, US, HK
+      
+      console.log('🌍 偵測到的國家/地區:', countryCode);
+      
+      // 根據國家代碼決定語言
+      const englishCountries = ['US', 'GB', 'CA', 'AU', 'NZ', 'IE', 'SG'];
+      if (englishCountries.includes(countryCode)) {
+        console.log('🌍 IP 偵測：切換到英文');
+        return 'en';
+      }
+      
+      // 繁體中文地區
+      const traditionalChineseRegions = ['TW', 'HK', 'MO'];
+      if (traditionalChineseRegions.includes(countryCode)) {
+        console.log('🌍 IP 偵測：切換到繁體中文');
+        return 'zh-TW';
+      }
+      
+      // 如果 IP 偵測失敗或不在上述地區，使用瀏覽器語言
+      console.log('🌍 IP 偵測結果不明確，使用瀏覽器語言設定');
+      return this.detectLanguageFromBrowser();
+      
+    } catch (error) {
+      console.warn('🌍 IP 偵測失敗，使用瀏覽器語言設定:', error);
+      return this.detectLanguageFromBrowser();
+    }
+  }
+  
+  // 從瀏覽器語言設定偵測
+  detectLanguageFromBrowser() {
+    const browserLang = navigator.language || navigator.userLanguage;
+    console.log('🌍 瀏覽器語言設定:', browserLang);
+    
+    if (browserLang.toLowerCase().startsWith('en')) {
+      return 'en';
+    }
+    
+    return 'zh-TW';
   }
 
   // 偵測用戶語言
   detectLanguage() {
-    // 1. 檢查 URL 參數
+    // 1. 檢查 URL 參數（最高優先級）
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang');
     if (langParam && this.isValidLang(langParam)) {
+      console.log('🌍 語言來源：URL 參數 -', langParam);
       return langParam;
     }
 
-    // 2. 檢查 localStorage
+    // 2. 檢查 localStorage（用戶之前的選擇）
     const savedLang = localStorage.getItem('lang');
     if (savedLang && this.isValidLang(savedLang)) {
+      console.log('🌍 語言來源：用戶偏好 -', savedLang);
       return savedLang;
     }
 
-    // 3. 檢查瀏覽器語言
+    // 3. 智能檢測瀏覽器語言（自動偵測）✨
     const browserLang = navigator.language || navigator.userLanguage;
-    if (browserLang.startsWith('en')) {
+    console.log('🌍 瀏覽器語言設定:', browserLang);
+    
+    // 檢測英文（en, en-US, en-GB, en-AU 等）
+    if (browserLang.toLowerCase().startsWith('en')) {
+      console.log('🌍 自動切換到：英文');
       return 'en';
     }
+    
+    // 檢測繁體中文（zh-TW, zh-HK 等）
+    if (browserLang === 'zh-TW' || browserLang === 'zh-HK' || browserLang === 'zh-Hant') {
+      console.log('🌍 自動切換到：繁體中文');
+      return 'zh-TW';
+    }
+    
+    // 其他中文變體也返回繁體中文
+    if (browserLang.toLowerCase().startsWith('zh')) {
+      console.log('🌍 自動切換到：繁體中文（預設）');
+      return 'zh-TW';
+    }
 
-    // 4. 默認中文
+    // 4. 默認繁體中文
+    console.log('🌍 使用預設語言：繁體中文');
     return 'zh-TW';
   }
 
@@ -814,5 +908,12 @@ class I18nManager {
 
 // 初始化多語系系統
 document.addEventListener('DOMContentLoaded', () => {
+  // ========================================
+  // 語言偵測設定
+  // ========================================
+  // 方案 1：使用瀏覽器語言偵測（推薦✨，預設）
   window.i18n = new I18nManager();
+  
+  // 方案 2：啟用 IP 地理位置偵測（需要取消註釋）
+  // window.i18n = new I18nManager({ useIPDetection: true });
 });
