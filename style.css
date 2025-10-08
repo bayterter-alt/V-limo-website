@@ -58,7 +58,14 @@ a:hover { color: var(--primary-dark); }
 .nav-list a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--accent); transition: width 0.3s ease; }
 .nav-list a:hover::after, .nav-list a.active::after { width: 100%; }
 .nav-list a:hover { color: var(--accent); }
-.header-cta { display: flex; align-items: center; gap: 20px; }
+.header-cta { display: flex; align-items: center; gap: 15px; }
+
+/* 語言切換器 */
+.language-switcher { display: flex; gap: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 4px; }
+.lang-btn { background: transparent; border: none; color: var(--white); padding: 6px 12px; border-radius: 16px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; font-family: "Noto Sans TC", sans-serif; }
+.lang-btn:hover { background: rgba(255, 255, 255, 0.15); }
+.lang-btn.active { background: var(--accent); color: var(--dark); }
+
 .mobile-nav-toggle { display: block; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--white); transition: transform 0.3s ease; }
 .mobile-nav-toggle:hover { transform: scale(1.1); }
 
@@ -799,6 +806,9 @@ a:hover { color: var(--primary-dark); }
   }
   .filter-chips { justify-content: center; }
   .header-cta .btn { display: none; }
+  
+  /* 手機版語言切換器調整 */
+  .language-switcher { order: -1; }
 }
 
 /* --- 最新消息樣式 --- */

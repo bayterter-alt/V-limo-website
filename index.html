@@ -45,15 +45,20 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html" class="active">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html">貨車出租</a></li>
-          <li><a href="露營車出租.html">露營車出租</a></li>
-          <li><a href="聯絡我們.html">聯絡我們</a></li>
+          <li><a href="index.html" class="active" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <!-- 語言切換器 -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -103,11 +108,11 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <div class="hero-content">
-          <h1 id="hero-title" class="hero-title">專業、可靠的租賃服務</h1>
-          <p class="hero-subtitle">機場接送、旅遊包車、露營車與貨車出租，一次滿足您的所有用車需求。</p>
+          <h1 id="hero-title" class="hero-title" data-i18n="hero.title">專業、可靠的租賃服務</h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">機場接送、旅遊包車、露營車與貨車出租，一次滿足您的所有用車需求。</p>
           <div class="hero-cta">
-            <a href="https://v-limo.app/" class="btn btn-primary btn-lg">線上快速預約</a>
-            <a href="#services" class="btn btn-ghost btn-lg">查看服務項目</a>
+            <a href="https://v-limo.app/" class="btn btn-primary btn-lg" data-i18n="hero.cta.booking">線上快速預約</a>
+            <a href="#services" class="btn btn-ghost btn-lg" data-i18n="hero.cta.services">查看服務項目</a>
           </div>
         </div>
       </div>
@@ -512,5 +517,6 @@
 
   <script src="script.js"></script>
   <script src="js/news.js"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>
