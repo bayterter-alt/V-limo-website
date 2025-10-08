@@ -1,0 +1,9 @@
+name = "limo-website"
+compatibility_date = "2025-10-08"
+
+[site]
+bucket = "."
+
+# 靜態資產配置
+# 將整個目錄作為靜態資產部署
+
