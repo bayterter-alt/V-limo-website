@@ -300,6 +300,21 @@
           } else {
             console.error('❌ 找不到服務類型選單');
           }
+          
+          // 自動填入主旨
+          const subjectInput = document.getElementById('subject');
+          if (subjectInput) {
+            subjectInput.value = '機場接送預約';
+            console.log('✅ 已自動填入主旨：機場接送預約');
+            
+            // 添加視覺提示
+            subjectInput.style.border = '2px solid #10B981';
+            subjectInput.style.backgroundColor = '#ECFDF5';
+            setTimeout(() => {
+              subjectInput.style.border = '';
+              subjectInput.style.backgroundColor = '';
+            }, 2000);
+          }
         }
         
         // 自動填入航班資訊到訊息內容
