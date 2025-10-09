@@ -503,35 +503,90 @@
   </section>
 
   <!-- Footer -->
-  <footer class="main-footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <img src="img/logo.png" alt="利盟租車 Logo" class="footer-logo" />
-        <p class="footer-tagline" data-i18n="footer.company">利盟小客車租賃有限公司</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-column">
-          <h4 data-i18n="footer.explore.title">探索</h4>
-          <ul>
-            <li><a href="https://v-limo.app/" data-i18n="footer.explore.booking">線上訂車</a></li>
-            <li><a href="交通接送車型介紹.html" data-i18n="footer.explore.vehicles">交通接送車型介紹</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4 data-i18n="footer.support.title">支援</h4>
-          <ul>
-            <li><a href="flight-search.html" class="active" data-i18n="footer.support.flight">航班查詢</a></li>
-            <li><a href="聯絡我們.html" data-i18n="footer.support.contact">聯絡我們</a></li>
-            <li><a href="隱私權政策.html" data-i18n="footer.support.privacy">隱私權政策</a></li>
-            <li><a href="服務條款.html" data-i18n="footer.support.terms">服務條款</a></li>
-          </ul>
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-content">
+          <!-- 聯絡資訊 -->
+          <section class="footer-contact">
+            <h3><i class="fas fa-phone" aria-hidden="true"></i> <span data-i18n="footer.contact.title">聯絡我們</span></h3>
+            <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: var(--primary);" data-i18n="footer.company">利盟小客車租賃有限公司</h4>
+            <p><span data-i18n="footer.contact.phone">電話</span>：<a href="tel:+886425208777">04-2520-8777</a></p>
+            <p><span data-i18n="footer.contact.fax">傳真</span>：04-2520-8207</p>
+            <p><span data-i18n="footer.contact.email">聯絡信箱</span>：<a href="mailto:tcs-info@chuteng.com.tw">tcs-info@chuteng.com.tw</a></p>
+            <p><i class="fas fa-clock" aria-hidden="true"></i> <span data-i18n="footer.contact.hours">營業時間</span>：09:00-18:00</p>
+            
+            <ul class="footer-social" aria-label="社群媒體">
+              <li><a href="https://www.facebook.com/profile.php?id=61552787290915" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+              <li><a href="https://www.instagram.com/r.u.trip/" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+            </ul>
+          </section>
+
+          <!-- 導覽 -->
+          <nav class="footer-nav" aria-label="頁尾導覽">
+            <div class="nav-col">
+              <h3 data-i18n="footer.explore.title">探索</h3>
+              <ul>
+                <li><a href="https://v-limo.app/" data-i18n="footer.explore.booking">線上訂車</a></li>
+                <li><a href="交通接送車型介紹.html" data-i18n="footer.explore.vehicles">交通接送車型介紹</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3 data-i18n="footer.support.title">支援</h3>
+              <ul>
+                <li><a href="flight-search.html" class="active" data-i18n="footer.support.flight">航班查詢</a></li>
+                <li><a href="聯絡我們.html" data-i18n="footer.support.contact">聯絡我們</a></li>
+                <li><a href="隱私權政策.html" data-i18n="footer.support.privacy">隱私權政策</a></li>
+                <li><a href="服務條款.html" data-i18n="footer.support.terms">服務條款</a></li>
+              </ul>
+            </div>
+            <div class="nav-col">
+              <h3 data-i18n="footer.quick.title">快速操作</h3>
+              <ul>
+                <li><a href="tel:+886425208777" data-i18n="footer.quick.call">立即來電預約</a></li>
+                <li><a href="聯絡我們.html#form" data-i18n="footer.quick.message">線上留言</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <!-- CTA 按鈕 -->
+          <section class="footer-cta">
+            <a class="btn btn-accent" href="tel:+886425208777" aria-label="撥打電話 04-2520-8777" data-i18n="footer.cta.call">立即來電</a>
+            <a class="btn btn-ghost" href="聯絡我們.html" data-i18n="footer.cta.contact">聯絡我們</a>
+          </section>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p data-i18n="footer.copyright">Copyright © 利盟小客車租賃有限公司</p>
+
+    <!-- 底部版權與輔助連結 -->
+    <div class="footer-meta">
+      <div class="container">
+        <div class="meta-inner">
+          <p class="copyright"><span data-i18n="footer.copyright">Copyright © 利盟小客車租賃有限公司</span></p>
+          <ul class="meta-links">
+            <li><a href="隱私權政策.html" data-i18n="footer.meta.privacy">隱私權政策</a></li>
+            <li><a href="服務條款.html" data-i18n="footer.meta.terms">服務條款</a></li>
+            <li><button class="back-to-top" type="button" aria-label="回到頂端" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><span data-i18n="footer.meta.top">回到頂端</span> ↑</button></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <a href="tel:+886425208777" class="floating-btn" aria-label="撥打電話">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <button class="floating-btn back-to-top" aria-label="回到頂端">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+  </div>
+  
+  <!-- Mobile Sticky Bar -->
+  <div class="sticky-bar">
+    <a href="聯絡我們.html" class="btn btn-primary w-100"><i class="fa-solid fa-bolt"></i> <span data-i18n="sticky.book">一鍵快速預約</span></a>
+  </div>
 
   <script src="script.js"></script>
   <script src="js/i18n.js"></script>
@@ -690,12 +745,48 @@
       let flightInfo = '';
       if (isTaiwanDeparture) {
         flightInfo = isEnglish 
-          ? `Flight Information:\\n✈️ Flight: ${currentFlightData.flightNumber}\\n🏢 Airline: ${currentFlightData.airline}\\n🛫 Departure: ${currentFlightData.departure.name}\\n📅 Departure Time: ${currentFlightData.departure.time}\\n🏢 Terminal: ${currentFlightData.departure.terminal}\\n🛬 Destination: ${currentFlightData.arrival.name}\\n\\n🚗 Service Type: Airport Drop-off`
-          : `航班資訊：\\n✈️ 航班號碼：${currentFlightData.flightNumber}\\n🏢 航空公司：${currentFlightData.airline}\\n🛫 起飛地點：${currentFlightData.departure.name}\\n📅 起飛時間：${currentFlightData.departure.time}\\n🏢 航廈資訊：${currentFlightData.departure.terminal}\\n🛬 目的地：${currentFlightData.arrival.name}\\n\\n🚗 服務類型：機場送機`;
+          ? `✈️ Flight Information
+━━━━━━━━━━━━━━━━━━━━
+Flight Number: ${currentFlightData.flightNumber}
+Airline: ${currentFlightData.airline}
+Departure: ${currentFlightData.departure.name}
+Departure Time: ${currentFlightData.departure.time}
+Terminal: ${currentFlightData.departure.terminal}
+Destination: ${currentFlightData.arrival.name}
+
+🚗 Service Type: Airport Drop-off`
+          : `✈️ 航班資訊
+━━━━━━━━━━━━━━━━━━━━
+航班號碼：${currentFlightData.flightNumber}
+航空公司：${currentFlightData.airline}
+起飛地點：${currentFlightData.departure.name}
+起飛時間：${currentFlightData.departure.time}
+航廈資訊：${currentFlightData.departure.terminal}
+目的地：${currentFlightData.arrival.name}
+
+🚗 服務類型：機場送機`;
       } else if (isTaiwanArrival) {
         flightInfo = isEnglish
-          ? `Flight Information:\\n✈️ Flight: ${currentFlightData.flightNumber}\\n🏢 Airline: ${currentFlightData.airline}\\n🛫 Departure: ${currentFlightData.departure.name}\\n🛬 Arrival: ${currentFlightData.arrival.name}\\n📅 Arrival Time: ${currentFlightData.arrival.time}\\n🏢 Terminal: ${currentFlightData.arrival.terminal}\\n\\n🚗 Service Type: Airport Pickup`
-          : `航班資訊：\\n✈️ 航班號碼：${currentFlightData.flightNumber}\\n🏢 航空公司：${currentFlightData.airline}\\n🛫 出發地：${currentFlightData.departure.name}\\n🛬 抵達地點：${currentFlightData.arrival.name}\\n📅 抵達時間：${currentFlightData.arrival.time}\\n🏢 航廈資訊：${currentFlightData.arrival.terminal}\\n\\n🚗 服務類型：機場接機`;
+          ? `✈️ Flight Information
+━━━━━━━━━━━━━━━━━━━━
+Flight Number: ${currentFlightData.flightNumber}
+Airline: ${currentFlightData.airline}
+Departure: ${currentFlightData.departure.name}
+Arrival: ${currentFlightData.arrival.name}
+Arrival Time: ${currentFlightData.arrival.time}
+Terminal: ${currentFlightData.arrival.terminal}
+
+🚗 Service Type: Airport Pickup`
+          : `✈️ 航班資訊
+━━━━━━━━━━━━━━━━━━━━
+航班號碼：${currentFlightData.flightNumber}
+航空公司：${currentFlightData.airline}
+出發地：${currentFlightData.departure.name}
+抵達地點：${currentFlightData.arrival.name}
+抵達時間：${currentFlightData.arrival.time}
+航廈資訊：${currentFlightData.arrival.terminal}
+
+🚗 服務類型：機場接機`;
       }
       
       // 使用 URL 參數傳遞資訊
