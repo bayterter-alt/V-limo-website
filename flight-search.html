@@ -913,8 +913,8 @@
         } else {
           // 提供更友好的錯誤訊息
           const errorMessage = isEnglish 
-            ? `❌ Flight ${flightNumber} not found\n\n📊 AviationStack API Status:\nFree plan only shows flights active TODAY.\nYour flight may not be flying today.\n\n💡 What you can do:\n\n1️⃣ Try these sample flights:\n• TW669 • TW668 • BR123 • CI001\n• BR189 • BR216 • CI835 • CI9205\n\n2️⃣ Use quick links below to search real-time flights\n\n3️⃣ Or manually enter flight info in contact form`
-            : `❌ 找不到航班 ${flightNumber}\n\n📊 AviationStack API 狀態：\n免費方案僅顯示今天正在飛行的航班。\n您查詢的航班可能今天沒有班次。\n\n💡 您可以：\n\n1️⃣ 嘗試這些示例航班：\n• TW669 • TW668 • BR123 • CI001\n• BR189 • BR216 • CI835 • CI9205\n\n2️⃣ 使用下方快速查詢連結查詢即時航班\n\n3️⃣ 或直接在聯絡表單中手動填寫航班資訊`;
+            ? `❌ Flight ${flightNumber} not found\n\n📊 TDX API Status:\nFlight data not available for this flight.\nThe flight may not be scheduled today or may not depart/arrive at Taiwan airports.\n\n💡 What you can do:\n\n1️⃣ Try these sample flights:\n• TW669 • TW668 • BR123 • CI001\n• BR189 • BR216 • CI835 • CI9205\n\n2️⃣ Use quick links below to search real-time flights\n\n3️⃣ Or manually enter flight info in contact form`
+            : `❌ 找不到航班 ${flightNumber}\n\n📊 TDX API 狀態：\n查無此航班資料。\n該航班可能今天沒有班次，或不是從台灣機場起降的航班。\n\n💡 您可以：\n\n1️⃣ 嘗試這些示例航班：\n• TW669 • TW668 • BR123 • CI001\n• BR189 • BR216 • CI835 • CI9205\n\n2️⃣ 使用下方快速查詢連結查詢即時航班\n\n3️⃣ 或直接在聯絡表單中手動填寫航班資訊`;
           
           alert(errorMessage);
         }
