@@ -86,26 +86,42 @@ function detectSpam(formData) {
   // 2. 模式檢測（只檢測訊息內容，排除正常欄位）
   const foundPatterns = [];
   
+  // 檢查是否為航班資訊（如果是，跳過大部分檢測）
+  const isFlightInfo = message.includes('航班號碼') || message.includes('Flight Number') || 
+                       message.includes('✈️ 航班資訊') || message.includes('✈️ Flight Information') ||
+                       message.includes('🚗 服務類型');
+  
   // 只檢測訊息內容中的可疑網址（排除 email 地址檢測，已在上面單獨處理）
-  const urlPattern = /\b(?:https?:\/\/|www\.)[^\s]+/gi;
-  const urlMatches = message.match(urlPattern);
-  if (urlMatches) {
-    foundPatterns.push('包含外部連結');
-    spamScore += SPAM_PROTECTION.weights.pattern;
+  if (!isFlightInfo) {
+    const urlPattern = /\b(?:https?:\/\/|www\.)[^\s]+/gi;
+    const urlMatches = message.match(urlPattern);
+    if (urlMatches) {
+      foundPatterns.push('包含外部連結');
+      spamScore += SPAM_PROTECTION.weights.pattern;
+    }
   }
   
-  // 檢測信用卡號
+  // 檢測信用卡號（航班資訊也要檢查）
   const creditCardPattern = /\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/g;
   if (message.match(creditCardPattern)) {
     foundPatterns.push('包含疑似信用卡號');
     spamScore += SPAM_PROTECTION.weights.pattern;
   }
   
-  // 檢測重複字符
-  const repeatPattern = /(.)\1{5,}/g;
-  if (message.match(repeatPattern)) {
-    foundPatterns.push('包含大量重複字符');
-    spamScore += SPAM_PROTECTION.weights.pattern;
+  // 檢測重複字符（排除航班資訊的分隔線）
+  if (!isFlightInfo) {
+    const repeatPattern = /(.)\1{5,}/g;
+    const repeatMatches = message.match(repeatPattern);
+    if (repeatMatches) {
+      // 排除常見的分隔線符號
+      const validRepeats = repeatMatches.filter(match => 
+        !match.match(/^[━─-=*#]{6,}$/)
+      );
+      if (validRepeats.length > 0) {
+        foundPatterns.push('包含大量重複字符');
+        spamScore += SPAM_PROTECTION.weights.pattern;
+      }
+    }
   }
   
   if (foundPatterns.length > 0) {
