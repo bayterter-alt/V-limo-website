@@ -8,21 +8,19 @@ const SPAM_PROTECTION = {
   // 可疑關鍵字列表
   suspiciousKeywords: [
     // 廣告相關
-    '推廣', '優惠', '免費', '贈送', '限時', '特價', '折扣', '促銷',
-    'SEO', '排名', '網站優化', '行銷', '廣告', '宣傳',
+    '推廣服務', '限時優惠', '特價促銷', '免費贈送',
+    'SEO優化', '網站排名', '行銷推廣',
     
     // 金融詐騙
-    '投資', '理財', '股票', '基金', '借款', '貸款', '信用卡',
-    '賺錢', '獲利', '報酬', '收益', '利息',
+    '投資理財', '快速借款', '信用貸款',
+    '保證賺錢', '高額獲利', '保證收益',
     
     // 常見垃圾內容
-    '點擊', '連結', 'http', 'www', '.com', '.tw',
-    '加我', '聯繫我', '私訊', 'LINE', 'WeChat',
+    '點擊連結', '加我LINE', '私訊聯繫',
     
-    // 英文垃圾關鍵字
-    'free', 'promotion', 'discount', 'offer', 'deal',
-    'investment', 'loan', 'money', 'profit', 'earn',
-    'click', 'link', 'website', 'marketing', 'seo'
+    // 英文垃圾關鍵字（組合詞，避免誤判）
+    'free money', 'quick loan', 'guaranteed profit',
+    'click here', 'visit website'
   ],
   
   // 可疑模式
@@ -47,11 +45,11 @@ const SPAM_PROTECTION = {
     timePattern: 3       // 異常時間模式 +3分
   },
   
-  // 風險等級
+  // 風險等級（調高門檻，避免誤判）
   riskLevels: {
-    low: 5,      // 0-5分：正常
-    medium: 10,  // 6-10分：可疑，需審核
-    high: 15     // 11+分：高風險，可能阻擋
+    low: 8,      // 0-8分：正常
+    medium: 15,  // 9-15分：可疑，需審核
+    high: 20     // 16+分：高風險，可能阻擋
   }
 };
 
@@ -85,32 +83,48 @@ function detectSpam(formData) {
     warnings.push(`可疑關鍵字: ${foundKeywords.join(', ')}`);
   }
   
-  // 2. 模式檢測
+  // 2. 模式檢測（只檢測訊息內容，排除正常欄位）
   const foundPatterns = [];
-  SPAM_PROTECTION.suspiciousPatterns.forEach((pattern, index) => {
-    const matches = allText.match(pattern);
-    if (matches) {
-      foundPatterns.push(`模式${index + 1}: ${matches[0]}`);
-      spamScore += SPAM_PROTECTION.weights.pattern;
-    }
-  });
   
-  if (foundPatterns.length > 0) {
-    warnings.push(`可疑模式: ${foundPatterns.join(', ')}`);
+  // 只檢測訊息內容中的可疑網址（排除 email 地址檢測，已在上面單獨處理）
+  const urlPattern = /\b(?:https?:\/\/|www\.)[^\s]+/gi;
+  const urlMatches = message.match(urlPattern);
+  if (urlMatches) {
+    foundPatterns.push('包含外部連結');
+    spamScore += SPAM_PROTECTION.weights.pattern;
   }
   
-  // 3. 內容長度檢測
-  if (message.length < 5 || message.length > 1500) {
+  // 檢測信用卡號
+  const creditCardPattern = /\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b/g;
+  if (message.match(creditCardPattern)) {
+    foundPatterns.push('包含疑似信用卡號');
+    spamScore += SPAM_PROTECTION.weights.pattern;
+  }
+  
+  // 檢測重複字符
+  const repeatPattern = /(.)\1{5,}/g;
+  if (message.match(repeatPattern)) {
+    foundPatterns.push('包含大量重複字符');
+    spamScore += SPAM_PROTECTION.weights.pattern;
+  }
+  
+  if (foundPatterns.length > 0) {
+    warnings.push(`可疑內容: ${foundPatterns.join(', ')}`);
+  }
+  
+  // 3. 內容長度檢測（放寬限制，因為航班資訊可能較長）
+  if (message.length < 3 || message.length > 3000) {
     spamScore += SPAM_PROTECTION.weights.length;
     warnings.push('訊息長度異常');
   }
   
-  // 4. Email 一致性檢測
+  // 4. Email 一致性檢測（只檢查訊息內容，不包含表單 email 欄位）
   const emailPattern = /[\w\.-]+@[\w\.-]+\.\w+/g;
-  const emailsInContent = allText.match(emailPattern) || [];
-  if (emailsInContent.length > 0 && !emailsInContent.includes(email.toLowerCase())) {
+  const emailsInMessage = message.match(emailPattern) || [];
+  const differentEmails = emailsInMessage.filter(e => e.toLowerCase() !== email.toLowerCase());
+  if (differentEmails.length > 0) {
     spamScore += SPAM_PROTECTION.weights.emailMismatch;
-    warnings.push('內容中包含不同的email地址');
+    warnings.push('訊息內容中包含不同的email地址');
   }
   
   // 5. 重複電話檢測
@@ -120,12 +134,15 @@ function detectSpam(formData) {
     warnings.push('重複的電話號碼');
   }
   
-  // 6. 時間模式檢測 (深夜或異常頻繁)
+  // 6. 時間模式檢測（移除深夜限制，因為機場接送服務可能24小時需求）
+  // 保留此段落供未來需要時使用
+  /*
   const hour = new Date().getHours();
-  if (hour < 6 || hour > 23) {
+  if (hour < 3 || hour > 23) {
     spamScore += SPAM_PROTECTION.weights.timePattern;
     warnings.push('異常提交時間');
   }
+  */
   
   // 記錄電話號碼
   if (phone) {
@@ -161,13 +178,13 @@ function enhancedValidateFormData(formData) {
   
   if (spamResult.riskLevel === 'high') {
     console.warn('🚫 高風險內容被阻擋:', spamResult.warnings);
-    alert('您的訊息包含可疑內容，請檢查後重新提交，或直接電話聯繫我們：04-2520-8777');
+    alert('抱歉，系統偵測到您的訊息可能包含不當內容。\n\n如有疑問，請直接來電洽詢：04-2520-8777');
     return false;
   }
   
   if (spamResult.riskLevel === 'medium') {
     console.warn('⚠️ 可疑內容，需要額外確認:', spamResult.warnings);
-    const userConfirm = confirm('您的訊息將需要額外審核，確定要提交嗎？\n\n如需立即回覆，請直接電話聯繫：04-2520-8777');
+    const userConfirm = confirm('為確保服務品質，您的訊息將經過人工審核。\n\n確定要提交嗎？\n\n如需立即協助，歡迎來電：04-2520-8777');
     if (!userConfirm) {
       return false;
     }
