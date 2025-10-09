@@ -823,8 +823,8 @@
     const WORKER_API_URL = 'https://flight-api.bayterter.workers.dev';
     
     // 是否使用真實 API（如果 WORKER_API_URL 已設置）
-    // ⚠️ 暫時設為 false，使用本地數據庫測試
-    const USE_REAL_API = false; // 部署 Worker 後改為：WORKER_API_URL !== ''
+    // ✅ Worker 已部署，啟用真實 API
+    const USE_REAL_API = true; // ✅ 真實 API 已啟用
     // ===========================
 
     async function searchFlight() {
