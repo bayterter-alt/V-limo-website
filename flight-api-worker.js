@@ -45,9 +45,8 @@ async function handleRequest(request) {
     });
   }
 
-  // ⚠️ 重要：將 YOUR_API_KEY 替換為您的 AviationStack API Key
-  // 建議使用 Cloudflare Workers 的環境變數來存儲
-  const AVIATIONSTACK_API_KEY = 'YOUR_API_KEY_HERE'; 
+  // ✅ 已配置 AviationStack API Key
+  const AVIATIONSTACK_API_KEY = '702550fe61e049b7843ec3ba143a820b'; 
 
   try {
     // 調用 AviationStack API

@@ -819,9 +819,8 @@
     let currentFlightData = null;
 
     // ========== 配置區 ==========
-    // TODO: 替換為您的 Cloudflare Worker URL（設置完成後）
-    // 格式：https://flight-api.YOUR-USERNAME.workers.dev
-    const WORKER_API_URL = ''; // 留空則使用示例數據模式
+    // ✅ 已啟用真實航班 API
+    const WORKER_API_URL = 'https://flight-api.bayterter.workers.dev';
     
     // 是否使用真實 API（如果 WORKER_API_URL 已設置）
     const USE_REAL_API = WORKER_API_URL !== '';
