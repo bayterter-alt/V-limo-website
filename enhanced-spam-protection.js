@@ -166,6 +166,7 @@ function detectSpam(formData) {
 
 /**
  * 增強的表單驗證（整合垃圾訊息檢測）
+ * 注意：檢測結果僅記錄在 Console，不會阻止用戶提交
  */
 function enhancedValidateFormData(formData) {
   // 執行原有驗證
@@ -173,23 +174,30 @@ function enhancedValidateFormData(formData) {
     return false;
   }
   
-  // 執行垃圾訊息檢測
+  // 執行垃圾訊息檢測（僅後台記錄，不影響用戶體驗）
   const spamResult = detectSpam(formData);
   
+  // 記錄到 Console 供管理員檢視，但不阻止提交
   if (spamResult.riskLevel === 'high') {
-    console.warn('🚫 高風險內容被阻擋:', spamResult.warnings);
-    alert('抱歉，系統偵測到您的訊息可能包含不當內容。\n\n如有疑問，請直接來電洽詢：04-2520-8777');
-    return false;
+    console.warn('🚫 高風險內容檢測:', {
+      score: spamResult.score,
+      warnings: spamResult.warnings,
+      note: '僅記錄，不阻止提交'
+    });
+  } else if (spamResult.riskLevel === 'medium') {
+    console.log('⚠️ 中風險內容檢測:', {
+      score: spamResult.score,
+      warnings: spamResult.warnings,
+      note: '僅記錄，不阻止提交'
+    });
+  } else {
+    console.log('✅ 垃圾訊息檢測通過:', {
+      score: spamResult.score,
+      riskLevel: spamResult.riskLevel
+    });
   }
   
-  if (spamResult.riskLevel === 'medium') {
-    console.warn('⚠️ 可疑內容，需要額外確認:', spamResult.warnings);
-    const userConfirm = confirm('為確保服務品質，您的訊息將經過人工審核。\n\n確定要提交嗎？\n\n如需立即協助，歡迎來電：04-2520-8777');
-    if (!userConfirm) {
-      return false;
-    }
-  }
-  
+  // 允許所有通過基本驗證的表單提交
   return true;
 }
 
