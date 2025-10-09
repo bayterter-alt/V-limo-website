@@ -492,14 +492,14 @@
         </div>
 
         <!-- API 模式指示器 -->
-        <div class="info-notice" style="background: #ECFDF5; border-color: #A7F3D0;">
-          <i class="fas fa-broadcast-tower" style="color: #10B981;"></i>
+        <div class="info-notice" style="background: #F3F4F6; border-color: #D1D5DB;">
+          <i class="fas fa-database" style="color: #6B7280;"></i>
           <div class="info-notice-text">
-            <strong style="color: #065F46;">🌐 即時 API 模式</strong>
-            <p style="color: #065F46; margin: 0.5rem 0 0 0; font-size: 0.8rem;">
-              ✅ 正在使用 AviationStack 真實航班 API<br>
-              ⚠️ 免費方案僅顯示今天正在飛行的航班<br>
-              💡 如果找不到航班，系統會自動使用本地數據庫
+            <strong style="color: #374151;">💾 本地數據庫模式</strong>
+            <p style="color: #4B5563; margin: 0.5rem 0 0 0; font-size: 0.8rem;">
+              ✅ 使用精選的常用航班示例數據<br>
+              📊 包含 11 個台灣往返常見航班<br>
+              💡 確保功能穩定可靠，不受 API 限制影響
             </p>
           </div>
         </div>
@@ -836,8 +836,8 @@
     const WORKER_API_URL = 'https://flight-api.bayterter.workers.dev';
     
     // 是否使用真實 API（如果 WORKER_API_URL 已設置）
-    // ✅ Worker 已部署，啟用真實 API
-    const USE_REAL_API = true; // ✅ 真實 API 已啟用
+    // ⚠️ 暫時使用本地數據庫，因為免費 API 限制嚴格
+    const USE_REAL_API = false; // 使用本地數據庫確保功能穩定
     // ===========================
 
     async function searchFlight() {
