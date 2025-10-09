@@ -3,7 +3,7 @@
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://docs.google.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://cloudflareinsights.com https://static.cloudflareinsights.com https://maps.googleapis.com; frame-src https://www.google.com https://docs.google.com;
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://docs.google.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://cloudflareinsights.com https://static.cloudflareinsights.com https://maps.googleapis.com https://flight-api.bayterter.workers.dev https://api.aviationstack.com; frame-src https://www.google.com https://docs.google.com;
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 /img/*
