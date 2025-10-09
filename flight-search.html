@@ -492,14 +492,14 @@
         </div>
 
         <!-- API 模式指示器 -->
-        <div class="info-notice" style="background: #F3F4F6; border-color: #D1D5DB;">
-          <i class="fas fa-database" style="color: #6B7280;"></i>
+        <div class="info-notice" style="background: #ECFDF5; border-color: #A7F3D0;">
+          <i class="fas fa-broadcast-tower" style="color: #10B981;"></i>
           <div class="info-notice-text">
-            <strong style="color: #374151;">💾 本地數據庫模式</strong>
-            <p style="color: #4B5563; margin: 0.5rem 0 0 0; font-size: 0.8rem;">
-              ✅ 使用精選的常用航班示例數據<br>
-              📊 包含 11 個台灣往返常見航班<br>
-              💡 確保功能穩定可靠，不受 API 限制影響
+            <strong style="color: #065F46;">🇹🇼 TDX 即時 API 模式</strong>
+            <p style="color: #065F46; margin: 0.5rem 0 0 0; font-size: 0.8rem;">
+              ✅ 使用台灣交通部官方航班數據（TDX 運輸資料流通服務）<br>
+              📊 免費額度：50,000次/天（遠超一般網站需求）<br>
+              🎯 完整支持桃園/松山機場所有航班 | 💡 查詢失敗時自動使用本地數據
             </p>
           </div>
         </div>
@@ -832,12 +832,12 @@
     let currentFlightData = null;
 
     // ========== 配置區 ==========
-    // ✅ 已啟用真實航班 API
-    const WORKER_API_URL = 'https://flight-api.bayterter.workers.dev';
+    // ✅ 已啟用 TDX 真實航班 API（台灣交通部官方數據）
+    const WORKER_API_URL = 'https://flight-api-tdx.bayterter.workers.dev';
     
-    // 是否使用真實 API（如果 WORKER_API_URL 已設置）
-    // ⚠️ 暫時使用本地數據庫，因為免費 API 限制嚴格
-    const USE_REAL_API = false; // 使用本地數據庫確保功能穩定
+    // 是否使用真實 API
+    // ✅ TDX API 啟用（免費 50,000次/天，完整台灣航班數據）
+    const USE_REAL_API = true; // ✅ 啟用 TDX 官方 API
     // ===========================
 
     async function searchFlight() {
