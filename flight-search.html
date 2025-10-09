@@ -673,6 +673,146 @@
           time: '2024-12-17 05:30',
           terminal: '第一航廈 Terminal 1'
         }
+      },
+      'TW669': {
+        flightNumber: 'TW669',
+        airline: '德威航空 T\'way Air',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'ICN',
+          name: '韓國仁川機場',
+          nameEn: 'Incheon International Airport',
+          time: '2024-12-15 15:20'
+        },
+        arrival: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 18:50',
+          terminal: '第一航廈 Terminal 1'
+        }
+      },
+      'TW668': {
+        flightNumber: 'TW668',
+        airline: '德威航空 T\'way Air',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 08:30',
+          terminal: '第一航廈 Terminal 1'
+        },
+        arrival: {
+          code: 'ICN',
+          name: '韓國仁川機場',
+          nameEn: 'Incheon International Airport',
+          time: '2024-12-15 12:10'
+        }
+      },
+      'BR855': {
+        flightNumber: 'BR855',
+        airline: '長榮航空 EVA Air',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 09:15',
+          terminal: '第二航廈 Terminal 2'
+        },
+        arrival: {
+          code: 'ICN',
+          name: '韓國仁川機場',
+          nameEn: 'Incheon International Airport',
+          time: '2024-12-15 13:00'
+        }
+      },
+      'CI160': {
+        flightNumber: 'CI160',
+        airline: '中華航空 China Airlines',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 07:40',
+          terminal: '第一航廈 Terminal 1'
+        },
+        arrival: {
+          code: 'KIX',
+          name: '日本關西機場',
+          nameEn: 'Kansai International Airport',
+          time: '2024-12-15 11:25'
+        }
+      },
+      'JX801': {
+        flightNumber: 'JX801',
+        airline: '星宇航空 STARLUX Airlines',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 18:40',
+          terminal: '第一航廈 Terminal 1'
+        },
+        arrival: {
+          code: 'NRT',
+          name: '日本成田機場',
+          nameEn: 'Tokyo Narita Airport',
+          time: '2024-12-15 22:50'
+        }
+      },
+      'BR216': {
+        flightNumber: 'BR216',
+        airline: '長榮航空 EVA Air',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'SIN',
+          name: '新加坡樟宜機場',
+          nameEn: 'Singapore Changi Airport',
+          time: '2024-12-15 13:00'
+        },
+        arrival: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 17:45',
+          terminal: '第二航廈 Terminal 2'
+        }
+      },
+      'CI9205': {
+        flightNumber: 'CI9205',
+        airline: '中華航空 China Airlines',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'BKK',
+          name: '泰國曼谷機場',
+          nameEn: 'Bangkok Suvarnabhumi Airport',
+          time: '2024-12-15 20:30'
+        },
+        arrival: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-16 01:15',
+          terminal: '第一航廈 Terminal 1'
+        }
       }
     };
 
@@ -698,7 +838,14 @@
         if (flightData) {
           displayFlightResult(flightData);
         } else {
-          alert(`找不到航班 ${flightNumber}\\n\\n請嘗試以下航班號碼：\\n• BR123 (桃園 → 東京成田)\\n• CI001 (桃園 → 東京羽田)\\n• BR189 (香港 → 桃園)\\n• CI835 (洛杉磯 → 桃園)\\n\\n或使用快速查詢連結查詢其他航班。`);
+          const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+          const isEnglish = currentLang === 'en';
+          
+          const availableFlights = isEnglish 
+            ? `Flight ${flightNumber} not found\n\nPlease try these flight numbers:\n• TW669 (Seoul ICN → Taipei)\n• TW668 (Taipei → Seoul ICN)\n• BR123 (Taipei → Tokyo NRT)\n• CI001 (Taipei → Tokyo HND)\n• JX801 (Taipei → Tokyo NRT)\n• BR855 (Taipei → Seoul ICN)\n• CI160 (Taipei → Osaka KIX)\n• BR189 (Hong Kong → Taipei)\n• BR216 (Singapore → Taipei)\n• CI835 (Los Angeles → Taipei)\n• CI9205 (Bangkok → Taipei)\n\nOr use quick links to search other flights.`
+            : `找不到航班 ${flightNumber}\n\n請嘗試以下航班號碼：\n• TW669 (韓國仁川 → 桃園)\n• TW668 (桃園 → 韓國仁川)\n• BR123 (桃園 → 東京成田)\n• CI001 (桃園 → 東京羽田)\n• JX801 (桃園 → 東京成田)\n• BR855 (桃園 → 韓國仁川)\n• CI160 (桃園 → 大阪關西)\n• BR189 (香港 → 桃園)\n• BR216 (新加坡 → 桃園)\n• CI835 (洛杉磯 → 桃園)\n• CI9205 (曼谷 → 桃園)\n\n或使用快速查詢連結查詢其他航班。`;
+          
+          alert(availableFlights);
         }
         
         searchBtn.disabled = false;
