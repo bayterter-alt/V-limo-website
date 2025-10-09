@@ -920,6 +920,39 @@ class I18nManager {
             },
             submit: 'Submit'
           }
+        },
+        
+        // Vehicles Introduction Page
+        'vehicles-page': {
+          hero: {
+            title: 'Premium Transportation Fleet',
+            subtitle: 'Top-tier fleet lineup to meet all your transportation needs. From luxury vans to business sedans, we provide the most comfortable and safe transportation services.'
+          },
+          tab: {
+            exterior: 'Exterior',
+            interior: 'Interior'
+          },
+          notice: {
+            title: 'Important Notice',
+            content: 'The above vehicle interiors are for reference only. Actual interiors are subject to on-site vehicles. We guarantee that every vehicle provided has undergone strict inspection to ensure safety and comfort.'
+          },
+          cta: {
+            title: 'Book Your Exclusive Ride Now',
+            subtitle: 'Professional drivers, premium vehicles, thoughtful service - making every journey a wonderful memory',
+            book: 'Online Booking',
+            call: 'Call Now'
+          }
+        },
+        
+        // Privacy Policy Page
+        privacy: {
+          title: 'Privacy Policy'
+        },
+        
+        // Terms of Service Page
+        terms: {
+          title: 'Terms of Service',
+          intro: 'By clicking "Agree" when booking online, you agree to comply with the "Terms of Service" and "Privacy Policy". To ensure your rights, please read the following terms of service carefully.'
         }
       }
     };

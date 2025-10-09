@@ -21,15 +21,20 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html">貨車出租</a></li>
-          <li><a href="露營車出租.html">露營車出租</a></li>
-          <li><a href="聯絡我們.html">聯絡我們</a></li>
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <!-- 語言切換器 -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -78,7 +83,7 @@
       <div class="container">
         <div class="section-head">
           <div class="eyebrow">Privacy Policy</div>
-          <h2>隱私權政策</h2>
+          <h2 data-i18n="privacy.title">隱私權政策</h2>
         </div>
         <div class="content-body">
           <p>為保護您的隱私權，請您詳細閱讀以下有關利盟小客車租賃有限公司之「隱私權政策」，請注意本《隱私權政策》將不定時變更。我們不會在未經您同意的情況下，削減本《隱私權政策》賦予您的權利，並且會隨時在利盟小客車租賃有限公司 登載最新版本的《隱私權政策》，提供您隨時查閱。</p>
@@ -225,5 +230,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>

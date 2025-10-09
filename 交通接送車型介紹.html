@@ -552,15 +552,20 @@
       </a>
       <nav class="main-nav" aria-label="主選單">
         <ul class="nav-list">
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="https://v-limo.app/">線上訂車</a></li>
-          <li><a href="貨車出租.html">貨車出租</a></li>
-          <li><a href="露營車出租.html">露營車出租</a></li>
-          <li><a href="聯絡我們.html">聯絡我們</a></li>
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
         </ul>
       </nav>
       <div class="header-cta">
-        <a href="聯絡我們.html" class="btn btn-primary">立即預約</a>
+        <!-- 語言切換器 -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
         <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
           <i class="fas fa-bars"></i>
         </button>
@@ -611,8 +616,8 @@
         <div class="hero-content">
           <div class="section-head">
             <div class="eyebrow">Premium Transportation</div>
-            <h1>交通接送車型介紹</h1>
-            <p>頂級車隊陣容，滿足各種接送需求。從豪華保母車到商務房車，我們提供最舒適、安全的交通接送服務。</p>
+            <h1 data-i18n="vehicles-page.hero.title">交通接送車型介紹</h1>
+            <p data-i18n="vehicles-page.hero.subtitle">頂級車隊陣容，滿足各種接送需求。從豪華保母車到商務房車，我們提供最舒適、安全的交通接送服務。</p>
           </div>
         </div>
       </div>
@@ -628,10 +633,10 @@
             <div class="vehicle-image-container">
               <div class="image-tabs">
                 <button class="image-tab active" data-tab="exterior">
-                  <i class="fas fa-car"></i>外觀
+                  <i class="fas fa-car"></i><span data-i18n="vehicles-page.tab.exterior">外觀</span>
                 </button>
                 <button class="image-tab" data-tab="interior">
-                  <i class="fas fa-couch"></i>內裝
+                  <i class="fas fa-couch"></i><span data-i18n="vehicles-page.tab.interior">內裝</span>
                 </button>
               </div>
               <div class="image-content">
@@ -1203,8 +1208,8 @@
             <i class="fas fa-info-circle"></i>
           </div>
           <div class="notice-content">
-            <h3>重要提醒</h3>
-            <p>以上車型內裝僅供參考，實際內裝依現場車輛為主。我們保證提供的每一輛車都經過嚴格檢查，確保安全舒適。</p>
+            <h3 data-i18n="vehicles-page.notice.title">重要提醒</h3>
+            <p data-i18n="vehicles-page.notice.content">以上車型內裝僅供參考，實際內裝依現場車輛為主。我們保證提供的每一輛車都經過嚴格檢查，確保安全舒適。</p>
           </div>
         </div>
       </div>
@@ -1214,14 +1219,14 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-content">
-          <h2>立即預約您的專屬座駕</h2>
-          <p>專業司機、頂級車款、貼心服務，讓每一段旅程都成為美好回憶</p>
+          <h2 data-i18n="vehicles-page.cta.title">立即預約您的專屬座駕</h2>
+          <p data-i18n="vehicles-page.cta.subtitle">專業司機、頂級車款、貼心服務，讓每一段旅程都成為美好回憶</p>
           <div class="cta-buttons">
             <a href="https://v-limo.app/" class="btn btn-primary" target="_blank">
-              <i class="fas fa-mouse-pointer"></i> 線上預約
+              <i class="fas fa-mouse-pointer"></i> <span data-i18n="vehicles-page.cta.book">線上預約</span>
             </a>
             <a href="tel:+886425208777" class="btn btn-secondary">
-              <i class="fas fa-phone"></i> 立即來電
+              <i class="fas fa-phone"></i> <span data-i18n="vehicles-page.cta.call">立即來電</span>
             </a>
           </div>
         </div>
@@ -1312,6 +1317,7 @@
   <!-- ======================= 頁尾 End ======================= -->
 
   <script src="script.js"></script>
+  <script src="js/i18n.js"></script>
   
   <!-- 圖片切換功能 -->
   <script>
