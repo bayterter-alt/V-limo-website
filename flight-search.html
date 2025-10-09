@@ -818,39 +818,151 @@
 
     let currentFlightData = null;
 
-    function searchFlight() {
+    // ========== 配置區 ==========
+    // TODO: 替換為您的 Cloudflare Worker URL（設置完成後）
+    // 格式：https://flight-api.YOUR-USERNAME.workers.dev
+    const WORKER_API_URL = ''; // 留空則使用示例數據模式
+    
+    // 是否使用真實 API（如果 WORKER_API_URL 已設置）
+    const USE_REAL_API = WORKER_API_URL !== '';
+    // ===========================
+
+    async function searchFlight() {
       const input = document.getElementById('flightNumber');
       const flightNumber = input.value.trim().toUpperCase();
       
       if (!flightNumber) {
-        alert('請輸入航班號碼');
+        const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+        alert(currentLang === 'en' ? 'Please enter a flight number' : '請輸入航班號碼');
         return;
       }
 
       const searchBtn = document.getElementById('searchBtn');
       searchBtn.disabled = true;
-      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 查詢中...';
+      const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (currentLang === 'en' ? 'Searching...' : '查詢中...');
 
-      // 模擬API查詢延遲
+      // 判斷使用哪種模式
+      if (USE_REAL_API) {
+        await searchRealAPI(flightNumber);
+      } else {
+        searchLocalDatabase(flightNumber);
+      }
+    }
+
+    // 使用真實 API 查詢
+    async function searchRealAPI(flightNumber) {
+      const searchBtn = document.getElementById('searchBtn');
+      const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+      const isEnglish = currentLang === 'en';
+
+      try {
+        const response = await fetch(`${WORKER_API_URL}?flight=${flightNumber}`);
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+          throw new Error(data.error || 'API Error');
+        }
+
+        // 轉換 API 數據為本地格式
+        const formattedData = {
+          flightNumber: data.flightNumber,
+          airline: data.airline,
+          status: data.status,
+          statusText: translateStatus(data.status, false),
+          statusTextEn: translateStatus(data.status, true),
+          departure: {
+            code: data.departure.iata,
+            name: data.departure.airport,
+            nameEn: data.departure.airport,
+            time: formatDateTime(data.departure.scheduled || data.departure.estimated),
+            terminal: data.departure.terminal || '-'
+          },
+          arrival: {
+            code: data.arrival.iata,
+            name: data.arrival.airport,
+            nameEn: data.arrival.airport,
+            time: formatDateTime(data.arrival.scheduled || data.arrival.estimated),
+            terminal: data.arrival.terminal || '-'
+          }
+        };
+
+        displayFlightResult(formattedData);
+
+      } catch (error) {
+        console.error('API Error:', error);
+        
+        // API 失敗時，嘗試使用本地數據庫
+        const localData = flightDatabase[flightNumber];
+        if (localData) {
+          displayFlightResult(localData);
+        } else {
+          alert(isEnglish 
+            ? `Flight ${flightNumber} not found.\n\nError: ${error.message}\n\nPlease try the sample flights or use quick links.`
+            : `找不到航班 ${flightNumber}\n\n錯誤：${error.message}\n\n請嘗試示例航班或使用快速查詢連結。`
+          );
+        }
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.innerHTML = '<i class="fas fa-search"></i> <span data-i18n="flight.search">' + 
+          (isEnglish ? 'Search Flight' : '查詢航班') + '</span>';
+      }
+    }
+
+    // 使用本地數據庫查詢（示例模式）
+    function searchLocalDatabase(flightNumber) {
+      const searchBtn = document.getElementById('searchBtn');
+      const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+      const isEnglish = currentLang === 'en';
+
       setTimeout(() => {
         const flightData = flightDatabase[flightNumber];
         
         if (flightData) {
           displayFlightResult(flightData);
         } else {
-          const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
-          const isEnglish = currentLang === 'en';
-          
           const availableFlights = isEnglish 
-            ? `Flight ${flightNumber} not found\n\nPlease try these flight numbers:\n• TW669 (Seoul ICN → Taipei)\n• TW668 (Taipei → Seoul ICN)\n• BR123 (Taipei → Tokyo NRT)\n• CI001 (Taipei → Tokyo HND)\n• JX801 (Taipei → Tokyo NRT)\n• BR855 (Taipei → Seoul ICN)\n• CI160 (Taipei → Osaka KIX)\n• BR189 (Hong Kong → Taipei)\n• BR216 (Singapore → Taipei)\n• CI835 (Los Angeles → Taipei)\n• CI9205 (Bangkok → Taipei)\n\nOr use quick links to search other flights.`
-            : `找不到航班 ${flightNumber}\n\n請嘗試以下航班號碼：\n• TW669 (韓國仁川 → 桃園)\n• TW668 (桃園 → 韓國仁川)\n• BR123 (桃園 → 東京成田)\n• CI001 (桃園 → 東京羽田)\n• JX801 (桃園 → 東京成田)\n• BR855 (桃園 → 韓國仁川)\n• CI160 (桃園 → 大阪關西)\n• BR189 (香港 → 桃園)\n• BR216 (新加坡 → 桃園)\n• CI835 (洛杉磯 → 桃園)\n• CI9205 (曼谷 → 桃園)\n\n或使用快速查詢連結查詢其他航班。`;
+            ? `Flight ${flightNumber} not found\n\nℹ️ Currently using sample data mode\n\nPlease try these flight numbers:\n• TW669 (Seoul ICN → Taipei)\n• TW668 (Taipei → Seoul ICN)\n• BR123 (Taipei → Tokyo NRT)\n• CI001 (Taipei → Tokyo HND)\n• JX801 (Taipei → Tokyo NRT)\n• BR855 (Taipei → Seoul ICN)\n• CI160 (Taipei → Osaka KIX)\n• BR189 (Hong Kong → Taipei)\n• BR216 (Singapore → Taipei)\n• CI835 (Los Angeles → Taipei)\n• CI9205 (Bangkok → Taipei)\n\nOr use quick links to search other flights.`
+            : `找不到航班 ${flightNumber}\n\nℹ️ 目前使用示例數據模式\n\n請嘗試以下航班號碼：\n• TW669 (韓國仁川 → 桃園)\n• TW668 (桃園 → 韓國仁川)\n• BR123 (桃園 → 東京成田)\n• CI001 (桃園 → 東京羽田)\n• JX801 (桃園 → 東京成田)\n• BR855 (桃園 → 韓國仁川)\n• CI160 (桃園 → 大阪關西)\n• BR189 (香港 → 桃園)\n• BR216 (新加坡 → 桃園)\n• CI835 (洛杉磯 → 桃園)\n• CI9205 (曼谷 → 桃園)\n\n或使用快速查詢連結查詢其他航班。`;
           
           alert(availableFlights);
         }
         
         searchBtn.disabled = false;
-        searchBtn.innerHTML = '<i class="fas fa-search"></i> <span data-i18n="flight.search">查詢航班</span>';
+        searchBtn.innerHTML = '<i class="fas fa-search"></i> <span data-i18n="flight.search">' + 
+          (isEnglish ? 'Search Flight' : '查詢航班') + '</span>';
       }, 1000);
+    }
+
+    // 輔助函數：轉換航班狀態
+    function translateStatus(status, isEnglish) {
+      const statusMap = {
+        'scheduled': { zh: '已排定', en: 'Scheduled' },
+        'active': { zh: '飛行中', en: 'In Flight' },
+        'landed': { zh: '已降落', en: 'Landed' },
+        'cancelled': { zh: '已取消', en: 'Cancelled' },
+        'incident': { zh: '異常', en: 'Incident' },
+        'diverted': { zh: '改降', en: 'Diverted' }
+      };
+      return (statusMap[status] || statusMap['scheduled'])[isEnglish ? 'en' : 'zh'];
+    }
+
+    // 輔助函數：格式化日期時間
+    function formatDateTime(dateTimeString) {
+      if (!dateTimeString) return '-';
+      try {
+        const date = new Date(dateTimeString);
+        return date.toLocaleString('zh-TW', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }).replace(/\//g, '-');
+      } catch {
+        return dateTimeString;
+      }
     }
 
     function displayFlightResult(data) {
