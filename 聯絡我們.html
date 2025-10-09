@@ -285,8 +285,16 @@
       if (service === 'airport') {
         const serviceSelect = document.getElementById('service');
         if (serviceSelect) {
-          serviceSelect.value = 'airport';
+          serviceSelect.value = '機場接送';
           console.log('✅ 已自動選擇：機場接送');
+          
+          // 添加視覺提示
+          serviceSelect.style.border = '2px solid #10B981';
+          serviceSelect.style.backgroundColor = '#ECFDF5';
+          setTimeout(() => {
+            serviceSelect.style.border = '';
+            serviceSelect.style.backgroundColor = '';
+          }, 2000);
         }
       }
       

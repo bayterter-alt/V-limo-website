@@ -413,6 +413,7 @@ class I18nManager {
           },
           support: {
             title: '支援',
+            flight: '航班查詢',
             contact: '聯絡我們',
             privacy: '隱私權政策',
             terms: '服務條款'
@@ -943,6 +944,7 @@ class I18nManager {
           },
           support: {
             title: 'Support',
+            flight: 'Flight Search',
             contact: 'Contact Us',
             privacy: 'Privacy Policy',
             terms: 'Terms of Service'
