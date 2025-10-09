@@ -938,7 +938,9 @@ class I18nManager {
             size: 'Vehicle Size',
             ac: 'Air Conditioning',
             luggage: 'Luggage Space',
-            safety: 'Safety Features'
+            safety: 'Safety Features',
+            seating: 'Seating Configuration',
+            route: 'Applicable Routes'
           },
           // Vehicle 1: VW Crafter 2022
           v1: {
@@ -969,6 +971,96 @@ class I18nManager {
             'luggage-val': 'Extra spacious large luggage compartment',
             features: 'Celebrity Van Features',
             desc: 'The celebrity van premium choice, Crafter boasts unparalleled passenger cabin space, offering comfortable 9-seater configuration. It has become the top choice for celebrity vans and premium tour vehicles. In addition to 9-seat configuration, it features ultra-spacious luggage space that easily accommodates all passengers\' large luggage.'
+          },
+          // Vehicle 3: VW T6
+          v3: {
+            'img-ext': 'Premium charter vehicle exterior',
+            'img-int': 'Spacious bright cabin with top safety features',
+            category: 'Charter Choice',
+            name: 'Volkswagen T6',
+            slogan: 'Premium Charter Vehicle',
+            'capacity-val': '7 Passengers',
+            'safety-val': 'Full Premium Safety System',
+            'safety-title': 'Safety Features',
+            s1: 'Electronic Stability Control',
+            s2: 'Anti-lock Braking System',
+            s3: 'Electronic Brake Force Distribution',
+            s4: 'Electronic Differential Lock',
+            s5: 'Acceleration Traction Control',
+            s6: 'Deceleration Traction Control',
+            desc: 'Spacious and bright VW T6 cabin, equipped with the most premium safety features, ensuring every journey is safe and comfortable.'
+          },
+          // Vehicle 4: Toyota Granvia
+          v4: {
+            'img-ext': 'Luxurious exterior design of distinction',
+            'img-int': 'Captain luxury leather seats with comfortable suspension',
+            category: 'Distinguished Service',
+            name: 'Toyota Granvia',
+            slogan: 'Distinguished Luxury Experience',
+            'capacity-val': '5 Passengers (with luggage)',
+            'seating-val': 'Captain Luxury Leather Seats',
+            'cabin-title': 'Luxury Cabin',
+            desc: 'To meet the rapidly growing demand for high-quality travel, Granvia comes standard with Captain luxury leather seats in the 1st and 2nd rows. Independent seats and armrests give passengers their own personal seating space, providing comfort and security like home, reducing fatigue from long journeys.',
+            'suspension-title': 'MacPherson Front & Four-Link Rear Suspension',
+            'suspension-desc': 'Effectively reduces road vibrations, providing rear passengers with a comfortable riding experience'
+          },
+          // Vehicle 5: IVECO Medium Bus
+          v5: {
+            'img-ext': 'European IVECO medium bus professional exterior',
+            'img-int': 'Luxury three-row large seats with professional equipment',
+            category: 'Mountain Routes',
+            name: 'European IVECO Medium Bus',
+            slogan: 'Luxurious Spacious Comfortable Ride',
+            'capacity-val': '23 Passengers (with professional driver)',
+            'route-val': 'Specific Mountain Routes',
+            'equip-title': 'Professional Equipment',
+            'f1-title': 'Luxury Three-Row Large Seats',
+            'f1-desc': 'Spacious and comfortable seating',
+            'f2-title': 'Air Suspension System',
+            'f2-desc': 'Provides more stable and comfortable driving experience',
+            'f3-title': 'Hydraulic Retarder',
+            'f3-desc': 'Prevents brake overheating in mountains, ensuring safety',
+            'route-title': 'Specific Route Services',
+            r1: 'Smangus',
+            r2: 'Dasyueshan',
+            r3: 'Chiayi Meishan',
+            r4: 'Mingchi Forest Recreation Area'
+          },
+          // Vehicle 6: Mercedes V250D
+          v6: {
+            'img-ext': 'Luxurious and comfortable choice',
+            'img-int': 'M-Benz V-Class V250d',
+            category: 'Comfortable Luxury',
+            name: 'Mercedes V250D',
+            slogan: 'New Era of Smart Luxury Driving Experience',
+            'capacity-val': '6 Passengers (with professional driver)',
+            'luggage-val': '4 pieces (27 inch)',
+            'luxury-title': 'Maybach-Level Luxury Features',
+            desc: 'M-BENZ V-CLASS V250D is a luxury 6-seater van with spacious and comfortable interior and high-quality equipment, perfect for business transfers and family travel.',
+            l1: 'Premium Aviation Seats',
+            l2: 'Entertainment System',
+            l3: 'Panoramic Electric Sunroof',
+            l4: 'Burmester 3D Surround Sound',
+            l5: 'Electric Doors',
+            l6: 'Interior Ambient Lighting System'
+          },
+          // Vehicle 7: Toyota Camry Hybrid
+          v7: {
+            'img-ext': 'Elegant and comfortable luxury sedan exterior',
+            'img-int': 'Toyota Safety Sense 2.0 intelligent interior',
+            category: 'Eco-Friendly',
+            name: 'Toyota Camry Hybrid',
+            slogan: 'Elegant and Comfortable Luxury Sedan',
+            'capacity-val': '3 Passengers (with professional driver)',
+            'luggage-val': '2 pieces (27 inch)',
+            'tech-title': 'Toyota Safety Sense 2.0',
+            desc: 'Upgraded with "Toyota Safety Sense 2.0 Intelligent Driving Assistance System", featuring up to 34 active and passive safety protection systems, providing drivers and passengers with comprehensive safety protection.',
+            t1: 'AHB Intelligent High Beam Auto Switch',
+            t2: 'PCS Pre-Collision System',
+            t3: 'Emergency Steering Assist',
+            t4: 'ACC Full-Speed Active Cruise Control',
+            t5: 'LTA Lane Tracing Assist',
+            t6: 'Stop & Go Function'
           },
           notice: {
             title: 'Important Notice',
