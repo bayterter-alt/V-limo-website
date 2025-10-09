@@ -279,51 +279,58 @@
     const flightInfo = urlParams.get('flightInfo');
     
     if (service || flightInfo) {
-      console.log('✈️ 檢測到航班資訊，自動填充表單');
+      console.log('✈️ 檢測到航班資訊，準備自動填充表單');
       
-      // 自動選擇服務類型
-      if (service === 'airport') {
-        const serviceSelect = document.getElementById('service');
-        if (serviceSelect) {
-          serviceSelect.value = '機場接送';
-          console.log('✅ 已自動選擇：機場接送');
-          
-          // 添加視覺提示
-          serviceSelect.style.border = '2px solid #10B981';
-          serviceSelect.style.backgroundColor = '#ECFDF5';
-          setTimeout(() => {
-            serviceSelect.style.border = '';
-            serviceSelect.style.backgroundColor = '';
-          }, 2000);
+      // 延遲執行以確保 i18n 初始化完成
+      setTimeout(() => {
+        // 自動選擇服務類型
+        if (service === 'airport') {
+          const serviceSelect = document.getElementById('service');
+          if (serviceSelect) {
+            serviceSelect.value = '機場接送';
+            console.log('✅ 已自動選擇：機場接送，當前值:', serviceSelect.value);
+            
+            // 添加視覺提示
+            serviceSelect.style.border = '2px solid #10B981';
+            serviceSelect.style.backgroundColor = '#ECFDF5';
+            setTimeout(() => {
+              serviceSelect.style.border = '';
+              serviceSelect.style.backgroundColor = '';
+            }, 2000);
+          } else {
+            console.error('❌ 找不到服務類型選單');
+          }
         }
-      }
-      
-      // 自動填入航班資訊到訊息內容
-      if (flightInfo) {
-        const messageTextarea = document.getElementById('message');
-        if (messageTextarea) {
-          messageTextarea.value = decodeURIComponent(flightInfo);
-          console.log('✅ 已自動填入航班資訊');
-          
-          // 添加視覺提示
-          messageTextarea.style.border = '2px solid #10B981';
-          messageTextarea.style.backgroundColor = '#ECFDF5';
-          setTimeout(() => {
-            messageTextarea.style.border = '';
-            messageTextarea.style.backgroundColor = '';
-          }, 2000);
-          
-          // 滾動到表單區域
-          setTimeout(() => {
-            messageTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 300);
+        
+        // 自動填入航班資訊到訊息內容
+        if (flightInfo) {
+          const messageTextarea = document.getElementById('message');
+          if (messageTextarea) {
+            messageTextarea.value = decodeURIComponent(flightInfo);
+            console.log('✅ 已自動填入航班資訊');
+            
+            // 添加視覺提示
+            messageTextarea.style.border = '2px solid #10B981';
+            messageTextarea.style.backgroundColor = '#ECFDF5';
+            setTimeout(() => {
+              messageTextarea.style.border = '';
+              messageTextarea.style.backgroundColor = '';
+            }, 2000);
+            
+            // 滾動到表單區域
+            setTimeout(() => {
+              messageTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 500);
+          }
         }
-      }
+      }, 500); // 延遲 500ms 確保 i18n 初始化完成
       
       // 清除URL參數（保持頁面整潔）
-      if (window.history.replaceState) {
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
+      setTimeout(() => {
+        if (window.history.replaceState) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      }, 1000);
     }
     
     const form = document.getElementById('contactForm');
