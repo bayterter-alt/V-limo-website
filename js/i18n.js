@@ -932,6 +932,44 @@ class I18nManager {
             exterior: 'Exterior',
             interior: 'Interior'
           },
+          'features-title': 'Vehicle Features',
+          spec: {
+            capacity: 'Passenger Capacity',
+            size: 'Vehicle Size',
+            ac: 'Air Conditioning',
+            luggage: 'Luggage Space',
+            safety: 'Safety Features'
+          },
+          // Vehicle 1: VW Crafter 2022
+          v1: {
+            'img-ext': 'Showcasing the luxury van exterior design',
+            'img-int': 'Showcasing first-class luxury interior space',
+            category: 'Top Luxury',
+            name: 'Luxury Van Volkswagen Crafter 2022',
+            slogan: 'Land First Class Luxury',
+            'capacity-val': '8 Passengers (with luggage)',
+            'ac-val': 'Independent Rear A/C',
+            'f1-title': 'Ultra Spacious',
+            'f1-desc': 'Rear cabin space up to 3,201-4,051mm, even adults 190cm tall can walk comfortably',
+            'f2-title': 'Smart Seating System',
+            'f2-desc': 'Aluminum alloy sliding floor, 6 quick-release independent seats with flexible adjustment',
+            'f3-title': 'Panoramic Windows',
+            'f3-desc': 'Large fixed windows on both sides providing passengers with scenic views',
+            'f4-title': 'Cabin Storage',
+            'f4-desc': 'Ceiling storage space design for convenient storage of personal items'
+          },
+          // Vehicle 2: VW Crafter 2015
+          v2: {
+            'img-ext': 'Celebrity van premium exterior design',
+            'img-int': '9-seater luxury seats and spacious luggage space',
+            category: 'Premium Choice',
+            name: 'Luxury Van Volkswagen Crafter 2015',
+            slogan: 'Mobile Luxury First Class',
+            'capacity-val': '8 Passengers (with luggage)',
+            'luggage-val': 'Extra spacious large luggage compartment',
+            features: 'Celebrity Van Features',
+            desc: 'The celebrity van premium choice, Crafter boasts unparalleled passenger cabin space, offering comfortable 9-seater configuration. It has become the top choice for celebrity vans and premium tour vehicles. In addition to 9-seat configuration, it features ultra-spacious luggage space that easily accommodates all passengers\' large luggage.'
+          },
           notice: {
             title: 'Important Notice',
             content: 'The above vehicle interiors are for reference only. Actual interiors are subject to on-site vehicles. We guarantee that every vehicle provided has undergone strict inspection to ensure safety and comfort.'
