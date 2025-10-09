@@ -10,9 +10,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-// ✅ 請替換為您的 TDX API 憑證
-const TDX_CLIENT_ID = 'YOUR_CLIENT_ID_HERE';
-const TDX_CLIENT_SECRET = 'YOUR_CLIENT_SECRET_HERE';
+// ✅ 從環境變數讀取 TDX API 憑證（安全方式）
+// 不要在代碼中硬編碼敏感資訊！
+const TDX_CLIENT_ID = typeof TDX_ID !== 'undefined' ? TDX_ID : '';
+const TDX_CLIENT_SECRET = typeof TDX_SECRET !== 'undefined' ? TDX_SECRET : '';
 
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));

@@ -92,21 +92,42 @@
 4. **复制全部内容**
 5. 贴到 Cloudflare 编辑器
 
-### 3.4 设置 API 凭证
+### 3.4 设置 API 凭证（🔒 安全方式）
 
-在 Worker 代码中找到第 14-15 行：
+**⚠️ 重要：请使用环境变量，不要在代码中硬编码！**
+
+#### **方法 A：使用 Cloudflare Dashboard（推荐）**
+
+1. 在 Worker 编辑页面，点击右上角 **Settings（设置）**
+2. 找到 **Variables（变量）** 区块
+3. 点击 **Add variable（添加变量）**
+
+**添加 Client ID**：
+- Variable name: `TDX_ID`
+- Value: `您的 TDX Client ID`
+- Type: ☐ 不加密
+
+**添加 Client Secret**：
+- Variable name: `TDX_SECRET`
+- Value: `您的 TDX Client Secret`
+- Type: ☑️ **Encrypt（加密）** ← **必须勾选！**
+
+#### **方法 B：直接在代码中（⚠️ 不推荐）**
+
+如果您坚持要硬编码（不建议）：
 
 ```javascript
-const TDX_CLIENT_ID = 'YOUR_CLIENT_ID_HERE';
-const TDX_CLIENT_SECRET = 'YOUR_CLIENT_SECRET_HERE';
-```
-
-替换为您的实际凭证：
-
-```javascript
+// ⚠️ 不安全的方式
 const TDX_CLIENT_ID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
 const TDX_CLIENT_SECRET = 'yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy';
 ```
+
+**安全提示**：使用此方式时：
+- ❌ 不要将此代码提交到 GitHub
+- ❌ 不要分享给他人
+- ✅ 建议尽快迁移到环境变量
+
+**详细安全设置指南**：请查看 `TDX-SECURITY-SETUP.md`
 
 ### 3.5 保存并部署
 
