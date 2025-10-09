@@ -1,32 +1,33 @@
 {
-  "categories": [
-    {
-      "id": "all",
-      "name": "全部消息",
-      "active": true
-    },
-    {
-      "id": "promotion",
-      "name": "優惠活動",
-      "active": false
-    },
-    {
-      "id": "service",
-      "name": "服務公告",
-      "active": false
-    },
-    {
-      "id": "news",
-      "name": "公司動態",
-      "active": false
-    }
-  ],
+  "categories": {
+    "zh-TW": [
+      { "id": "all", "name": "全部消息", "active": true },
+      { "id": "promotion", "name": "優惠活動", "active": false },
+      { "id": "service", "name": "服務公告", "active": false },
+      { "id": "news", "name": "公司動態", "active": false }
+    ],
+    "en": [
+      { "id": "all", "name": "All News", "active": true },
+      { "id": "promotion", "name": "Promotions", "active": false },
+      { "id": "service", "name": "Service Announcements", "active": false },
+      { "id": "news", "name": "Company News", "active": false }
+    ]
+  },
   "news": [
     {
       "id": 1,
-      "title": "秋季優惠專案開跑！",
-      "summary": "🍁秋季連假來臨，快揪上家人或朋友一起出發吧！",
-      "content": "連假檔期：9/26-9/29|10/3-10/6|10/9-10/12|10/23-10/26。優惠價：3天2夜僅 $5688 4天3夜只要 $7999⭐ 專屬福利任務：✔️ 中午12點前取車，還車延長至下午5點（17:00）前還車，讓您玩得更盡興！",
+      "title": {
+        "zh-TW": "秋季優惠專案開跑！",
+        "en": "Fall Special Promotion!"
+      },
+      "summary": {
+        "zh-TW": "🍁秋季連假來臨，快揪上家人或朋友一起出發吧！",
+        "en": "🍁 Fall holidays are here! Gather your family and friends for an adventure!"
+      },
+      "content": {
+        "zh-TW": "連假檔期：9/26-9/29|10/3-10/6|10/9-10/12|10/23-10/26。優惠價：3天2夜僅 $5688 4天3夜只要 $7999⭐ 專屬福利任務：✔️ 中午12點前取車，還車延長至下午5點（17:00）前還車，讓您玩得更盡興！",
+        "en": "Holiday Dates: 9/26-9/29 | 10/3-10/6 | 10/9-10/12 | 10/23-10/26. Special Rates: 3 Days 2 Nights only $5688, 4 Days 3 Nights only $7999 ⭐ Exclusive Benefits: ✔️ Pick up before 12:00 PM, return extended to 5:00 PM for more fun time!"
+      },
       "category": "promotion",
       "date": "2025-09-15",
       "featured": true,
@@ -34,9 +35,18 @@
     },
     {
       "id": 2,
-      "title": "🌸 春天來了！連假露營車租賃超值優惠等你來享！🚐",
-      "summary": "在春光明媚的季節，來場與自然親密接觸的露營之旅吧！🌷🌳",
-      "content": "利春風拂面、陽光明媚，這個連假，帶著家人或朋友一起來一場春意盎然的露營之旅吧！我們推出了春季限定優惠，讓你在大自然中度過一個溫暖又輕鬆的假期。<br>優惠期間 : 4月2日至4月7日",
+      "title": {
+        "zh-TW": "🌸 春天來了！連假露營車租賃超值優惠等你來享！🚐",
+        "en": "🌸 Spring is Here! Holiday RV Rental Special Offers! 🚐"
+      },
+      "summary": {
+        "zh-TW": "在春光明媚的季節，來場與自然親密接觸的露營之旅吧！🌷🌳",
+        "en": "Enjoy the beautiful spring season with a nature camping trip! 🌷🌳"
+      },
+      "content": {
+        "zh-TW": "春風拂面、陽光明媚，這個連假，帶著家人或朋友一起來一場春意盎然的露營之旅吧！我們推出了春季限定優惠，讓你在大自然中度過一個溫暖又輕鬆的假期。<br>優惠期間 : 4月2日至4月7日",
+        "en": "With gentle spring breezes and bright sunshine, bring your family or friends for a camping trip this holiday! We're offering spring-exclusive deals to help you enjoy a warm and relaxing vacation in nature.<br>Promotion Period: April 2nd to April 7th"
+      },
       "category": "service",
       "date": "2025-03-10",
       "featured": false,
@@ -44,9 +54,18 @@
     },
     {
       "id": 3,
-      "title": "春節連假露營出租服務時間調整",
-      "summary": "連假期間服務時間調整公告，請提前預約以確保用車需求。",
-      "content": "春節連假期間（1/29-1/31）公休，。建議客戶提前預約，以確保您的用車需求得到滿足。緊急聯絡電話：04-2520-8777",
+      "title": {
+        "zh-TW": "春節連假露營出租服務時間調整",
+        "en": "Lunar New Year Holiday Service Hours Adjustment"
+      },
+      "summary": {
+        "zh-TW": "連假期間服務時間調整公告，請提前預約以確保用車需求。",
+        "en": "Service hours adjustment during holiday period. Please book in advance to ensure vehicle availability."
+      },
+      "content": {
+        "zh-TW": "春節連假期間（1/29-1/31）公休。建議客戶提前預約，以確保您的用車需求得到滿足。緊急聯絡電話：04-2520-8777",
+        "en": "Closed during Lunar New Year holiday (1/29-1/31). We recommend booking in advance to ensure your rental needs are met. Emergency Contact: 04-2520-8777"
+      },
       "category": "service",
       "date": "2025-03-05",
       "featured": false,
@@ -54,9 +73,18 @@
     },
     {
       "id": 4,
-      "title": "利盟租車優惠券大放送",
-      "summary": "此票券適用於利盟小客車租賃有限公司任一行程或車資皆可使用",
-      "content": "1張折價券僅折抵1人,恕無法同時使用2張以上的折價券。<br>車最多同時使用5張,共乘部分為1張折價券僅折抵1人 機場接送單程僅折抵一張,恕無法同時使用2張以上的折券。<br>請於預約前告知需使用本券,若完成匯款後恕無法使用折扣,票券請於出發當天繳交提供給司機,如當天未攜帶視同放棄此優惠,請於車上補齊尾款。<br>折價券如有遺失,恕無法另行補發,本票券恕不找零,不得折換現金。<br>如發現使用偽造或具有取得疑慮的折價券,本公司有權拒絕折價券的使用。本公司得於沒有告知的情況下變更折價券的使用方式,敬請見諒並請隨時留意本公司 之網頁公告。<br>此票券為贈品,不得進行轉售。<br>本券經塗改視同無效,偽造本券依法究辦利盟小客車租賃有限公司保有票券修訂之權益,如有異動述不進行通知。<br>本票券僅適用來電訂購或官網訂購,其他平台皆不適用。",
+      "title": {
+        "zh-TW": "利盟租車優惠券大放送",
+        "en": "V-LIMO Rental Coupon Giveaway"
+      },
+      "summary": {
+        "zh-TW": "此票券適用於利盟小客車租賃有限公司任一行程或車資皆可使用",
+        "en": "This voucher is applicable to any V-LIMO Car Rental service or vehicle rental"
+      },
+      "content": {
+        "zh-TW": "1張折價券僅折抵1人,恕無法同時使用2張以上的折價券。<br>車最多同時使用5張,共乘部分為1張折價券僅折抵1人 機場接送單程僅折抵一張,恕無法同時使用2張以上的折券。<br>請於預約前告知需使用本券,若完成匯款後恕無法使用折扣,票券請於出發當天繳交提供給司機,如當天未攜帶視同放棄此優惠,請於車上補齊尾款。<br>折價券如有遺失,恕無法另行補發,本票券恕不找零,不得折換現金。<br>如發現使用偽造或具有取得疑慮的折價券,本公司有權拒絕折價券的使用。本公司得於沒有告知的情況下變更折價券的使用方式,敬請見諒並請隨時留意本公司 之網頁公告。<br>此票券為贈品,不得進行轉售。<br>本券經塗改視同無效,偽造本券依法究辦利盟小客車租賃有限公司保有票券修訂之權益,如有異動述不進行通知。<br>本票券僅適用來電訂購或官網訂購,其他平台皆不適用。",
+        "en": "One voucher is valid for one person only; multiple vouchers cannot be used simultaneously.<br>Maximum 5 vouchers per vehicle. For carpooling, one voucher per person. Airport transfers allow one voucher per trip; multiple vouchers cannot be used together.<br>Please inform us before booking if you wish to use this voucher. Vouchers cannot be applied after payment is completed. Present the voucher to the driver on departure day. Failure to present voucher means forfeiting the discount; balance must be paid in the vehicle.<br>Lost vouchers cannot be reissued. No change given; cannot be exchanged for cash.<br>If counterfeit or suspicious vouchers are detected, the company reserves the right to refuse acceptance. The company may change voucher usage terms without prior notice; please check our website regularly.<br>This voucher is a complimentary gift and cannot be resold.<br>Altered vouchers are void. Counterfeit vouchers will be prosecuted. V-LIMO Car Rental Co., Ltd. reserves the right to modify voucher terms without notice.<br>This voucher is only valid for phone or official website bookings; not applicable on other platforms."
+      },
       "category": "news",
       "date": "2024-08-25",
       "featured": false,
@@ -64,9 +92,18 @@
     },
     {
       "id": 5,
-      "title": "線上預約系統全面升級",
-      "summary": "新版線上預約系統上線，操作更簡便，功能更完整。",
-      "content": "為了提升客戶使用體驗，我們的線上預約系統已全面升級。新系統介面更加直觀，新增24小時預約系統、預約進度追蹤會員集點等功能。歡迎前往 v-limo.app 體驗全新服務！",
+      "title": {
+        "zh-TW": "線上預約系統全面升級",
+        "en": "Online Booking System Fully Upgraded"
+      },
+      "summary": {
+        "zh-TW": "新版線上預約系統上線，操作更簡便，功能更完整。",
+        "en": "New online booking system launched with easier operation and more complete features."
+      },
+      "content": {
+        "zh-TW": "為了提升客戶使用體驗，我們的線上預約系統已全面升級。新系統介面更加直觀，新增24小時預約系統、預約進度追蹤會員集點等功能。歡迎前往 v-limo.app 體驗全新服務！",
+        "en": "To enhance customer experience, our online booking system has been fully upgraded. The new system features a more intuitive interface with 24-hour booking, reservation tracking, and member rewards. Visit v-limo.app to experience our new services!"
+      },
       "category": "service",
       "date": "2024-08-15",
       "featured": true,

@@ -165,19 +165,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Back to Top Button ---
   function initializeBackToTop() {
-    const backToTopButton = document.querySelector('.back-to-top');
-    if (!backToTopButton) return;
+    // 選擇所有的回到頂端按鈕（包含懸浮和footer內的）
+    const backToTopButtons = document.querySelectorAll('.back-to-top');
+    if (backToTopButtons.length === 0) return;
 
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopButton.style.display = 'flex';
-      } else {
-        backToTopButton.style.display = 'none';
-      }
+      backToTopButtons.forEach(button => {
+        // 只對懸浮按鈕添加 show class
+        if (button.classList.contains('floating-btn')) {
+          if (window.scrollY > 300) {
+            button.classList.add('show');
+          } else {
+            button.classList.remove('show');
+          }
+        }
+      });
     });
 
-    backToTopButton.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    backToTopButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
   }
 

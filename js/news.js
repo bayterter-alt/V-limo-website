@@ -9,18 +9,43 @@ class NewsManager {
     this.currentPage = 1;
     this.currentCategory = 'all';
     this.filteredNews = [];
+    this.currentLang = 'zh-TW'; // 預設語言
     
     this.init();
+  }
+  
+  // 獲取當前語言
+  getCurrentLanguage() {
+    // 從 localStorage 或 window.i18n 獲取當前語言
+    if (window.i18n && window.i18n.currentLang) {
+      return window.i18n.currentLang;
+    }
+    return localStorage.getItem('lang') || 'zh-TW';
+  }
+  
+  // 更新語言並重新渲染
+  updateLanguage(lang) {
+    this.currentLang = lang;
+    this.renderCategories();
+    this.renderNews();
   }
 
   async init() {
     try {
+      this.currentLang = this.getCurrentLanguage(); // 獲取當前語言
       await this.loadNewsData();
       this.renderCategories();
       this.filterNews();
       this.renderNews();
       this.renderPagination();
       this.bindEvents();
+      
+      // 監聽語言切換事件
+      window.addEventListener('languageChanged', (e) => {
+        this.updateLanguage(e.detail.lang);
+        this.filterNews();
+        this.renderNews();
+      });
     } catch (error) {
       console.error('初始化新聞系統失敗:', error);
       this.showError();
@@ -44,10 +69,11 @@ class NewsManager {
     const filterContainer = document.getElementById('news-filter');
     if (!filterContainer || !this.newsData.settings.showCategories) return;
 
-    const categories = this.newsData.categories;
+    // 根據當前語言獲取分類
+    const categories = this.newsData.categories[this.currentLang] || this.newsData.categories['zh-TW'];
     
     filterContainer.innerHTML = categories.map(category => `
-      <button class="news-filter-btn ${category.active ? 'active' : ''}" 
+      <button class="news-filter-btn ${category.id === this.currentCategory ? 'active' : ''}" 
               data-category="${category.id}">
         ${category.name}
       </button>
@@ -78,35 +104,45 @@ class NewsManager {
     const endIndex = startIndex + itemsPerPage;
     const newsToShow = this.filteredNews.slice(startIndex, endIndex);
 
+    // 多語言文字
+    const noNewsText = this.currentLang === 'en' ? 'No related news available' : '目前沒有相關消息';
+    const readMoreText = this.currentLang === 'en' ? 'Read More' : '閱讀更多';
+
     if (newsToShow.length === 0) {
       newsContainer.innerHTML = `
         <div class="no-news">
-          <p>目前沒有相關消息</p>
+          <p>${noNewsText}</p>
         </div>
       `;
       return;
     }
 
-    newsContainer.innerHTML = newsToShow.map(news => `
-      <article class="news-item ${news.featured ? 'featured' : ''}">
-        ${news.image && this.newsData.settings.showImages ? `
-          <div class="news-image">
-            <img src="${news.image}" alt="${news.title}" loading="lazy">
+    newsContainer.innerHTML = newsToShow.map(news => {
+      // 根據當前語言獲取內容
+      const title = typeof news.title === 'object' ? (news.title[this.currentLang] || news.title['zh-TW']) : news.title;
+      const summary = typeof news.summary === 'object' ? (news.summary[this.currentLang] || news.summary['zh-TW']) : news.summary;
+      
+      return `
+        <article class="news-item ${news.featured ? 'featured' : ''}">
+          ${news.image && this.newsData.settings.showImages ? `
+            <div class="news-image">
+              <img src="${news.image}" alt="${title}" loading="lazy">
+            </div>
+          ` : ''}
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-date">${this.formatDate(news.date)}</span>
+              <span class="news-category">${this.getCategoryName(news.category)}</span>
+            </div>
+            <h3 class="news-title">${title}</h3>
+            <p class="news-summary">${summary}</p>
+            <button class="news-read-more" data-news-id="${news.id}">
+              ${readMoreText} <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
-        ` : ''}
-        <div class="news-content">
-          <div class="news-meta">
-            <span class="news-date">${this.formatDate(news.date)}</span>
-            <span class="news-category">${this.getCategoryName(news.category)}</span>
-          </div>
-          <h3 class="news-title">${news.title}</h3>
-          <p class="news-summary">${news.summary}</p>
-          <button class="news-read-more" data-news-id="${news.id}">
-            閱讀更多 <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </article>
-    `).join('');
+        </article>
+      `;
+    }).join('');
   }
 
   renderPagination() {
@@ -208,14 +244,22 @@ class NewsManager {
     const news = this.newsData.news.find(item => item.id === newsId);
     if (!news) return;
 
+    // 根據當前語言獲取內容
+    const title = typeof news.title === 'object' ? (news.title[this.currentLang] || news.title['zh-TW']) : news.title;
+    const content = typeof news.content === 'object' ? (news.content[this.currentLang] || news.content['zh-TW']) : news.content;
+    
+    // 多語言按鈕文字
+    const contactUsText = this.currentLang === 'en' ? 'Contact Us' : '聯絡我們';
+    const closeAriaLabel = this.currentLang === 'en' ? 'Close news window' : '關閉消息視窗';
+
     // 建立彈出視窗
     const modal = document.createElement('div');
     modal.className = 'news-modal';
     modal.innerHTML = `
       <div class="news-modal-content">
         <div class="news-modal-header">
-          <h2>${news.title}</h2>
-          <button class="news-modal-close" aria-label="關閉消息視窗">
+          <h2>${title}</h2>
+          <button class="news-modal-close" aria-label="${closeAriaLabel}">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -224,14 +268,14 @@ class NewsManager {
             <span class="news-date">${this.formatDate(news.date)}</span>
             <span class="news-category">${this.getCategoryName(news.category)}</span>
           </div>
-          ${news.image ? `<img src="${news.image}" alt="${news.title}" class="news-modal-image">` : ''}
+          ${news.image ? `<img src="${news.image}" alt="${title}" class="news-modal-image">` : ''}
           <div class="news-modal-text">
-            ${news.content.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('')}
+            ${content.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('')}
           </div>
         </div>
         <div class="news-modal-footer">
           <button class="btn btn-primary news-modal-contact" onclick="window.location.href='聯絡我們.html'">
-            聯絡我們
+            ${contactUsText}
           </button>
         </div>
       </div>

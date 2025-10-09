@@ -188,6 +188,11 @@ class I18nManager {
     const url = new URL(window.location);
     url.searchParams.set('lang', lang);
     window.history.replaceState({}, '', url);
+    
+    // 觸發語言切換事件，讓其他組件（如 NewsManager）能夠響應
+    window.dispatchEvent(new CustomEvent('languageChanged', { 
+      detail: { lang: lang } 
+    }));
   }
 
   bindEvents() {
@@ -603,7 +608,7 @@ class I18nManager {
         // Services Section
         services: {
           title: 'Our Services',
-          subtitle: 'Whether for business travel, family trips, or cargo transport, V-LIMO provides the perfect solution for you.'
+          subtitle: 'Whether for business travel, family trips, or cargo transport, 利盟 (V-LIMO) provides the perfect solution for you.'
         },
         service: {
           airport: {
@@ -690,7 +695,7 @@ class I18nManager {
         about: {
           title: 'Since 1990,<br>Your Best Transportation Partner',
           quote: 'We always uphold the principle of "Customer First, Service First".',
-          desc: 'V-LIMO provides comprehensive car services including rental, point-to-point transfer, and charter tours. As your transportation expert, we are committed to making every journey safer, more comfortable, and more convenient.',
+          desc: '利盟小客車租賃 provides comprehensive car services including rental, point-to-point transfer, and charter tours. As your transportation expert, we are committed to making every journey safer, more comfortable, and more convenient.',
           feature1: 'Transparent pricing with clear processes',
           feature2: 'New vehicles with clean and comfortable interiors',
           feature3: 'Dedicated service with fast communication'
@@ -730,12 +735,12 @@ class I18nManager {
         // News Section
         news: {
           title: 'Latest News',
-          subtitle: 'Stay updated with V-LIMO\'s latest information, promotions, and service announcements.'
+          subtitle: 'Stay updated with 利盟\'s latest information, promotions, and service announcements.'
         },
 
         // Footer
         footer: {
-          company: 'V-LIMO Car Rental Co., Ltd.',
+          company: '利盟小客車租賃有限公司',
           contact: {
             title: 'Contact Us',
             phone: 'Phone',
@@ -763,7 +768,7 @@ class I18nManager {
             call: 'Call Now',
             contact: 'Contact Us'
           },
-          copyright: 'Copyright © V-LIMO Car Rental Co., Ltd.',
+          copyright: 'Copyright © 利盟小客車租賃有限公司',
           meta: {
             privacy: 'Privacy Policy',
             terms: 'Terms of Service',
@@ -809,7 +814,7 @@ class I18nManager {
             title: 'Pickup Locations',
             taichung: 'Taichung Pickup:',
             hsinchu: 'Hsinchu Zhudong Pickup:',
-            search: 'Google Maps Search: V-LIMO Car/Truck/Rutrip Rental Pickup Point'
+            search: 'Google Maps Search: 利盟小客車/小貨車/Rutrip Rental Pickup Point'
           },
           pricing: {
             title: 'Rental Pricing',
