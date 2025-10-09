@@ -410,7 +410,8 @@ class NewsManager {
   }
 
   getCategoryName(categoryId) {
-    const category = this.newsData.categories.find(cat => cat.id === categoryId);
+    const categories = this.newsData.categories[this.currentLang] || this.newsData.categories['zh-TW'];
+    const category = categories.find(cat => cat.id === categoryId);
     return category ? category.name : categoryId;
   }
 
