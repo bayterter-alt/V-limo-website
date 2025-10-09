@@ -33,21 +33,28 @@ class NewsManager {
   async init() {
     try {
       this.currentLang = this.getCurrentLanguage(); // 獲取當前語言
+      console.log('📰 新聞系統初始化中... 當前語言:', this.currentLang);
+      
       await this.loadNewsData();
+      console.log('✅ 新聞資料載入成功');
+      
       this.renderCategories();
       this.filterNews();
       this.renderNews();
       this.renderPagination();
       this.bindEvents();
       
+      console.log('✅ 新聞系統初始化完成');
+      
       // 監聽語言切換事件
       window.addEventListener('languageChanged', (e) => {
         this.updateLanguage(e.detail.lang);
         this.filterNews();
         this.renderNews();
+        this.renderPagination();
       });
     } catch (error) {
-      console.error('初始化新聞系統失敗:', error);
+      console.error('❌ 初始化新聞系統失敗:', error);
       this.showError();
     }
   }
@@ -67,10 +74,24 @@ class NewsManager {
 
   renderCategories() {
     const filterContainer = document.getElementById('news-filter');
-    if (!filterContainer || !this.newsData.settings.showCategories) return;
+    if (!filterContainer) return;
+    
+    // 防護性檢查
+    if (!this.newsData || !this.newsData.categories || !this.newsData.settings) {
+      console.warn('新聞資料尚未載入或格式不正確');
+      return;
+    }
+    
+    if (!this.newsData.settings.showCategories) return;
 
     // 根據當前語言獲取分類
     const categories = this.newsData.categories[this.currentLang] || this.newsData.categories['zh-TW'];
+    
+    // 確保 categories 是陣列
+    if (!Array.isArray(categories)) {
+      console.error('分類資料格式錯誤，應為陣列:', categories);
+      return;
+    }
     
     filterContainer.innerHTML = categories.map(category => `
       <button class="news-filter-btn ${category.id === this.currentCategory ? 'active' : ''}" 

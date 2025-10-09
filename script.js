@@ -624,26 +624,28 @@ function initializeFormSystem() {
   console.log('🚀 初始化 Google 表單系統...');
   
   const form = document.getElementById('contactForm');
-  if (form) {
-    // 添加表單提交事件監聽器
-    form.addEventListener('submit', handleFormSubmit);
-    
-    console.log('✅ Google 表單處理器已啟用');
-    
-    // 更新系統指示器
-    const systemIndicator = form.querySelector('#formSystemType');
-    if (systemIndicator) {
-      systemIndicator.value = 'google-form';
-    }
-    
-    console.log('📋 表單配置:');
-    console.log('表單 ID:', GOOGLE_FORM_CONFIG.formId);
-    console.log('提交 URL:', GOOGLE_FORM_CONFIG.actionUrl);
-    console.log('欄位映射:', GOOGLE_FORM_CONFIG.fields);
-    
-  } else {
-    console.error('❌ 找不到 contactForm 表單元素');
+  if (!form) {
+    console.warn('⚠️ 找不到 contactForm 表單元素（可能不在聯絡我們頁面）');
+    return false;
   }
+  
+  // 添加表單提交事件監聽器
+  form.addEventListener('submit', handleFormSubmit);
+  
+  console.log('✅ Google 表單處理器已啟用');
+  
+  // 更新系統指示器
+  const systemIndicator = form.querySelector('#formSystemType');
+  if (systemIndicator) {
+    systemIndicator.value = 'google-form';
+  }
+  
+  console.log('📋 表單配置:');
+  console.log('表單 ID:', GOOGLE_FORM_CONFIG.formId);
+  console.log('提交 URL:', GOOGLE_FORM_CONFIG.actionUrl);
+  console.log('欄位映射:', GOOGLE_FORM_CONFIG.fields);
+  
+  return true;
 }
 
 /**
@@ -695,20 +697,27 @@ function fillTestData() {
 
 // ===== 初始化系統 =====
 document.addEventListener('DOMContentLoaded', function() {
-  // 初始化表單系統
-  setTimeout(() => {
-    console.log('🚀 啟動 Google 表單系統...');
-    initializeFormSystem();
-    
-    // 開發者工具函數註冊
-    window.testGoogleFormConnection = testGoogleFormConnection;
-    window.fillTestData = fillTestData;
-    window.initializeFormSystem = initializeFormSystem;
-    
-    console.log('💡 開發者工具已準備:');
-    console.log('- testGoogleFormConnection() - 測試連接');
-    console.log('- fillTestData() - 填入測試資料');
-    console.log('- initializeFormSystem() - 重新初始化系統');
-    
-  }, 1000);
+  // 僅在聯絡我們頁面初始化表單系統
+  const contactForm = document.getElementById('contactForm');
+  
+  if (contactForm) {
+    // 初始化表單系統
+    setTimeout(() => {
+      console.log('🚀 啟動 Google 表單系統...');
+      initializeFormSystem();
+      
+      // 開發者工具函數註冊
+      window.testGoogleFormConnection = testGoogleFormConnection;
+      window.fillTestData = fillTestData;
+      window.initializeFormSystem = initializeFormSystem;
+      
+      console.log('💡 開發者工具已準備:');
+      console.log('- testGoogleFormConnection() - 測試連接');
+      console.log('- fillTestData() - 填入測試資料');
+      console.log('- initializeFormSystem() - 重新初始化系統');
+      
+    }, 1000);
+  } else {
+    console.log('ℹ️ 當前頁面無聯絡表單，跳過表單系統初始化');
+  }
 });

@@ -148,6 +148,9 @@ class I18nManager {
         } else {
           el.textContent = translation;
         }
+      } else {
+        // 如果翻譯不存在，保留原有內容（不顯示警告）
+        // console.warn(`Translation missing for key: ${key}`);
       }
     });
 
@@ -169,7 +172,7 @@ class I18nManager {
       if (result && result[k] !== undefined) {
         result = result[k];
       } else {
-        console.warn(`Translation key not found: ${key}`);
+        // 靜默處理缺失的翻譯，避免控制台警告
         return null;
       }
     }
@@ -237,8 +240,10 @@ class I18nManager {
         info: {
           phone: '客服專線',
           hours: '營業時間',
-          address: '公司地址',
-          'address.detail': '台中市豐原區豐原大道七段66號'
+          address: {
+            title: '公司地址',
+            detail: '台中市豐原區豐原大道七段66號'
+          }
         },
 
         // USP 區塊
@@ -589,8 +594,10 @@ class I18nManager {
         info: {
           phone: 'Customer Service',
           hours: 'Business Hours',
-          address: 'Address',
-          'address.detail': 'No. 66, Sec. 7, Fengyuan Ave., Fengyuan Dist., Taichung City'
+          address: {
+            title: 'Address',
+            detail: 'No. 66, Sec. 7, Fengyuan Ave., Fengyuan Dist., Taichung City'
+          }
         },
 
         // USP Section
