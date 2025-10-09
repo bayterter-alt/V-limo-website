@@ -222,6 +222,7 @@ class I18nManager {
           booking: '線上訂車',
           truck: '貨車出租',
           rv: '露營車出租',
+          flight: '航班查詢',
           contact: '聯絡我們',
           'book-now': '立即預約'
         },
@@ -718,6 +719,29 @@ class I18nManager {
             book: '線上預約',
             call: '立即來電'
           }
+        },
+
+        // 航班查詢頁面
+        flight: {
+          title: '✈️ 航班資訊查詢',
+          subtitle: '輸入航班號碼，快速查詢航班資訊並預約機場接送',
+          input: {
+            placeholder: '例如：BR123, CI001, EVA001'
+          },
+          search: '查詢航班',
+          quickLinks: '快速查詢：',
+          tpe: '桃園機場',
+          result: {
+            departure: '起飛時間',
+            arrival: '抵達時間',
+            terminal: '航廈',
+            airline: '航空公司'
+          },
+          useInfo: '使用此航班資訊預約接送',
+          notice: {
+            title: '提示：',
+            content: '查詢到航班資訊後，點擊「使用此航班資訊預約接送」按鈕，系統將自動跳轉至預約表單並填入航班資訊，您只需補充姓名、聯絡方式等基本資料即可完成預約。'
+          }
         }
       },
 
@@ -728,6 +752,7 @@ class I18nManager {
           booking: 'Online Booking',
           truck: 'Truck Rental',
           rv: 'RV Rental',
+          flight: 'Flight Search',
           contact: 'Contact Us',
           'book-now': 'Book Now'
         },
@@ -1235,6 +1260,29 @@ class I18nManager {
         terms: {
           title: 'Terms of Service',
           intro: 'By clicking "Agree" when booking online, you agree to comply with the "Terms of Service" and "Privacy Policy". To ensure your rights, please read the following terms of service carefully.'
+        },
+
+        // Flight Search Page
+        flight: {
+          title: '✈️ Flight Information Search',
+          subtitle: 'Enter your flight number to quickly search flight information and book airport transfer',
+          input: {
+            placeholder: 'e.g., BR123, CI001, EVA001'
+          },
+          search: 'Search Flight',
+          quickLinks: 'Quick Links:',
+          tpe: 'Taoyuan Airport',
+          result: {
+            departure: 'Departure Time',
+            arrival: 'Arrival Time',
+            terminal: 'Terminal',
+            airline: 'Airline'
+          },
+          useInfo: 'Use This Flight Info to Book Transfer',
+          notice: {
+            title: 'Note:',
+            content: 'After finding your flight information, click the "Use This Flight Info to Book Transfer" button. The system will automatically redirect to the booking form with flight details pre-filled. You only need to provide your name, contact information, and other basic details to complete the booking.'
+          }
         }
       }
     };

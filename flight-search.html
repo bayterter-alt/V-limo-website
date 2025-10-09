@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>航班查詢 | 利盟租車</title>
+  <meta name="description" content="快速查詢您的航班資訊，自動填入機場接送預約表單，讓預約更快速便捷。" />
+  <meta name="theme-color" content="#1D4ED8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* 航班查詢專用樣式 */
+    .flight-search-section {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .flight-search-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    .flight-search-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .flight-search-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .flight-search-header h1 {
+      font-size: 2rem;
+      color: #1F2937;
+      margin-bottom: 0.5rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .flight-search-header p {
+      color: #6B7280;
+      font-size: 1rem;
+    }
+    
+    .flight-input-group {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .flight-input-wrapper {
+      position: relative;
+    }
+    
+    .flight-input-wrapper i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9CA3AF;
+      font-size: 1.2rem;
+    }
+    
+    .flight-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid #E5E7EB;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    .flight-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .flight-search-btn {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    
+    .flight-search-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .flight-search-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .quick-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    
+    .quick-link-btn {
+      padding: 0.5rem 1rem;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      border-radius: 0.5rem;
+      color: #4B5563;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .quick-link-btn:hover {
+      background: #E5E7EB;
+      color: #1F2937;
+    }
+    
+    .flight-result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #F9FAFB;
+      border-radius: 0.75rem;
+      border: 2px solid #E5E7EB;
+      display: none;
+    }
+    
+    .flight-result.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .flight-result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #E5E7EB;
+    }
+    
+    .flight-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1F2937;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .flight-status {
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .flight-status.scheduled {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+    
+    .flight-status.landed {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    
+    .flight-status.delayed {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    
+    .flight-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .flight-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .flight-info-label {
+      font-size: 0.875rem;
+      color: #6B7280;
+      font-weight: 500;
+    }
+    
+    .flight-info-value {
+      font-size: 1.125rem;
+      color: #1F2937;
+      font-weight: 600;
+    }
+    
+    .flight-route {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: white;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .flight-airport {
+      text-align: center;
+      flex: 1;
+    }
+    
+    .airport-code {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1F2937;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .airport-name {
+      font-size: 0.875rem;
+      color: #6B7280;
+      margin-top: 0.25rem;
+    }
+    
+    .flight-arrow {
+      flex: 0 0 auto;
+      padding: 0 1rem;
+      color: #9CA3AF;
+      font-size: 1.5rem;
+    }
+    
+    .use-flight-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .use-flight-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #6B7280;
+    }
+    
+    .loading i {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .info-notice {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-top: 2rem;
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .info-notice i {
+      color: #2563EB;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    
+    .info-notice-text {
+      color: #1E40AF;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .flight-input-group {
+        grid-template-columns: 1fr;
+      }
+      
+      .flight-search-card {
+        padding: 1.5rem;
+      }
+      
+      .flight-search-header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .flight-route {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .flight-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="main-header" role="banner">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="利盟租車首頁">
+        <img src="img/logo.png" alt="利盟租車 Logo" />
+      </a>
+      <nav class="main-nav" aria-label="主選單">
+        <ul class="nav-list">
+          <li><a href="index.html" data-i18n="nav.home">首頁</a></li>
+          <li><a href="https://v-limo.app/" data-i18n="nav.booking">線上訂車</a></li>
+          <li><a href="貨車出租.html" data-i18n="nav.truck">貨車出租</a></li>
+          <li><a href="露營車出租.html" data-i18n="nav.rv">露營車出租</a></li>
+          <li><a href="flight-search.html" class="active" data-i18n="nav.flight">航班查詢</a></li>
+          <li><a href="聯絡我們.html" data-i18n="nav.contact">聯絡我們</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="zh-TW" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary" data-i18n="nav.book-now">立即預約</a>
+        <button class="mobile-nav-toggle" aria-label="開啟選單" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav-overlay">
+    <nav class="mobile-nav-menu" aria-label="行動版選單">
+      <div class="mobile-nav-header">
+        <a href="index.html" class="mobile-brand-logo">
+          <img src="img/logo.png" alt="利盟租車 Logo" />
+        </a>
+        <button class="mobile-nav-close" aria-label="關閉選單">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html"><i class="fas fa-home"></i><span data-i18n="nav.home">首頁</span></a></li>
+        <li><a href="https://v-limo.app/"><i class="fas fa-shopping-cart"></i><span data-i18n="nav.booking">線上訂車</span></a></li>
+        <li><a href="貨車出租.html"><i class="fas fa-truck"></i><span data-i18n="nav.truck">貨車出租</span></a></li>
+        <li><a href="露營車出租.html"><i class="fas fa-campground"></i><span data-i18n="nav.rv">露營車出租</span></a></li>
+        <li><a href="flight-search.html" class="active"><i class="fas fa-plane"></i><span data-i18n="nav.flight">航班查詢</span></a></li>
+        <li><a href="聯絡我們.html"><i class="fas fa-envelope"></i><span data-i18n="nav.contact">聯絡我們</span></a></li>
+      </ul>
+      <div class="mobile-nav-footer">
+        <div class="mobile-contact-info">
+          <div class="mobile-contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:+886425208777">04-2520-8777</a>
+          </div>
+          <div class="mobile-contact-item">
+            <i class="fas fa-clock"></i>
+            <span>09:00 - 18:00</span>
+          </div>
+        </div>
+        <a href="聯絡我們.html" class="btn btn-primary mobile-cta-btn">
+          <i class="fas fa-calendar-check"></i> <span data-i18n="nav.book-now">立即預約</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- 航班查詢區塊 -->
+  <section class="flight-search-section">
+    <div class="flight-search-container">
+      <div class="flight-search-card">
+        <div class="flight-search-header">
+          <h1 data-i18n="flight.title">✈️ 航班資訊查詢</h1>
+          <p data-i18n="flight.subtitle">輸入航班號碼，快速查詢航班資訊並預約機場接送</p>
+        </div>
+
+        <div class="flight-input-group">
+          <div class="flight-input-wrapper">
+            <i class="fas fa-plane"></i>
+            <input 
+              type="text" 
+              id="flightNumber" 
+              class="flight-input" 
+              placeholder="例如：BR123, CI001, EVA001"
+              data-i18n-placeholder="flight.input.placeholder"
+            >
+          </div>
+          <button class="flight-search-btn" id="searchBtn" onclick="searchFlight()">
+            <i class="fas fa-search"></i>
+            <span data-i18n="flight.search">查詢航班</span>
+          </button>
+        </div>
+
+        <div class="quick-links">
+          <span style="color: #6B7280; font-size: 0.875rem;" data-i18n="flight.quickLinks">快速查詢：</span>
+          <a href="https://www.flightradar24.com/" target="_blank" class="quick-link-btn">
+            <i class="fas fa-external-link-alt"></i> FlightRadar24
+          </a>
+          <a href="https://www.flightstats.com/" target="_blank" class="quick-link-btn">
+            <i class="fas fa-external-link-alt"></i> FlightStats
+          </a>
+          <a href="https://www.taoyuan-airport.com/flight" target="_blank" class="quick-link-btn">
+            <i class="fas fa-external-link-alt"></i> <span data-i18n="flight.tpe">桃園機場</span>
+          </a>
+        </div>
+
+        <!-- 查詢結果 -->
+        <div id="flightResult" class="flight-result">
+          <div class="flight-result-header">
+            <div class="flight-number" id="resultFlightNumber">BR123</div>
+            <div class="flight-status scheduled" id="resultStatus">已排定</div>
+          </div>
+
+          <div class="flight-route">
+            <div class="flight-airport">
+              <div class="airport-code" id="departureCode">TPE</div>
+              <div class="airport-name" id="departureName">台灣桃園機場</div>
+            </div>
+            <div class="flight-arrow">
+              <i class="fas fa-plane"></i>
+            </div>
+            <div class="flight-airport">
+              <div class="airport-code" id="arrivalCode">NRT</div>
+              <div class="airport-name" id="arrivalName">日本成田機場</div>
+            </div>
+          </div>
+
+          <div class="flight-info-grid">
+            <div class="flight-info-item">
+              <span class="flight-info-label" data-i18n="flight.result.departure">起飛時間</span>
+              <span class="flight-info-value" id="departureTime">2024-01-15 10:30</span>
+            </div>
+            <div class="flight-info-item">
+              <span class="flight-info-label" data-i18n="flight.result.arrival">抵達時間</span>
+              <span class="flight-info-value" id="arrivalTime">2024-01-15 15:00</span>
+            </div>
+            <div class="flight-info-item">
+              <span class="flight-info-label" data-i18n="flight.result.terminal">航廈</span>
+              <span class="flight-info-value" id="terminal">第二航廈</span>
+            </div>
+            <div class="flight-info-item">
+              <span class="flight-info-label" data-i18n="flight.result.airline">航空公司</span>
+              <span class="flight-info-value" id="airline">長榮航空</span>
+            </div>
+          </div>
+
+          <button class="use-flight-btn" onclick="useFlightInfo()">
+            <i class="fas fa-check-circle"></i>
+            <span data-i18n="flight.useInfo">使用此航班資訊預約接送</span>
+          </button>
+        </div>
+
+        <div class="info-notice">
+          <i class="fas fa-info-circle"></i>
+          <div class="info-notice-text">
+            <strong data-i18n="flight.notice.title">提示：</strong>
+            <span data-i18n="flight.notice.content">查詢到航班資訊後，點擊「使用此航班資訊預約接送」按鈕，系統將自動跳轉至預約表單並填入航班資訊，您只需補充姓名、聯絡方式等基本資料即可完成預約。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="img/logo.png" alt="利盟租車 Logo" class="footer-logo" />
+        <p class="footer-tagline" data-i18n="footer.company">利盟小客車租賃有限公司</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4 data-i18n="footer.explore.title">探索</h4>
+          <ul>
+            <li><a href="https://v-limo.app/" data-i18n="footer.explore.booking">線上訂車</a></li>
+            <li><a href="交通接送車型介紹.html" data-i18n="footer.explore.vehicles">交通接送車型介紹</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4 data-i18n="footer.support.title">支援</h4>
+          <ul>
+            <li><a href="聯絡我們.html" data-i18n="footer.support.contact">聯絡我們</a></li>
+            <li><a href="隱私權政策.html" data-i18n="footer.support.privacy">隱私權政策</a></li>
+            <li><a href="服務條款.html" data-i18n="footer.support.terms">服務條款</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">Copyright © 利盟小客車租賃有限公司</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="js/i18n.js"></script>
+  
+  <script>
+    // 模擬航班數據庫（實際應用中應該調用航班API）
+    const flightDatabase = {
+      'BR123': {
+        flightNumber: 'BR123',
+        airline: '長榮航空 EVA Air',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 10:30',
+          terminal: '第二航廈 Terminal 2'
+        },
+        arrival: {
+          code: 'NRT',
+          name: '日本成田機場',
+          nameEn: 'Tokyo Narita Airport',
+          time: '2024-12-15 15:00'
+        }
+      },
+      'CI001': {
+        flightNumber: 'CI001',
+        airline: '中華航空 China Airlines',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 14:20',
+          terminal: '第一航廈 Terminal 1'
+        },
+        arrival: {
+          code: 'HND',
+          name: '日本羽田機場',
+          nameEn: 'Tokyo Haneda Airport',
+          time: '2024-12-15 18:45'
+        }
+      },
+      'BR189': {
+        flightNumber: 'BR189',
+        airline: '長榮航空 EVA Air',
+        status: 'landed',
+        statusText: '已降落',
+        statusTextEn: 'Landed',
+        departure: {
+          code: 'HKG',
+          name: '香港國際機場',
+          nameEn: 'Hong Kong International Airport',
+          time: '2024-12-15 08:00'
+        },
+        arrival: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-15 09:45',
+          terminal: '第二航廈 Terminal 2'
+        }
+      },
+      'CI835': {
+        flightNumber: 'CI835',
+        airline: '中華航空 China Airlines',
+        status: 'scheduled',
+        statusText: '已排定',
+        statusTextEn: 'Scheduled',
+        departure: {
+          code: 'LAX',
+          name: '洛杉磯國際機場',
+          nameEn: 'Los Angeles International Airport',
+          time: '2024-12-15 23:55'
+        },
+        arrival: {
+          code: 'TPE',
+          name: '台灣桃園機場',
+          nameEn: 'Taiwan Taoyuan Airport',
+          time: '2024-12-17 05:30',
+          terminal: '第一航廈 Terminal 1'
+        }
+      }
+    };
+
+    let currentFlightData = null;
+
+    function searchFlight() {
+      const input = document.getElementById('flightNumber');
+      const flightNumber = input.value.trim().toUpperCase();
+      
+      if (!flightNumber) {
+        alert('請輸入航班號碼');
+        return;
+      }
+
+      const searchBtn = document.getElementById('searchBtn');
+      searchBtn.disabled = true;
+      searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 查詢中...';
+
+      // 模擬API查詢延遲
+      setTimeout(() => {
+        const flightData = flightDatabase[flightNumber];
+        
+        if (flightData) {
+          displayFlightResult(flightData);
+        } else {
+          alert(`找不到航班 ${flightNumber}\\n\\n請嘗試以下航班號碼：\\n• BR123 (桃園 → 東京成田)\\n• CI001 (桃園 → 東京羽田)\\n• BR189 (香港 → 桃園)\\n• CI835 (洛杉磯 → 桃園)\\n\\n或使用快速查詢連結查詢其他航班。`);
+        }
+        
+        searchBtn.disabled = false;
+        searchBtn.innerHTML = '<i class="fas fa-search"></i> <span data-i18n="flight.search">查詢航班</span>';
+      }, 1000);
+    }
+
+    function displayFlightResult(data) {
+      currentFlightData = data;
+      const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+      const isEnglish = currentLang === 'en';
+      
+      document.getElementById('resultFlightNumber').textContent = data.flightNumber;
+      document.getElementById('resultStatus').textContent = isEnglish ? data.statusTextEn : data.statusText;
+      document.getElementById('resultStatus').className = 'flight-status ' + data.status;
+      
+      document.getElementById('departureCode').textContent = data.departure.code;
+      document.getElementById('departureName').textContent = isEnglish ? data.departure.nameEn : data.departure.name;
+      document.getElementById('departureTime').textContent = data.departure.time;
+      
+      document.getElementById('arrivalCode').textContent = data.arrival.code;
+      document.getElementById('arrivalName').textContent = isEnglish ? data.arrival.nameEn : data.arrival.name;
+      document.getElementById('arrivalTime').textContent = data.arrival.time;
+      
+      document.getElementById('terminal').textContent = data.departure.terminal || data.arrival.terminal || '-';
+      document.getElementById('airline').textContent = data.airline;
+      
+      document.getElementById('flightResult').classList.add('show');
+      
+      // 滾動到結果
+      document.getElementById('flightResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function useFlightInfo() {
+      if (!currentFlightData) return;
+      
+      const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
+      const isEnglish = currentLang === 'en';
+      
+      // 判斷是出發還是抵達台灣
+      const isTaiwanDeparture = currentFlightData.departure.code === 'TPE';
+      const isTaiwanArrival = currentFlightData.arrival.code === 'TPE';
+      
+      let flightInfo = '';
+      if (isTaiwanDeparture) {
+        flightInfo = isEnglish 
+          ? `Flight Information:\\n✈️ Flight: ${currentFlightData.flightNumber}\\n🏢 Airline: ${currentFlightData.airline}\\n🛫 Departure: ${currentFlightData.departure.name}\\n📅 Departure Time: ${currentFlightData.departure.time}\\n🏢 Terminal: ${currentFlightData.departure.terminal}\\n🛬 Destination: ${currentFlightData.arrival.name}\\n\\n🚗 Service Type: Airport Drop-off`
+          : `航班資訊：\\n✈️ 航班號碼：${currentFlightData.flightNumber}\\n🏢 航空公司：${currentFlightData.airline}\\n🛫 起飛地點：${currentFlightData.departure.name}\\n📅 起飛時間：${currentFlightData.departure.time}\\n🏢 航廈資訊：${currentFlightData.departure.terminal}\\n🛬 目的地：${currentFlightData.arrival.name}\\n\\n🚗 服務類型：機場送機`;
+      } else if (isTaiwanArrival) {
+        flightInfo = isEnglish
+          ? `Flight Information:\\n✈️ Flight: ${currentFlightData.flightNumber}\\n🏢 Airline: ${currentFlightData.airline}\\n🛫 Departure: ${currentFlightData.departure.name}\\n🛬 Arrival: ${currentFlightData.arrival.name}\\n📅 Arrival Time: ${currentFlightData.arrival.time}\\n🏢 Terminal: ${currentFlightData.arrival.terminal}\\n\\n🚗 Service Type: Airport Pickup`
+          : `航班資訊：\\n✈️ 航班號碼：${currentFlightData.flightNumber}\\n🏢 航空公司：${currentFlightData.airline}\\n🛫 出發地：${currentFlightData.departure.name}\\n🛬 抵達地點：${currentFlightData.arrival.name}\\n📅 抵達時間：${currentFlightData.arrival.time}\\n🏢 航廈資訊：${currentFlightData.arrival.terminal}\\n\\n🚗 服務類型：機場接機`;
+      }
+      
+      // 使用 URL 參數傳遞資訊
+      const params = new URLSearchParams({
+        service: 'airport',
+        flightInfo: flightInfo
+      });
+      
+      window.location.href = `聯絡我們.html?${params.toString()}`;
+    }
+
+    // 支援按 Enter 鍵搜尋
+    document.getElementById('flightNumber').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchFlight();
+      }
+    });
+
+    // 監聽語言切換事件
+    window.addEventListener('languageChanged', function(e) {
+      // 如果有顯示航班結果，重新渲染
+      if (currentFlightData) {
+        displayFlightResult(currentFlightData);
+      }
+    });
+  </script>
+</body>
+</html>

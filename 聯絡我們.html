@@ -273,6 +273,51 @@
     
     sessionStorage.setItem('formStartTime', Date.now().toString());
     
+    // ========== 航班資訊自動填充功能 ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service');
+    const flightInfo = urlParams.get('flightInfo');
+    
+    if (service || flightInfo) {
+      console.log('✈️ 檢測到航班資訊，自動填充表單');
+      
+      // 自動選擇服務類型
+      if (service === 'airport') {
+        const serviceSelect = document.getElementById('service');
+        if (serviceSelect) {
+          serviceSelect.value = 'airport';
+          console.log('✅ 已自動選擇：機場接送');
+        }
+      }
+      
+      // 自動填入航班資訊到訊息內容
+      if (flightInfo) {
+        const messageTextarea = document.getElementById('message');
+        if (messageTextarea) {
+          messageTextarea.value = decodeURIComponent(flightInfo);
+          console.log('✅ 已自動填入航班資訊');
+          
+          // 添加視覺提示
+          messageTextarea.style.border = '2px solid #10B981';
+          messageTextarea.style.backgroundColor = '#ECFDF5';
+          setTimeout(() => {
+            messageTextarea.style.border = '';
+            messageTextarea.style.backgroundColor = '';
+          }, 2000);
+          
+          // 滾動到表單區域
+          setTimeout(() => {
+            messageTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 300);
+        }
+      }
+      
+      // 清除URL參數（保持頁面整潔）
+      if (window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+    
     const form = document.getElementById('contactForm');
     if (form) {
       // 移除所有可能的舊事件監聽器
