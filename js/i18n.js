@@ -545,16 +545,20 @@ class I18nManager {
             name: '您的姓名',
             email: '電子郵件',
             phone: '聯絡電話',
-            service: '服務類型',
-            'service.placeholder': '請選擇服務類型',
-            'service.airport': '機場接送',
-            'service.tour': '旅遊包車',
-            'service.rv': '露營車出租',
-            'service.truck': '貨車出租',
-            'service.other': '其他諮詢',
+            service: {
+              label: '服務類型',
+              placeholder: '請選擇服務類型',
+              airport: '機場接送',
+              tour: '旅遊包車',
+              rv: '露營車出租',
+              truck: '貨車出租',
+              other: '其他諮詢'
+            },
             subject: '主旨',
-            message: '訊息內容',
-            'message.placeholder': '請詳細描述您的需求，包含日期、時間、地點等資訊',
+            message: {
+              label: '訊息內容',
+              placeholder: '請詳細描述您的需求，包含日期、時間、地點等資訊'
+            },
             submit: '確認送出'
           }
         }
@@ -893,16 +897,20 @@ class I18nManager {
             name: 'Your Name',
             email: 'Email',
             phone: 'Phone Number',
-            service: 'Service Type',
-            'service.placeholder': 'Please select service type',
-            'service.airport': 'Airport Transfer',
-            'service.tour': 'Charter Service',
-            'service.rv': 'RV Rental',
-            'service.truck': 'Truck Rental',
-            'service.other': 'Other Inquiry',
+            service: {
+              label: 'Service Type',
+              placeholder: 'Please select service type',
+              airport: 'Airport Transfer',
+              tour: 'Charter Service',
+              rv: 'RV Rental',
+              truck: 'Truck Rental',
+              other: 'Other Inquiry'
+            },
             subject: 'Subject',
-            message: 'Message',
-            'message.placeholder': 'Please describe your needs in detail, including date, time, location, etc.',
+            message: {
+              label: 'Message',
+              placeholder: 'Please describe your needs in detail, including date, time, location, etc.'
+            },
             submit: 'Submit'
           }
         }
