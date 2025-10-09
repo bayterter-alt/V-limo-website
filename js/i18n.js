@@ -566,6 +566,158 @@ class I18nManager {
             },
             submit: '確認送出'
           }
+        },
+
+        // 交通接送車型介紹頁面
+        'vehicles-page': {
+          hero: {
+            title: '頂級車隊陣容',
+            subtitle: '頂級車隊陣容，滿足您所有的交通需求。從豪華保母車到商務轎車，我們提供最舒適、安全的交通服務。'
+          },
+          tab: {
+            exterior: '外觀',
+            interior: '內裝'
+          },
+          'features-title': '車輛特色',
+          spec: {
+            capacity: '乘載人數',
+            size: '車身尺寸',
+            ac: '空調系統',
+            luggage: '行李空間',
+            safety: '安全配備',
+            seating: '座椅配置',
+            route: '適用路線'
+          },
+          // Vehicle 1: VW Crafter 2022
+          v1: {
+            'img-ext': '展示豪華保母車外觀設計',
+            'img-int': '展示頭等艙豪華內裝空間',
+            category: '頂級豪華',
+            name: '豪華保母車 Volkswagen Crafter 2022',
+            slogan: '陸地頭等艙豪華享受',
+            'capacity-val': '8人 (含行李)',
+            'ac-val': '獨立後座冷氣',
+            'f1-title': '超大空間',
+            'f1-desc': '後車廂空間達3,201-4,051mm，連身高190cm成人都可輕鬆站立行走',
+            'f2-title': '智能座椅系統',
+            'f2-desc': '鋁合金滑軌地板，6張快拆獨立座椅可靈活調整',
+            'f3-title': '全景式窗戶',
+            'f3-desc': '兩側大型固定窗提供乘客絕佳觀景視野',
+            'f4-title': '車艙收納',
+            'f4-desc': '天花板收納空間設計，方便存放個人物品'
+          },
+          // Vehicle 2: VW Crafter 2015
+          v2: {
+            'img-ext': '明星保母車高級外觀設計',
+            'img-int': '9人座豪華座椅與寬敞行李空間',
+            category: '高級首選',
+            name: '豪華保母車 Volkswagen Crafter 2015',
+            slogan: '移動式豪華頭等艙',
+            'capacity-val': '8人 (含行李)',
+            'luggage-val': '超大行李置放空間',
+            features: '明星保母車特色',
+            desc: '明星保母車高級首選，Crafter擁有無與倫比的乘客艙空間，提供舒適的9人座配置。已成為明星保母車、高級遊覽車的首選車款。除了9人座配置，更擁有超大行李空間，輕鬆容納所有乘客的大型行李。'
+          },
+          // Vehicle 3: VW T6
+          v3: {
+            'img-ext': '包車首選頂級車種外觀',
+            'img-int': '寬敞明亮座艙與頂級安全配備',
+            category: '包車首選',
+            name: 'Volkswagen T6',
+            slogan: '包車首選頂級車種',
+            'capacity-val': '7人',
+            'safety-val': '全頂級安全系統',
+            'safety-title': '安全配備',
+            s1: '電子行車穩定系統',
+            s2: '防鎖死煞車系統',
+            s3: '電子煞車力道分配系統',
+            s4: '電子防滑差速器',
+            s5: '加速循跡控制系統',
+            s6: '減速循跡控制系統',
+            desc: '寬敞、明亮的福斯T6座艙，配載全最頂級的安全配備，讓每一趟旅程都安全舒適。'
+          },
+          // Vehicle 4: Toyota Granvia
+          v4: {
+            'img-ext': '禮遇不凡的豪華外觀設計',
+            'img-int': 'Captain豪華皮質座椅與舒適懸吊',
+            category: '禮遇不凡',
+            name: 'Toyota Granvia',
+            slogan: '禮遇不凡的豪華體驗',
+            'capacity-val': '5人 (含行李)',
+            'seating-val': 'Captain豪華皮質座椅',
+            'cabin-title': '豪華座艙',
+            desc: '為滿足急速成長的高品質旅遊需求，Granvia全車系標配後座第1、2排Captain豪華皮質座椅，獨立的座椅與扶手讓乘客擁有個人專屬的乘坐空間，賦予如家一般自在、舒適的安全感，降低長時間乘車的負擔與疲勞。',
+            'suspension-title': '前麥花臣後四連桿懸吊',
+            'suspension-desc': '有效減緩來自路面的震動，帶給後座乘客舒適的乘坐體驗'
+          },
+          // Vehicle 5: IVECO Medium Bus
+          v5: {
+            'img-ext': '歐系IVECO中型客車專業外觀',
+            'img-int': '豪華三排大座椅與專業配備',
+            category: '山區專用',
+            name: '歐系 IVECO 中型客車',
+            slogan: '豪華寬敞的舒適乘坐體驗',
+            'capacity-val': '23人 (含專業司機)',
+            'route-val': '特定山區路線',
+            'equip-title': '專業配備',
+            'f1-title': '豪華三排大座椅',
+            'f1-desc': '寬敞舒適的乘坐空間',
+            'f2-title': '氣壓式懸吊系統',
+            'f2-desc': '提供更穩定舒適的行駛體驗',
+            'f3-title': '油壓減速器',
+            'f3-desc': '避免山區煞車溫度過高，確保安全',
+            'route-title': '特定路線服務',
+            r1: '司馬庫斯',
+            r2: '大雪山',
+            r3: '嘉義梅山',
+            r4: '明池森林遊樂區'
+          },
+          // Vehicle 6: Mercedes V250D
+          v6: {
+            'img-ext': '豪華舒適的選擇',
+            'img-int': 'M-Benz V-Class V250d',
+            category: '舒適奢華',
+            name: 'Mercedes V250D',
+            slogan: '新時代的智慧奢華行車體驗',
+            'capacity-val': '6人 (含專業司機)',
+            'luggage-val': '4件 (27吋)',
+            'luxury-title': 'Maybach 級奢華配備',
+            desc: 'M-BENZ V-CLASS V250D 是一款豪華六人座廂型車，擁有寬敞舒適的內裝與高質感配備，非常適合商務接送與家庭旅遊使用。',
+            l1: '頂級航太座椅',
+            l2: '娛樂系統',
+            l3: '全景式電動天窗',
+            l4: 'Burmester 3D環繞音響',
+            l5: '電動門',
+            l6: '室內環景照明系統'
+          },
+          // Vehicle 7: Toyota Camry Hybrid
+          v7: {
+            'img-ext': '雅致舒適的高級房車外觀',
+            'img-int': 'Toyota Safety Sense 2.0智能內裝',
+            category: '環保節能',
+            name: 'Toyota Camry Hybrid',
+            slogan: '雅致舒適的高級房車',
+            'capacity-val': '3人 (含專業司機)',
+            'luggage-val': '2件 (27吋)',
+            'tech-title': 'Toyota Safety Sense 2.0',
+            desc: '升級「Toyota Safety Sense 2.0智動駕駛輔助系統」，全車最高搭載34項主、被動安全防護系統，提供駕駛與乘客更完整的安全防護。',
+            t1: 'AHB智慧型遠光燈自動切換',
+            t2: 'PCS預警式防護系統',
+            t3: '緊急閃避轉向輔助',
+            t4: 'ACC全速域主動式車距維持',
+            t5: 'LTA車道循跡輔助系統',
+            t6: 'Stop & Go功能'
+          },
+          notice: {
+            title: '重要提醒',
+            content: '以上車輛內裝僅供參考，實際內裝以現場車輛為主。我們保證提供的每台車輛都經過嚴格檢查，確保安全與舒適。'
+          },
+          cta: {
+            title: '立即預約專屬用車',
+            subtitle: '專業司機、頂級車輛、貼心服務，讓每趟旅程都成為美好回憶',
+            book: '線上預約',
+            call: '立即來電'
+          }
         }
       },
 
