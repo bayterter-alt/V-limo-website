@@ -16,6 +16,7 @@ let tokenExpiry = 0;
 
 // ⚡ 查詢結果快取，降低重複請求與 429 機率
 const flightResultCache = new Map(); // key: flightNumber, value: { data, expiry }
+const RESULT_CACHE_TTL_MS = 60 * 1000; // 60 秒快取
 
 // ⚡ 全域節流：最多 5 次/60 秒 對上游 TDX FIDS 的請求
 const RATE_LIMIT_MAX = 5;
@@ -133,8 +134,8 @@ async function handleRequest(request, event) {
     }
 
     // 步驟 3: 格式化並返回數據（並寫入短期快取）
-    // 只將非錯誤結果寫入快取，TTL 30 秒
-    flightResultCache.set(flightNumber, { data: flightData, expiry: Date.now() + 30 * 1000 });
+    // 只將非錯誤結果寫入快取
+    flightResultCache.set(flightNumber, { data: flightData, expiry: Date.now() + RESULT_CACHE_TTL_MS });
     return new Response(JSON.stringify(flightData), {
       headers: {
         'Content-Type': 'application/json',
