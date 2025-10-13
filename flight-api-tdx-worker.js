@@ -396,6 +396,30 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
 
     const list = await response.json();
     console.log(`   Results: ${list?.length || 0} flights fetched (pre-filter)`);
+    
+    // 🔍 調試：顯示第一筆資料的結構
+    if (list && list.length > 0) {
+      const sample = list[0];
+      console.log(`   Sample record keys:`, Object.keys(sample).join(', '));
+      console.log(`   Sample complete structure:`, JSON.stringify(sample, null, 2).substring(0, 500));
+      
+      // 檢查嵌套結構
+      if (sample.FIDSDeparture) {
+        console.log(`   FIDSDeparture array length:`, sample.FIDSDeparture.length);
+        if (sample.FIDSDeparture.length > 0) {
+          console.log(`   FIDSDeparture[0] keys:`, Object.keys(sample.FIDSDeparture[0]).join(', '));
+          console.log(`   FIDSDeparture[0] sample:`, sample.FIDSDeparture[0]);
+        }
+      }
+      if (sample.FIDSArrival) {
+        console.log(`   FIDSArrival array length:`, sample.FIDSArrival.length);
+        if (sample.FIDSArrival.length > 0) {
+          console.log(`   FIDSArrival[0] keys:`, Object.keys(sample.FIDSArrival[0]).join(', '));
+          console.log(`   FIDSArrival[0] sample:`, sample.FIDSArrival[0]);
+        }
+      }
+    }
+    
     if (debug && debugData) {
       debugData.push({ airport: airportCode, sample: (list || []).slice(0, 3) });
     }
