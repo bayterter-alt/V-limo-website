@@ -14,6 +14,29 @@ const corsHeaders = {
 let cachedToken = null;
 let tokenExpiry = 0;
 
+// ⚡ 查詢結果快取，降低重複請求與 429 機率
+const flightResultCache = new Map(); // key: flightNumber, value: { data, expiry }
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url, options, maxRetries = 1) {
+  let attempt = 0;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const response = await fetch(url, options);
+    if (response.status !== 429 || attempt >= maxRetries) {
+      return response;
+    }
+    const retryAfterHeader = response.headers.get('Retry-After');
+    const retryMs = retryAfterHeader ? Number(retryAfterHeader) * 1000 : 400 + Math.floor(Math.random() * 600);
+    console.warn(`⏳ [TDX API] 429 received. Backing off for ${retryMs} ms (attempt ${attempt + 1}/${maxRetries})`);
+    await sleep(retryMs);
+    attempt += 1;
+  }
+}
+
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request, event));
 });
@@ -59,6 +82,17 @@ async function handleRequest(request, event) {
   }
 
   try {
+    // 先檢查快取結果（短期 30 秒）
+    const cached = flightResultCache.get(flightNumber);
+    if (cached && cached.expiry > Date.now()) {
+      console.log('⚡ [Cache] Returning cached flight result for', flightNumber);
+      return new Response(JSON.stringify(cached.data), {
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders
+        }
+      });
+    }
     // 步驟 1: 取得 TDX Access Token
     const accessToken = await getTDXAccessToken(TDX_CLIENT_ID, TDX_CLIENT_SECRET);
     
@@ -83,7 +117,9 @@ async function handleRequest(request, event) {
       });
     }
 
-    // 步驟 3: 格式化並返回數據
+    // 步驟 3: 格式化並返回數據（並寫入短期快取）
+    // 只將非錯誤結果寫入快取，TTL 30 秒
+    flightResultCache.set(flightNumber, { data: flightData, expiry: Date.now() + 30 * 1000 });
     return new Response(JSON.stringify(flightData), {
       headers: {
         'Content-Type': 'application/json',
@@ -215,19 +251,21 @@ async function searchTDXFlight(flightNumber, accessToken) {
  */
 async function searchFlightsByType(airportCode, type, flightNumber, accessToken) {
   // D = Departure (出發), A = Arrival (抵達)
-  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=FlightNumber eq '${flightNumber}' and ScheduleDepartureTime ne null&$format=JSON`;
+  // 僅在出發查詢時帶 ScheduleDepartureTime 過濾；抵達則帶 ScheduleArrivalTime
+  const scheduleFilter = type === 'D' ? "ScheduleDepartureTime ne null" : "ScheduleArrivalTime ne null";
+  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=FlightNumber eq '${flightNumber}' and ${scheduleFilter}&$format=JSON`;
   
   console.log(`🔍 [TDX API] Searching ${airportCode} for ${flightNumber}...`);
   console.log(`   URL: ${apiUrl}`);
   console.log(`   Token exists: ${!!accessToken}`);
   
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetchWithRetry(apiUrl, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Accept': 'application/json'
       }
-    });
+    }, 1);
 
     console.log(`📥 [TDX API] Response from ${airportCode}`);
     console.log(`   Status: ${response.status}`);
