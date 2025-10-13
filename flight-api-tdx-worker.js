@@ -428,67 +428,47 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
     const wanted = normalizeFlightNumber(flightNumber);
     console.log(`   Looking for normalized: "${wanted}"`);
 
-    // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr / Flight）
-    const matched = (list || []).find(rec => {
-      const candidates = getRecordFlightCandidates(rec);
-      if (!candidates.length) return false;
-      
-      // 🔍 調試：顯示候選航班號
-      const normalizedCandidates = candidates.map(c => normalizeFlightNumber(c));
-      if (normalizedCandidates.length > 0) {
-        console.log(`   Checking flight: ${normalizedCandidates.join(', ')} (raw: ${candidates.join(', ')})`);
+    // 🎯 TDX FIDS 使用嵌套結構：需要搜尋 FIDSDeparture 和 FIDSArrival 陣列
+    let matched = null;
+    let matchedType = null;
+    
+    for (const rec of list || []) {
+      // 搜尋出發航班
+      if (rec.FIDSDeparture && Array.isArray(rec.FIDSDeparture)) {
+        for (const flight of rec.FIDSDeparture) {
+          const flightId = `${flight.AirlineID || ''}${flight.FlightNumber || ''}`;
+          if (normalizeFlightNumber(flightId) === wanted) {
+            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSDeparture`);
+            console.log(`   Raw data:`, flight);
+            matched = flight;
+            matchedType = 'departure';
+            break;
+          }
+        }
       }
       
-      return candidates.some(c => normalizeFlightNumber(c) === wanted);
-    });
+      // 如果還沒找到，搜尋抵達航班
+      if (!matched && rec.FIDSArrival && Array.isArray(rec.FIDSArrival)) {
+        for (const flight of rec.FIDSArrival) {
+          const flightId = `${flight.AirlineID || ''}${flight.FlightNumber || ''}`;
+          if (normalizeFlightNumber(flightId) === wanted) {
+            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSArrival`);
+            console.log(`   Raw data:`, flight);
+            matched = flight;
+            matchedType = 'arrival';
+            break;
+          }
+        }
+      }
+      
+      if (matched) break;
+    }
 
     if (matched) {
-      console.log(`✅ [TDX API] Flight ${flightNumber} matched at ${airportCode}`);
       return formatTDXFlightData(matched, airportCode);
     }
-
-    // 🎯 優化：減少 filtered 查詢次數以節省 API 配額
-    // 只在初始查詢完全沒結果時，嘗試 1 次精準查詢（而非 5 次）
-    const { airlineCandidate, numericPart } = parseWantedFlight(flightNumber);
-    if (numericPart && list && list.length === 0) {
-      // 只嘗試最常用的欄位名稱
-      const field = 'FlightNumber'; // 最標準的欄位名
-      try {
-        const filterParts = [`${field} eq '${numericPart}'`];
-        if (airlineCandidate) filterParts.push(`AirlineID eq '${airlineCandidate}'`);
-        const filter = encodeURIComponent(filterParts.join(' and '));
-        const url = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=${filter}&$top=50&$format=JSON`;
-        console.log(`   Trying filtered fetch: ${url}`);
-
-        if (!canPerformUpstreamRequest()) {
-          const retryAfterSec = getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
-          return { rateLimited: true, retryAfterSeconds: retryAfterSec };
-        }
-
-        const resp = await fetchWithRetry(url, {
-          headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' }
-        }, 0); // 不重試，節省請求
-
-        if (resp.ok) {
-          const arr = await resp.json();
-          console.log(`   Filtered results: ${Array.isArray(arr) ? arr.length : 0}`);
-          const hit = (arr || []).find(rec => {
-            const candidates = getRecordFlightCandidates(rec);
-            if (!candidates.length) return false;
-            return candidates.some(c => normalizeFlightNumber(c) === wanted);
-          });
-          if (hit) {
-            console.log(`✅ [TDX API] Filtered match at ${airportCode}`);
-            return formatTDXFlightData(hit, airportCode);
-          }
-        } else if (resp.status === 429) {
-          const ra = resp.headers.get('Retry-After');
-          return { rateLimited: true, retryAfterSeconds: ra ? Number(ra) : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) };
-        }
-      } catch (e) {
-        console.warn(`   Filtered fetch exception:`, e.message);
-      }
-    }
+    
+    console.log(`   ❌ No match found for ${flightNumber} at ${airportCode}`);
   } catch (error) {
     console.error(`❌ [TDX API] Exception searching ${airportCode}:`, error.message);
   }
@@ -497,42 +477,60 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
 }
 
 /**
- * 格式化 TDX 航班數據
+ * 格式化 TDX 航班數據（FIDS 嵌套結構）
  */
 function formatTDXFlightData(flight, airportCode) {
-  const isDeparture = flight.ScheduleDepartureTime != null;
+  // 判斷是出發還是抵達航班
+  const isDeparture = flight.ScheduleDepartureTime != null || flight.DepartureAirportID != null;
+  
+  // 機場名稱映射
+  const getAirportName = (code) => {
+    const names = {
+      'TPE': '台灣桃園國際機場',
+      'TSA': '台北松山機場',
+      'KHH': '高雄小港機場',
+      'RMQ': '台中清泉岡機場'
+    };
+    return names[code] || code;
+  };
+  
+  // 航班狀態判斷
+  const getStatus = () => {
+    if (flight.ActualDepartureTime) return 'active';  // 已起飛
+    if (flight.ActualArrivalTime) return 'landed';     // 已降落
+    if (flight.DepartureRemark?.includes('取消') || flight.ArrivalRemark?.includes('取消')) {
+      return 'cancelled';
+    }
+    return 'scheduled';
+  };
   
   return {
-    flightNumber: getRecordFlightNumber(flight),
-    airline: flight.AirlineID || flight.AirlineName?.Zh_tw || 'Unknown',
-    status: translateStatus(flight.FlightStatus),
+    flightNumber: `${flight.AirlineID || ''}${flight.FlightNumber || ''}`,
+    airline: flight.AirlineID || 'Unknown',
+    status: getStatus(),
     departure: {
-      airport: isDeparture ? 
-        (airportCode === 'TPE' ? '台灣桃園國際機場' : '台北松山機場') : 
-        (flight.DepartureAirportName?.Zh_tw || flight.DepartureAirportID),
-      iata: isDeparture ? airportCode : flight.DepartureAirportID,
-      icao: isDeparture ? (airportCode === 'TPE' ? 'RCTP' : 'RCSS') : '',
+      airport: getAirportName(flight.DepartureAirportID || airportCode),
+      iata: flight.DepartureAirportID || airportCode,
+      icao: (flight.DepartureAirportID === 'TPE' || airportCode === 'TPE') ? 'RCTP' : 'RCSS',
       terminal: flight.Terminal || '',
-      gate: flight.Gate || '',
+      gate: (flight.Gate || '').trim(),
       scheduled: flight.ScheduleDepartureTime,
       estimated: flight.EstimatedDepartureTime,
       actual: flight.ActualDepartureTime,
       timezone: 'Asia/Taipei'
     },
     arrival: {
-      airport: !isDeparture ? 
-        (airportCode === 'TPE' ? '台灣桃園國際機場' : '台北松山機場') : 
-        (flight.ArrivalAirportName?.Zh_tw || flight.ArrivalAirportID),
-      iata: !isDeparture ? airportCode : flight.ArrivalAirportID,
-      icao: !isDeparture ? (airportCode === 'TPE' ? 'RCTP' : 'RCSS') : '',
+      airport: getAirportName(flight.ArrivalAirportID || airportCode),
+      iata: flight.ArrivalAirportID || airportCode,
+      icao: (flight.ArrivalAirportID === 'TPE' || airportCode === 'TPE') ? 'RCTP' : 'RCSS',
       terminal: flight.Terminal || '',
-      gate: flight.Gate || '',
+      gate: (flight.Gate || '').trim(),
       scheduled: flight.ScheduleArrivalTime,
       estimated: flight.EstimatedArrivalTime,
       actual: flight.ActualArrivalTime,
       timezone: 'Asia/Taipei'
     },
-    aircraft: null,
+    aircraft: flight.AcType || null,
     source: 'TDX'
   };
 }
