@@ -16,10 +16,10 @@ let tokenExpiry = 0;
 
 // ⚡ 查詢結果快取，降低重複請求與 429 機率
 const flightResultCache = new Map(); // key: flightNumber, value: { data, expiry }
-const RESULT_CACHE_TTL_MS = 60 * 1000; // 60 秒快取
+const RESULT_CACHE_TTL_MS = 5 * 60 * 1000; // 5 分鐘快取（航班資訊變動不會太頻繁）
 
-// ⚡ 全域節流：最多 5 次/60 秒 對上游 TDX FIDS 的請求
-const RATE_LIMIT_MAX = 5;
+// ⚡ 全域節流：最多 30 次/60 秒 對上游 TDX FIDS 的請求（遠低於 TDX 的 60次/秒 限制）
+const RATE_LIMIT_MAX = 30;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 let upstreamRequestTimestamps = [];
 
@@ -66,14 +66,21 @@ async function fetchWithRetry(url, options, maxRetries = 1) {
   }
 }
 
+// Export for ES Modules format (recommended)
+export default {
+  async fetch(request, env, ctx) {
+    return handleRequest(request, env);
+  }
+};
+
+// Also support Service Worker format for backward compatibility
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request, event));
+  event.respondWith(handleRequest(event.request, event.env || {}));
 });
 
-async function handleRequest(request, event) {
+async function handleRequest(request, env) {
   // ✅ 從環境變數讀取 TDX API 憑證（安全方式）
   // 在 Cloudflare Workers 中，環境變數通過 env 對象訪問
-  const env = event?.env || globalThis;
   const TDX_CLIENT_ID = env.TDX_ID || '';
   const TDX_CLIENT_SECRET = env.TDX_SECRET || '';
   
@@ -323,7 +330,8 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
   // D = Departure (出發), A = Arrival (抵達)
   // 注意：FIDS 結構在不同場站欄位名稱可能略異（如 FlightNo/FlightNO/FlightNumber）。
   // 為避免 OData 欄位名不相容造成 400，我們不使用 $filter，改為取回後在 Worker 端過濾。
-  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$format=JSON`;
+  // 取較大的筆數以避免預設頁面過小導致漏航班
+  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$top=3000&$format=JSON`;
   
   console.log(`🔍 [TDX API] Searching ${airportCode} for ${flightNumber}...`);
   console.log(`   URL: ${apiUrl}`);
@@ -381,6 +389,54 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
     if (matched) {
       console.log(`✅ [TDX API] Flight ${flightNumber} matched at ${airportCode}`);
       return formatTDXFlightData(matched, airportCode);
+    }
+
+    // 若一般清單無命中，嘗試以 OData $filter 精準查詢（逐一嘗試不同欄位名）
+    const { airlineCandidate, numericPart } = parseWantedFlight(flightNumber);
+    if (numericPart) {
+      const fieldCandidates = ['FlightNumber', 'FlightNo', 'FlightNO', 'FlightNbr', 'Flight'];
+      for (const field of fieldCandidates) {
+        try {
+          const filterParts = [`${field} eq '${numericPart}'`];
+          if (airlineCandidate) filterParts.push(`AirlineID eq '${airlineCandidate}'`);
+          const filter = encodeURIComponent(filterParts.join(' and '));
+          const url = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=${filter}&$top=50&$format=JSON`;
+          console.log(`   Trying filtered fetch: ${url}`);
+
+          if (!canPerformUpstreamRequest()) {
+            const retryAfterSec = getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
+            return { rateLimited: true, retryAfterSeconds: retryAfterSec };
+          }
+
+          const resp = await fetchWithRetry(url, {
+            headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' }
+          }, 1);
+
+          if (!resp.ok) {
+            const txt = await resp.text();
+            console.warn(`   Filtered fetch failed on field ${field}. Status ${resp.status}. Body: ${txt}`);
+            // 400 多半是欄位不存在，嘗試下一個欄位
+            if (resp.status === 429) {
+              const ra = resp.headers.get('Retry-After');
+              return { rateLimited: true, retryAfterSeconds: ra ? Number(ra) : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) };
+            }
+            continue;
+          }
+          const arr = await resp.json();
+          console.log(`   Filtered results by ${field}: ${Array.isArray(arr) ? arr.length : 0}`);
+          const hit = (arr || []).find(rec => {
+            const candidates = getRecordFlightCandidates(rec);
+            if (!candidates.length) return false;
+            return candidates.some(c => normalizeFlightNumber(c) === wanted);
+          });
+          if (hit) {
+            console.log(`✅ [TDX API] Filtered match via ${field} at ${airportCode}`);
+            return formatTDXFlightData(hit, airportCode);
+          }
+        } catch (e) {
+          console.warn(`   Exception during filtered fetch (${field}):`, e.message);
+        }
+      }
     }
   } catch (error) {
     console.error(`❌ [TDX API] Exception searching ${airportCode}:`, error.message);
@@ -501,5 +557,15 @@ function normalizeFlightNumber(no) {
   const digits = m[2].replace(/^0+/, '') || '0'; // 去除數字前導 0
   // 忽略尾碼字母（如 BR805A 視為 BR805）
   return `${prefix}${digits}`;
+}
+
+// 解析使用者輸入的航班號，拆出航空公司與純數字部分
+function parseWantedFlight(no) {
+  const normalized = normalizeFlightNumber(no);
+  const m = normalized.match(/^([A-Z]{1,4})?(\d{1,6})$/);
+  return {
+    airlineCandidate: m ? (m[1] || '') : '',
+    numericPart: m ? m[2] : ''
+  };
 }
 
