@@ -23,12 +23,16 @@ const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 let upstreamRequestTimestamps = [];
 
-function canPerformUpstreamRequest() {
+function isRateLimited() {
   const now = Date.now();
   upstreamRequestTimestamps = upstreamRequestTimestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW_MS);
-  if (upstreamRequestTimestamps.length >= RATE_LIMIT_MAX) {
-    return false;
-  }
+  return upstreamRequestTimestamps.length >= RATE_LIMIT_MAX;
+}
+
+function canPerformUpstreamRequest() {
+  if (isRateLimited()) return false;
+  const now = Date.now();
+  upstreamRequestTimestamps = upstreamRequestTimestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW_MS);
   upstreamRequestTimestamps.push(now);
   return true;
 }
@@ -105,6 +109,22 @@ async function handleRequest(request, event) {
       return new Response(JSON.stringify(cached.data), {
         headers: {
           'Content-Type': 'application/json',
+          ...corsHeaders
+        }
+      });
+    }
+    // 全域節流：超出上限直接回前端 429，請稍後再試
+    if (isRateLimited()) {
+      const retryAfterSec = Math.ceil((RATE_LIMIT_WINDOW_MS) / 1000);
+      return new Response(JSON.stringify({
+        error: 'rate_limited',
+        message: '查詢過於頻繁，請稍後再試',
+        retryAfterSeconds: retryAfterSec
+      }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(retryAfterSec),
           ...corsHeaders
         }
       });
