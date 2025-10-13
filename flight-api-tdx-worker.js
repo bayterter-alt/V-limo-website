@@ -230,19 +230,12 @@ async function getTDXAccessToken(clientId, clientSecret) {
  * 查詢 TDX 航班資訊
  */
 async function searchTDXFlight(flightNumber, accessToken) {
-  // TDX API 需要分別查詢桃園機場和松山機場
+  // 單次每個機場只請求一次，減少速率壓力
   const airports = ['TPE', 'TSA'];
-  
   for (const airport of airports) {
-    // 查詢出發航班
-    const departures = await searchFlightsByType(airport, 'D', flightNumber, accessToken);
-    if (departures) return departures;
-    
-    // 查詢抵達航班
-    const arrivals = await searchFlightsByType(airport, 'A', flightNumber, accessToken);
-    if (arrivals) return arrivals;
+    const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken);
+    if (result) return result;
   }
-  
   return null;
 }
 
@@ -285,11 +278,15 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
     // 正規化輸入的航班號（去空白、去連字號、轉大寫）
     const wanted = normalizeFlightNumber(flightNumber);
 
-    // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr）
+    // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr / Flight）
     const matched = (list || []).find(rec => {
       const recNo = normalizeFlightNumber(getRecordFlightNumber(rec));
       if (!recNo) return false;
-      return recNo === wanted;
+      if (recNo !== wanted) return false;
+      // 如果需要可再檢查 Schedule 時間欄位是否存在（任一存在即可）
+      const hasDep = !!rec.ScheduleDepartureTime;
+      const hasArr = !!rec.ScheduleArrivalTime;
+      return hasDep || hasArr;
     });
 
     if (matched) {
