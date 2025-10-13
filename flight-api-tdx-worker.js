@@ -402,11 +402,19 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
 
     // 正規化輸入的航班號（去空白、去連字號、轉大寫）
     const wanted = normalizeFlightNumber(flightNumber);
+    console.log(`   Looking for normalized: "${wanted}"`);
 
     // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr / Flight）
     const matched = (list || []).find(rec => {
       const candidates = getRecordFlightCandidates(rec);
       if (!candidates.length) return false;
+      
+      // 🔍 調試：顯示候選航班號
+      const normalizedCandidates = candidates.map(c => normalizeFlightNumber(c));
+      if (normalizedCandidates.length > 0) {
+        console.log(`   Checking flight: ${normalizedCandidates.join(', ')} (raw: ${candidates.join(', ')})`);
+      }
+      
       return candidates.some(c => normalizeFlightNumber(c) === wanted);
     });
 
