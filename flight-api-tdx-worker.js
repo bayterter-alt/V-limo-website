@@ -322,10 +322,10 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
 
     // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr / Flight）
     const matched = (list || []).find(rec => {
-      const recNo = normalizeFlightNumber(getRecordFlightNumber(rec));
-      if (!recNo) return false;
-      if (recNo !== wanted) return false;
-      // 如果需要可再檢查 Schedule 時間欄位是否存在（任一存在即可）
+      const candidates = getRecordFlightCandidates(rec);
+      if (!candidates.length) return false;
+      const anyMatch = candidates.some(c => normalizeFlightNumber(c) === wanted);
+      if (!anyMatch) return false;
       const hasDep = !!rec.ScheduleDepartureTime;
       const hasArr = !!rec.ScheduleArrivalTime;
       return hasDep || hasArr;
@@ -349,7 +349,7 @@ function formatTDXFlightData(flight, airportCode) {
   const isDeparture = flight.ScheduleDepartureTime != null;
   
   return {
-    flightNumber: flight.FlightNumber,
+    flightNumber: getRecordFlightNumber(flight),
     airline: flight.AirlineID || flight.AirlineName?.Zh_tw || 'Unknown',
     status: translateStatus(flight.FlightStatus),
     departure: {
@@ -409,6 +409,15 @@ function getRecordFlightNumber(rec) {
     rec.Flight ||
     ''
   );
+}
+
+// 有些資料會把多段共飛碼裝在同一欄位（以空白、斜線、逗號分隔）
+function getRecordFlightCandidates(rec) {
+  const raw = getRecordFlightNumber(rec);
+  if (!raw) return [];
+  return String(raw)
+    .split(/[\s,/]+/)
+    .filter(Boolean);
 }
 
 /**
