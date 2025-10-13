@@ -66,17 +66,12 @@ async function fetchWithRetry(url, options, maxRetries = 1) {
   }
 }
 
-// Export for ES Modules format (recommended)
+// Export for ES Modules format (Cloudflare Workers standard)
 export default {
   async fetch(request, env, ctx) {
     return handleRequest(request, env);
   }
 };
-
-// Also support Service Worker format for backward compatibility
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request, event.env || {}));
-});
 
 async function handleRequest(request, env) {
   // ✅ 從環境變數讀取 TDX API 憑證（安全方式）
