@@ -335,11 +335,7 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
     const matched = (list || []).find(rec => {
       const candidates = getRecordFlightCandidates(rec);
       if (!candidates.length) return false;
-      const anyMatch = candidates.some(c => normalizeFlightNumber(c) === wanted);
-      if (!anyMatch) return false;
-      const hasDep = !!rec.ScheduleDepartureTime;
-      const hasArr = !!rec.ScheduleArrivalTime;
-      return hasDep || hasArr;
+      return candidates.some(c => normalizeFlightNumber(c) === wanted);
     });
 
     if (matched) {
