@@ -874,6 +874,14 @@
         const data = await response.json();
 
         if (!response.ok || data.error) {
+          // 429 攔截：顯示友善提示，並直接返回不降級
+          if (response.status === 429 || data.error === 'rate_limited') {
+            const retryAfter = Number(data.retryAfterSeconds) || 60;
+            alert(isEnglish
+              ? `⏳ Rate limit reached. Please retry in ${retryAfter}s.`
+              : `⏳ 查詢過於頻繁，請於 ${retryAfter} 秒後再試。`);
+            return; // 不進入本地資料回退
+          }
           throw new Error(data.error || 'API Error');
         }
 

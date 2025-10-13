@@ -37,6 +37,15 @@ function canPerformUpstreamRequest() {
   return true;
 }
 
+function getGlobalLimiterRetryAfterSeconds() {
+  const now = Date.now();
+  upstreamRequestTimestamps = upstreamRequestTimestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW_MS);
+  if (upstreamRequestTimestamps.length < RATE_LIMIT_MAX) return 0;
+  const earliest = upstreamRequestTimestamps[0];
+  const ms = Math.max(0, RATE_LIMIT_WINDOW_MS - (now - earliest));
+  return Math.ceil(ms / 1000);
+}
+
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -152,6 +161,23 @@ async function handleRequest(request, event) {
     const debugData = debug ? [] : null;
     const flightData = await searchTDXFlight(flightNumber, accessToken, debug, debugData);
     
+    // 若上游或全域節流觸發，回傳 429 提示前端稍後再試
+    if (flightData && flightData.rateLimited) {
+      const retryAfterSec = Math.max(1, Number(flightData.retryAfterSeconds) || getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+      return new Response(JSON.stringify({
+        error: 'rate_limited',
+        message: '查詢過於頻繁，請稍後再試',
+        retryAfterSeconds: retryAfterSec
+      }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(retryAfterSec),
+          ...corsHeaders
+        }
+      });
+    }
+
     if (!flightData) {
       const body = {
         error: 'Flight not found',
@@ -306,8 +332,9 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
   try {
     // 全域節流：超出上限時直接返回 null，避免觸發 429
     if (!canPerformUpstreamRequest()) {
-      console.warn('🚦 [TDX API] Global rate limit hit (5/min). Skipping upstream call.');
-      return null;
+      const retryAfterSec = getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
+      console.warn('🚦 [TDX API] Global rate limit hit (5/min). Skipping upstream call. Retry after', retryAfterSec, 'seconds');
+      return { rateLimited: true, retryAfterSeconds: retryAfterSec };
     }
 
     const response = await fetchWithRetry(apiUrl, {
@@ -322,6 +349,12 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
     console.log(`   Status Text: ${response.statusText}`);
     
     if (!response.ok) {
+      if (response.status === 429) {
+        const retryAfterHeader = response.headers.get('Retry-After');
+        const retryAfterSec = retryAfterHeader ? Number(retryAfterHeader) : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
+        console.warn(`⏳ [TDX API] 429 from upstream ${airportCode}. Retry-After: ${retryAfterSec}s`);
+        return { rateLimited: true, retryAfterSeconds: retryAfterSec };
+      }
       const errorText = await response.text();
       console.error(`❌ [TDX API] Request failed for ${airportCode}`);
       console.error(`   Status: ${response.status}`);
@@ -428,7 +461,7 @@ function getRecordFlightNumber(rec) {
 // 有些資料會把多段共飛碼裝在同一欄位（以空白、斜線、逗號分隔）
 function getRecordFlightCandidates(rec) {
   const raw = getRecordFlightNumber(rec);
-  const airline = rec.AirlineID || rec.CarrierID || '';
+  const airline = rec.AirlineID || rec.CarrierID || rec.AirlineIATA || rec.AirlineICAO || '';
   const baseList = raw
     ? String(raw).split(/[\s,/]+/).filter(Boolean)
     : [];
@@ -458,7 +491,15 @@ function getRecordFlightCandidates(rec) {
  * 正規化航班號：移除空白/連字號，轉大寫
  */
 function normalizeFlightNumber(no) {
-  if (!no || typeof no !== 'string') return '';
-  return no.replace(/\s+/g, '').replace(/-/g, '').toUpperCase();
+  if (no == null) return '';
+  const s = String(no).replace(/\s+/g, '').replace(/-/g, '').toUpperCase();
+  // 常見格式：BR0805 / BR805 / 805 / BR805A
+  // 1) 嘗試解析為 [字母前綴][數字][可選字母]
+  const m = s.match(/^([A-Z]{1,4})?(\d{1,6})([A-Z])?$/);
+  if (!m) return s; // 無法解析時，回傳原始正規化
+  const prefix = m[1] || '';
+  const digits = m[2].replace(/^0+/, '') || '0'; // 去除數字前導 0
+  // 忽略尾碼字母（如 BR805A 視為 BR805）
+  return `${prefix}${digits}`;
 }
 
