@@ -309,13 +309,42 @@ async function getTDXAccessToken(clientId, clientSecret) {
  * 查詢 TDX 航班資訊
  */
 async function searchTDXFlight(flightNumber, accessToken, debug = false, debugData = null) {
-  // 單次每個機場只請求一次，減少速率壓力
-  const airports = ['TPE', 'TSA'];
+  // 🎯 智能機場選擇：根據航班號前綴優先查詢最可能的機場
+  const airports = guessAirportByFlightNumber(flightNumber);
+  
   for (const airport of airports) {
     const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken, debug, debugData);
     if (result) return result;
   }
   return null;
+}
+
+/**
+ * 根據航班號推測機場（減少不必要的查詢）
+ */
+function guessAirportByFlightNumber(flightNumber) {
+  const normalized = normalizeFlightNumber(flightNumber);
+  
+  // 國際航班通常在桃園機場（TPE）
+  const internationalCarriers = ['BR', 'CI', 'JX', 'IT', 'AE', 'TG', 'SQ', 'CX', 'KE', 'OZ', 'TW', 'VJ', 'VZ'];
+  
+  // 國內/區域航班可能在松山機場（TSA）
+  const domesticCarriers = ['B7', 'AE', 'MM'];
+  
+  for (const carrier of internationalCarriers) {
+    if (normalized.startsWith(carrier)) {
+      return ['TPE', 'TSA']; // 優先 TPE，其次 TSA
+    }
+  }
+  
+  for (const carrier of domesticCarriers) {
+    if (normalized.startsWith(carrier)) {
+      return ['TSA', 'TPE']; // 優先 TSA，其次 TPE
+    }
+  }
+  
+  // 未知航空公司，默認 TPE 優先
+  return ['TPE', 'TSA'];
 }
 
 /**
@@ -386,51 +415,46 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
       return formatTDXFlightData(matched, airportCode);
     }
 
-    // 若一般清單無命中，嘗試以 OData $filter 精準查詢（逐一嘗試不同欄位名）
+    // 🎯 優化：減少 filtered 查詢次數以節省 API 配額
+    // 只在初始查詢完全沒結果時，嘗試 1 次精準查詢（而非 5 次）
     const { airlineCandidate, numericPart } = parseWantedFlight(flightNumber);
-    if (numericPart) {
-      const fieldCandidates = ['FlightNumber', 'FlightNo', 'FlightNO', 'FlightNbr', 'Flight'];
-      for (const field of fieldCandidates) {
-        try {
-          const filterParts = [`${field} eq '${numericPart}'`];
-          if (airlineCandidate) filterParts.push(`AirlineID eq '${airlineCandidate}'`);
-          const filter = encodeURIComponent(filterParts.join(' and '));
-          const url = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=${filter}&$top=50&$format=JSON`;
-          console.log(`   Trying filtered fetch: ${url}`);
+    if (numericPart && list && list.length === 0) {
+      // 只嘗試最常用的欄位名稱
+      const field = 'FlightNumber'; // 最標準的欄位名
+      try {
+        const filterParts = [`${field} eq '${numericPart}'`];
+        if (airlineCandidate) filterParts.push(`AirlineID eq '${airlineCandidate}'`);
+        const filter = encodeURIComponent(filterParts.join(' and '));
+        const url = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=${filter}&$top=50&$format=JSON`;
+        console.log(`   Trying filtered fetch: ${url}`);
 
-          if (!canPerformUpstreamRequest()) {
-            const retryAfterSec = getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
-            return { rateLimited: true, retryAfterSeconds: retryAfterSec };
-          }
+        if (!canPerformUpstreamRequest()) {
+          const retryAfterSec = getGlobalLimiterRetryAfterSeconds() || Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
+          return { rateLimited: true, retryAfterSeconds: retryAfterSec };
+        }
 
-          const resp = await fetchWithRetry(url, {
-            headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' }
-          }, 1);
+        const resp = await fetchWithRetry(url, {
+          headers: { 'Authorization': `Bearer ${accessToken}`, 'Accept': 'application/json' }
+        }, 0); // 不重試，節省請求
 
-          if (!resp.ok) {
-            const txt = await resp.text();
-            console.warn(`   Filtered fetch failed on field ${field}. Status ${resp.status}. Body: ${txt}`);
-            // 400 多半是欄位不存在，嘗試下一個欄位
-            if (resp.status === 429) {
-              const ra = resp.headers.get('Retry-After');
-              return { rateLimited: true, retryAfterSeconds: ra ? Number(ra) : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) };
-            }
-            continue;
-          }
+        if (resp.ok) {
           const arr = await resp.json();
-          console.log(`   Filtered results by ${field}: ${Array.isArray(arr) ? arr.length : 0}`);
+          console.log(`   Filtered results: ${Array.isArray(arr) ? arr.length : 0}`);
           const hit = (arr || []).find(rec => {
             const candidates = getRecordFlightCandidates(rec);
             if (!candidates.length) return false;
             return candidates.some(c => normalizeFlightNumber(c) === wanted);
           });
           if (hit) {
-            console.log(`✅ [TDX API] Filtered match via ${field} at ${airportCode}`);
+            console.log(`✅ [TDX API] Filtered match at ${airportCode}`);
             return formatTDXFlightData(hit, airportCode);
           }
-        } catch (e) {
-          console.warn(`   Exception during filtered fetch (${field}):`, e.message);
+        } else if (resp.status === 429) {
+          const ra = resp.headers.get('Retry-After');
+          return { rateLimited: true, retryAfterSeconds: ra ? Number(ra) : Math.ceil(RATE_LIMIT_WINDOW_MS / 1000) };
         }
+      } catch (e) {
+        console.warn(`   Filtered fetch exception:`, e.message);
       }
     }
   } catch (error) {
