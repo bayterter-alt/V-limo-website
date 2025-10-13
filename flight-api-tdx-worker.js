@@ -414,10 +414,30 @@ function getRecordFlightNumber(rec) {
 // 有些資料會把多段共飛碼裝在同一欄位（以空白、斜線、逗號分隔）
 function getRecordFlightCandidates(rec) {
   const raw = getRecordFlightNumber(rec);
-  if (!raw) return [];
-  return String(raw)
-    .split(/[\s,/]+/)
-    .filter(Boolean);
+  const airline = rec.AirlineID || rec.CarrierID || '';
+  const baseList = raw
+    ? String(raw).split(/[\s,/]+/).filter(Boolean)
+    : [];
+
+  // 若 FIDS 把航空公司與班號拆開（e.g., AirlineID: TW, FlightNumber: 666）
+  // 產生合併候選：TW666、TW-666
+  const numeric = rec.FlightNumber || rec.FlightNo || rec.FlightNO || rec.FlightNbr;
+  if (airline && numeric) {
+    baseList.push(`${airline}${numeric}`);
+    baseList.push(`${airline}-${numeric}`);
+  }
+
+  // 去重
+  const seen = new Set();
+  const result = [];
+  for (const v of baseList) {
+    const key = normalizeFlightNumber(v);
+    if (!seen.has(key)) {
+      seen.add(key);
+      result.push(v);
+    }
+  }
+  return result;
 }
 
 /**
