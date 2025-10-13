@@ -87,6 +87,17 @@ async function handleRequest(request, event) {
   }
 
   const url = new URL(request.url);
+  const pathname = url.pathname || '';
+  // 靜態資源：避免 /favicon.ico 造成 400 噪音
+  if (pathname.endsWith('/favicon.ico')) {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Content-Type': 'image/x-icon',
+        ...corsHeaders
+      }
+    });
+  }
   const flightNumber = url.searchParams.get('flight');
 
   if (!flightNumber) {
