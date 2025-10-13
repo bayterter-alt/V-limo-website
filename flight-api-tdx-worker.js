@@ -99,6 +99,7 @@ async function handleRequest(request, event) {
     });
   }
   const flightNumber = url.searchParams.get('flight');
+  const debug = url.searchParams.get('debug') === '1';
 
   if (!flightNumber) {
     return new Response(JSON.stringify({
@@ -148,14 +149,17 @@ async function handleRequest(request, event) {
     }
 
     // 步驟 2: 查詢航班資訊
-    const flightData = await searchTDXFlight(flightNumber, accessToken);
+    const debugData = debug ? [] : null;
+    const flightData = await searchTDXFlight(flightNumber, accessToken, debug, debugData);
     
     if (!flightData) {
-      return new Response(JSON.stringify({
+      const body = {
         error: 'Flight not found',
         flightNumber: flightNumber,
         hint: '請確認航班號碼，或該航班今天可能沒有班次'
-      }), {
+      };
+      if (debug && debugData) body.debug = debugData;
+      return new Response(JSON.stringify(body), {
         status: 404,
         headers: {
           'Content-Type': 'application/json',
@@ -276,11 +280,11 @@ async function getTDXAccessToken(clientId, clientSecret) {
 /**
  * 查詢 TDX 航班資訊
  */
-async function searchTDXFlight(flightNumber, accessToken) {
+async function searchTDXFlight(flightNumber, accessToken, debug = false, debugData = null) {
   // 單次每個機場只請求一次，減少速率壓力
   const airports = ['TPE', 'TSA'];
   for (const airport of airports) {
-    const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken);
+    const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken, debug, debugData);
     if (result) return result;
   }
   return null;
@@ -289,7 +293,7 @@ async function searchTDXFlight(flightNumber, accessToken) {
 /**
  * 依類型查詢航班（出發/抵達）
  */
-async function searchFlightsByType(airportCode, type, flightNumber, accessToken) {
+async function searchFlightsByType(airportCode, type, flightNumber, accessToken, debug = false, debugData = null) {
   // D = Departure (出發), A = Arrival (抵達)
   // 注意：FIDS 結構在不同場站欄位名稱可能略異（如 FlightNo/FlightNO/FlightNumber）。
   // 為避免 OData 欄位名不相容造成 400，我們不使用 $filter，改為取回後在 Worker 端過濾。
@@ -327,6 +331,9 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
 
     const list = await response.json();
     console.log(`   Results: ${list?.length || 0} flights fetched (pre-filter)`);
+    if (debug && debugData) {
+      debugData.push({ airport: airportCode, sample: (list || []).slice(0, 3) });
+    }
 
     // 正規化輸入的航班號（去空白、去連字號、轉大寫）
     const wanted = normalizeFlightNumber(flightNumber);
