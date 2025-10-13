@@ -251,9 +251,9 @@ async function searchTDXFlight(flightNumber, accessToken) {
  */
 async function searchFlightsByType(airportCode, type, flightNumber, accessToken) {
   // D = Departure (出發), A = Arrival (抵達)
-  // 僅在出發查詢時帶 ScheduleDepartureTime 過濾；抵達則帶 ScheduleArrivalTime
-  const scheduleFilter = type === 'D' ? "ScheduleDepartureTime ne null" : "ScheduleArrivalTime ne null";
-  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$filter=FlightNumber eq '${flightNumber}' and ${scheduleFilter}&$format=JSON`;
+  // 注意：FIDS 結構在不同場站欄位名稱可能略異（如 FlightNo/FlightNO/FlightNumber）。
+  // 為避免 OData 欄位名不相容造成 400，我們不使用 $filter，改為取回後在 Worker 端過濾。
+  const apiUrl = `https://tdx.transportdata.tw/api/basic/v2/Air/FIDS/Airport/${airportCode}?$format=JSON`;
   
   console.log(`🔍 [TDX API] Searching ${airportCode} for ${flightNumber}...`);
   console.log(`   URL: ${apiUrl}`);
@@ -279,15 +279,22 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
       return null;
     }
 
-    const data = await response.json();
-    console.log(`   Results: ${data?.length || 0} flights found`);
-    
-    if (data && data.length > 0) {
-      const flight = data[0];
-      console.log(`✅ [TDX API] Flight ${flightNumber} found at ${airportCode}`);
-      
-      // 格式化為統一格式
-      return formatTDXFlightData(flight, airportCode);
+    const list = await response.json();
+    console.log(`   Results: ${list?.length || 0} flights fetched (pre-filter)`);
+
+    // 正規化輸入的航班號（去空白、去連字號、轉大寫）
+    const wanted = normalizeFlightNumber(flightNumber);
+
+    // 本地過濾：嘗試多種欄位名（FlightNumber / FlightNo / FlightNO / FlightNbr）
+    const matched = (list || []).find(rec => {
+      const recNo = normalizeFlightNumber(getRecordFlightNumber(rec));
+      if (!recNo) return false;
+      return recNo === wanted;
+    });
+
+    if (matched) {
+      console.log(`✅ [TDX API] Flight ${flightNumber} matched at ${airportCode}`);
+      return formatTDXFlightData(matched, airportCode);
     }
   } catch (error) {
     console.error(`❌ [TDX API] Exception searching ${airportCode}:`, error.message);
@@ -349,5 +356,27 @@ function translateStatus(status) {
     '4': 'delayed'       // 延遲
   };
   return statusMap[status] || 'scheduled';
+}
+
+/**
+ * 從記錄中提取航班號，兼容不同欄位名稱
+ */
+function getRecordFlightNumber(rec) {
+  return (
+    rec.FlightNumber ||
+    rec.FlightNo ||
+    rec.FlightNO ||
+    rec.FlightNbr ||
+    rec.Flight ||
+    ''
+  );
+}
+
+/**
+ * 正規化航班號：移除空白/連字號，轉大寫
+ */
+function normalizeFlightNumber(no) {
+  if (!no || typeof no !== 'string') return '';
+  return no.replace(/\s+/g, '').replace(/-/g, '').toUpperCase();
 }
 
