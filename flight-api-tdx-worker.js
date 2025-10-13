@@ -110,6 +110,7 @@ async function handleRequest(request, env) {
     });
   }
   const flightNumber = url.searchParams.get('flight');
+  const flightDate = url.searchParams.get('date'); // 格式：YYYY-MM-DD（選填）
   const debug = url.searchParams.get('debug') === '1';
 
   if (!flightNumber) {
@@ -161,7 +162,7 @@ async function handleRequest(request, env) {
 
     // 步驟 2: 查詢航班資訊
     const debugData = debug ? [] : null;
-    const flightData = await searchTDXFlight(flightNumber, accessToken, debug, debugData);
+    const flightData = await searchTDXFlight(flightNumber, accessToken, flightDate, debug, debugData);
     
     // 若上游或全域節流觸發，回傳 429 提示前端稍後再試
     if (flightData && flightData.rateLimited) {
@@ -308,12 +309,12 @@ async function getTDXAccessToken(clientId, clientSecret) {
 /**
  * 查詢 TDX 航班資訊
  */
-async function searchTDXFlight(flightNumber, accessToken, debug = false, debugData = null) {
+async function searchTDXFlight(flightNumber, accessToken, flightDate = null, debug = false, debugData = null) {
   // 🎯 智能機場選擇：根據航班號前綴優先查詢最可能的機場
   const airports = guessAirportByFlightNumber(flightNumber);
   
   for (const airport of airports) {
-    const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken, debug, debugData);
+    const result = await searchFlightsByType(airport, 'ANY', flightNumber, accessToken, flightDate, debug, debugData);
     if (result) return result;
   }
   return null;
@@ -350,7 +351,7 @@ function guessAirportByFlightNumber(flightNumber) {
 /**
  * 依類型查詢航班（出發/抵達）
  */
-async function searchFlightsByType(airportCode, type, flightNumber, accessToken, debug = false, debugData = null) {
+async function searchFlightsByType(airportCode, type, flightNumber, accessToken, flightDate = null, debug = false, debugData = null) {
   // D = Departure (出發), A = Arrival (抵達)
   // 注意：FIDS 結構在不同場站欄位名稱可能略異（如 FlightNo/FlightNO/FlightNumber）。
   // 為避免 OData 欄位名不相容造成 400，我們不使用 $filter，改為取回後在 Worker 端過濾。
@@ -426,19 +427,25 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
 
     // 正規化輸入的航班號（去空白、去連字號、轉大寫）
     const wanted = normalizeFlightNumber(flightNumber);
-    console.log(`   Looking for normalized: "${wanted}"`);
+    console.log(`   Looking for normalized: "${wanted}"${flightDate ? ` on date: ${flightDate}` : ''}`);
 
     // 🎯 TDX FIDS 使用嵌套結構：需要搜尋 FIDSDeparture 和 FIDSArrival 陣列
     let matched = null;
     let matchedType = null;
+    
+    // 日期匹配函數
+    const matchesDate = (flight) => {
+      if (!flightDate) return true; // 沒有指定日期，接受所有日期
+      return flight.FlightDate === flightDate;
+    };
     
     for (const rec of list || []) {
       // 搜尋出發航班
       if (rec.FIDSDeparture && Array.isArray(rec.FIDSDeparture)) {
         for (const flight of rec.FIDSDeparture) {
           const flightId = `${flight.AirlineID || ''}${flight.FlightNumber || ''}`;
-          if (normalizeFlightNumber(flightId) === wanted) {
-            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSDeparture`);
+          if (normalizeFlightNumber(flightId) === wanted && matchesDate(flight)) {
+            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSDeparture (Date: ${flight.FlightDate})`);
             console.log(`   Raw data:`, flight);
             matched = flight;
             matchedType = 'departure';
@@ -451,8 +458,8 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken,
       if (!matched && rec.FIDSArrival && Array.isArray(rec.FIDSArrival)) {
         for (const flight of rec.FIDSArrival) {
           const flightId = `${flight.AirlineID || ''}${flight.FlightNumber || ''}`;
-          if (normalizeFlightNumber(flightId) === wanted) {
-            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSArrival`);
+          if (normalizeFlightNumber(flightId) === wanted && matchesDate(flight)) {
+            console.log(`✅ [TDX API] Flight ${flightNumber} matched in FIDSArrival (Date: ${flight.FlightDate})`);
             console.log(`   Raw data:`, flight);
             matched = flight;
             matchedType = 'arrival';

@@ -52,7 +52,7 @@
     
     .flight-input-group {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 2fr 1.5fr auto;
       gap: 1rem;
       margin-bottom: 2rem;
     }
@@ -322,6 +322,10 @@
         grid-template-columns: 1fr;
       }
       
+      .flight-search-btn {
+        width: 100%;
+      }
+      
       .flight-search-card {
         padding: 1.5rem;
       }
@@ -424,6 +428,15 @@
               class="flight-input" 
               placeholder="例如：BR123, CI001, EVA001"
               data-i18n-placeholder="flight.input.placeholder"
+            >
+          </div>
+          <div class="flight-input-wrapper">
+            <i class="fas fa-calendar-alt"></i>
+            <input 
+              type="date" 
+              id="flightDate" 
+              class="flight-input" 
+              title="選擇航班日期（選填，不選則查詢今天）"
             >
           </div>
           <button class="flight-search-btn" id="searchBtn" onclick="searchFlight()">
@@ -837,6 +850,10 @@
         return;
       }
 
+      // 取得日期（選填）
+      const dateInput = document.getElementById('flightDate');
+      const flightDate = dateInput.value; // 格式：YYYY-MM-DD
+
       const searchBtn = document.getElementById('searchBtn');
       searchBtn.disabled = true;
       const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
@@ -844,20 +861,26 @@
 
       // 判斷使用哪種模式
       if (USE_REAL_API) {
-        await searchRealAPI(flightNumber);
+        await searchRealAPI(flightNumber, flightDate);
       } else {
         searchLocalDatabase(flightNumber);
       }
     }
 
     // 使用真實 API 查詢
-    async function searchRealAPI(flightNumber) {
+    async function searchRealAPI(flightNumber, flightDate) {
       const searchBtn = document.getElementById('searchBtn');
       const currentLang = localStorage.getItem('preferredLanguage') || 'zh-TW';
       const isEnglish = currentLang === 'en';
 
       try {
-        const response = await fetch(`${WORKER_API_URL}?flight=${flightNumber}`);
+        // 構建 API URL，加入日期參數（如果有）
+        let apiUrl = `${WORKER_API_URL}?flight=${flightNumber}`;
+        if (flightDate) {
+          apiUrl += `&date=${flightDate}`;
+        }
+        
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
         if (!response.ok || data.error) {
@@ -1086,6 +1109,27 @@ Terminal: ${currentFlightData.arrival.terminal}
       // 如果有顯示航班結果，重新渲染
       if (currentFlightData) {
         displayFlightResult(currentFlightData);
+      }
+    });
+
+    // 初始化：設置日期選擇器的默認值為今天
+    window.addEventListener('DOMContentLoaded', function() {
+      const dateInput = document.getElementById('flightDate');
+      if (dateInput) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        
+        // 設置日期範圍：今天到未來 7 天
+        dateInput.min = `${yyyy}-${mm}-${dd}`;
+        const maxDate = new Date(today);
+        maxDate.setDate(maxDate.getDate() + 7);
+        const maxYyyy = maxDate.getFullYear();
+        const maxMm = String(maxDate.getMonth() + 1).padStart(2, '0');
+        const maxDd = String(maxDate.getDate()).padStart(2, '0');
+        dateInput.max = `${maxYyyy}-${maxMm}-${maxDd}`;
       }
     });
   </script>
