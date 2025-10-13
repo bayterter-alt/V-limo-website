@@ -10,6 +10,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+// ⚡ Token 快取（避免頻繁請求）
+let cachedToken = null;
+let tokenExpiry = 0;
+
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request, event));
 });
@@ -103,9 +107,18 @@ async function handleRequest(request, event) {
 }
 
 /**
- * 取得 TDX Access Token
+ * 取得 TDX Access Token（帶快取）
  */
 async function getTDXAccessToken(clientId, clientSecret) {
+  // ⚡ 檢查快取的 Token 是否仍然有效
+  const now = Date.now();
+  if (cachedToken && tokenExpiry > now) {
+    const remainingMinutes = Math.floor((tokenExpiry - now) / 1000 / 60);
+    console.log('⚡ [TDX Auth] Using cached token');
+    console.log('   Remaining time:', remainingMinutes, 'minutes');
+    return cachedToken;
+  }
+  
   const authUrl = 'https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token';
   
   // 🔍 調試：檢查環境變數
@@ -128,7 +141,7 @@ async function getTDXAccessToken(clientId, clientSecret) {
   });
 
   try {
-    console.log('📤 [TDX Auth] Requesting access token...');
+    console.log('📤 [TDX Auth] Requesting NEW access token...');
     console.log('   URL:', authUrl);
     
     const response = await fetch(authUrl, {
@@ -154,10 +167,16 @@ async function getTDXAccessToken(clientId, clientSecret) {
     const data = await response.json();
     
     if (data.access_token) {
-      console.log('✅ [TDX Auth] Access token obtained successfully');
+      // ⚡ 快取 Token（設定過期時間為實際時間減 5 分鐘，提供緩衝）
+      cachedToken = data.access_token;
+      const expiresIn = data.expires_in || 86400; // 預設 24 小時
+      tokenExpiry = Date.now() + (expiresIn - 300) * 1000; // 減 5 分鐘緩衝
+      
+      console.log('✅ [TDX Auth] Access token obtained and cached');
       console.log('   Token length:', data.access_token.length);
       console.log('   Token preview:', data.access_token.substring(0, 20) + '...');
-      console.log('   Expires in:', data.expires_in, 'seconds');
+      console.log('   Expires in:', expiresIn, 'seconds');
+      console.log('   Cache until:', new Date(tokenExpiry).toISOString());
       return data.access_token;
     } else {
       console.error('❌ [TDX Auth] No access_token in response');
