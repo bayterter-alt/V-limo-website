@@ -17,6 +17,21 @@ let tokenExpiry = 0;
 // ⚡ 查詢結果快取，降低重複請求與 429 機率
 const flightResultCache = new Map(); // key: flightNumber, value: { data, expiry }
 
+// ⚡ 全域節流：最多 5 次/60 秒 對上游 TDX FIDS 的請求
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+let upstreamRequestTimestamps = [];
+
+function canPerformUpstreamRequest() {
+  const now = Date.now();
+  upstreamRequestTimestamps = upstreamRequestTimestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW_MS);
+  if (upstreamRequestTimestamps.length >= RATE_LIMIT_MAX) {
+    return false;
+  }
+  upstreamRequestTimestamps.push(now);
+  return true;
+}
+
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -253,6 +268,12 @@ async function searchFlightsByType(airportCode, type, flightNumber, accessToken)
   console.log(`   Token exists: ${!!accessToken}`);
   
   try {
+    // 全域節流：超出上限時直接返回 null，避免觸發 429
+    if (!canPerformUpstreamRequest()) {
+      console.warn('🚦 [TDX API] Global rate limit hit (5/min). Skipping upstream call.');
+      return null;
+    }
+
     const response = await fetchWithRetry(apiUrl, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
