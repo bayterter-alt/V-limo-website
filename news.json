@@ -1,19 +1,70 @@
 {
   "categories": {
     "zh-TW": [
-      { "id": "all", "name": "全部消息", "active": true },
-      { "id": "promotion", "name": "優惠活動", "active": false },
-      { "id": "service", "name": "服務公告", "active": false },
-      { "id": "news", "name": "公司動態", "active": false }
+      {
+        "id": "all",
+        "name": "全部消息",
+        "active": true
+      },
+      {
+        "id": "promotion",
+        "name": "優惠活動",
+        "active": false
+      },
+      {
+        "id": "service",
+        "name": "服務公告",
+        "active": false
+      },
+      {
+        "id": "news",
+        "name": "公司動態",
+        "active": false
+      }
     ],
     "en": [
-      { "id": "all", "name": "All News", "active": true },
-      { "id": "promotion", "name": "Promotions", "active": false },
-      { "id": "service", "name": "Service Announcements", "active": false },
-      { "id": "news", "name": "Company News", "active": false }
+      {
+        "id": "all",
+        "name": "All News",
+        "active": true
+      },
+      {
+        "id": "promotion",
+        "name": "Promotions",
+        "active": false
+      },
+      {
+        "id": "service",
+        "name": "Service Announcements",
+        "active": false
+      },
+      {
+        "id": "news",
+        "name": "Company News",
+        "active": false
+      }
     ]
   },
   "news": [
+    {
+      "id": 6,
+      "title": {
+        "zh-TW": "【春節公告】租車優惠方案出爐！最低 $5688 起 🧧",
+        "en": "[Spring Festival Announcement] Car Rental Specials Released! Starting from $5688 🧧"
+      },
+      "summary": {
+        "zh-TW": "親愛的朋友們，春節用車需求大，請盡早卡位！",
+        "en": "Dear friends, demand for cars during Spring Festival is high, please book early!"
+      },
+      "content": {
+        "zh-TW": "親愛的朋友們，春節用車需求大，請盡早卡位！<br><br>📝 方案詳情：<br>3天2夜：$5,688 (含700公里里程)<br>5天4夜：$11,900 (含1500公里里程)<br><br>📆 活動期間： 2月13日 至 2月23日<br>⛔ 重要提醒： 2月17日(三) - 2月19日(五) 期間暫停取還車服務，請安排於此區間前後取還。",
+        "en": "Dear friends, demand for cars during Spring Festival is high, please book early!<br><br>📝 Plan Details:<br>3 Days 2 Nights: $5,688 (incl. 700km)<br>5 Days 4 Nights: $11,900 (incl. 1500km)<br><br>📆 Event Period: Feb 13 - Feb 23<br>⛔ Important: No pickup/return service from Feb 17 (Wed) to Feb 19 (Fri). Please arrange accordingly."
+      },
+      "category": "promotion",
+      "date": "2026-01-13",
+      "featured": true,
+      "image": "/img/uploads/newyear.png"
+    },
     {
       "id": 1,
       "title": {
