@@ -472,7 +472,6 @@ class I18nManager {
           location: {
             title: '租用據點',
             taichung: '台中取車點：',
-            hsinchu: '新竹竹東取車點：',
             search: 'Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點'
           },
           pricing: {
@@ -1003,7 +1002,6 @@ class I18nManager {
           location: {
             title: 'Pickup Locations',
             taichung: 'Taichung Pickup:',
-            hsinchu: 'Hsinchu Zhudong Pickup:',
             search: 'Google Maps Search: 利盟小客車/小貨車/Rutrip Rental Pickup Point'
           },
           pricing: {
