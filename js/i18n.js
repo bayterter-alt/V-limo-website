@@ -469,10 +469,25 @@ class I18nManager {
             title: '精選露營車款',
             subtitle: '每台車都是您冒險旅程的完美夥伴'
           },
+          vehicle1: {
+            name: 'A180-快樂版',
+            slogan: '可愛外型，萬全裝備，上山下海，唯我獨尊!',
+            type: '車型：A180',
+            mileage: '里程：400km/日',
+            deposit: '押金：10,000元'
+          },
+          vehicle2: {
+            name: '中華菱利A180-輕鬆版',
+            slogan: '可愛外型，萬全裝備，上山下海，唯我獨尊!',
+            type: '車型：中華菱利A180',
+            mileage: '里程：400KM/日',
+            deposit: '押金：10,000元'
+          },
           location: {
             title: '租用據點',
             taichung: '台中取車點：',
-            search: 'Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點'
+            taichung_address: '台中市神岡區神洲路131巷22號',
+            search: '（Google 地圖搜尋：利盟小客車/小貨車/Rutrip出租取車點）'
           },
           pricing: {
             title: '租賃價格',
@@ -482,10 +497,11 @@ class I18nManager {
             'weekday.note': '星期一至星期四',
             'weekend.note': '星期五六日，政府公告之國定假日及連續假日',
             overtime: '逾時還車計價：',
+            overtime_val: '400元/每小時',
             overdue: '逾期加收費用：',
-            'overdue.note': '逾時未滿1小時以1小時計價，逾時超過6小時以24小時計價',
+            overdue_val: '逾時未滿1小時以1小時計價，逾時超過6小時以24小時計價',
             insurance: '保險：',
-            'insurance.note': '需額外收費，本公司只提供強制險'
+            insurance_val: '需額外收費，本公司只提供強制險'
           },
           interior: {
             title: '內裝配備展示'
@@ -494,9 +510,57 @@ class I18nManager {
             title: '隨車配件',
             basic: '基礎設備',
             power: '電力系統',
-            kitchen: '廚房設備',
-            bathroom: '衛浴設備',
-            other: '其他配備'
+            lighting: '照明系統',
+            camping: '露營用品',
+            items: {
+              rack: 'Travellife 靜音型車頂置放架',
+              awning: 'FIMMA 車邊帳',
+              bed_area: '平整化中後排床鋪/客廳區',
+              sofa_bed: '雙折型床椅',
+              battery: '12V 280A 鋰鐵電池',
+              charger: '50A 鋰鐵充電器',
+              inlet: '市電取電插座/線',
+              ac: '駐車空調',
+              inverter: 'AC 110V 2000W 逆變器',
+              tesla_adapter: '特斯拉充電樁慢衝轉接頭',
+              panel: '多功能型控置面板/點菸器/USB PD充電器/庫侖計/全車控制開關',
+              interior_lights: '室內燈×6',
+              tail_lights: '車尾燈×2',
+              ambient_lights: '車內氛圍燈/夜燈',
+              multi_sockets: '多用型插座×2 AC 110V/USB/PD',
+              fridge: '15L車用冰箱',
+              lanterns: 'USB 復古手提LED露營燈×2',
+              induction: 'AC 110V 電磁爐×1',
+              cookware: '整套式鍋具/鍋鏟/湯勺/面勺',
+              cups: '不銹鋼杯×4',
+              sink_table: '車尾外掛桌/簡易水槽',
+              faucet: '輕便型水桶/輕便型電動水龍頭',
+              table_chairs: '蛋捲桌×1/高背椅×2'
+            }
+          },
+          actions: {
+            book: '立即預約',
+            rules: '查看規範'
+          },
+          bottom_pricing: {
+            title: '租賃價格',
+            subtitle: '透明合理的價格，多種方案任您選擇',
+            perday: '/日',
+            card1: {
+              title: '平日租賃',
+              desc: '週一至週四，適合平日出遊',
+              cta: '預約平日'
+            },
+            card2: {
+              title: '假日租賃',
+              desc: '週五至週日、國定假日',
+              cta: '預約假日'
+            },
+            card3: {
+              title: '長期租賃',
+              desc: '多天以上享優惠價格',
+              cta: '聯繫專員'
+            }
           },
           specs: {
             title: '車輛規格',
@@ -760,90 +824,140 @@ class I18nManager {
         // Hero Section
         hero: {
           title: 'Professional & Reliable Rental Services',
-          subtitle: 'Airport transfers, chartered tours, RV & truck rentals. All your transportation needs in one place.',
+          subtitle: 'Airport transfers, chartered tours, RV & truck rentals. All your car rental needs met in one place.',
           cta: {
             booking: 'Quick Online Booking',
-            services: 'View Services'
+            services: 'View Our Services'
           }
         },
-
-        // Info Bar
-        info: {
-          phone: 'Customer Service',
-          hours: 'Business Hours',
-          address: {
-            title: 'Address',
-            detail: 'No. 66, Sec. 7, Fengyuan Ave., Fengyuan Dist., Taichung City'
-          }
-        },
-
-        // USP Section
-        usp: {
-          reliable: {
-            title: 'Safe & Reliable',
-            desc: 'Experienced drivers, regularly maintained and cleaned vehicles for a worry-free journey.'
+        rv: {
+          hero: {
+            title1: 'Start Your',
+            title2: 'Freedom Journey',
+            subtitle: 'Drive your home and explore every corner of Taiwan. Professionally equipped RVs make your journey full of possibilities. Perfect for family trips, couple travels, and friend adventures.',
+            cta1: 'View Vehicles',
+            cta2: 'Rental Terms'
           },
-          fast: {
-            title: 'Quick Booking',
-            desc: 'Instant online booking with dedicated customer service for quick responses.'
+          features: {
+            title: 'Why Choose Our RVs',
+            subtitle: 'Professional equipment and thoughtful service for a worry-free journey',
+            feature1: {
+              title: 'Mobile Home',
+              desc: 'Equipped with beds, air conditioning, and camping gear for a cozy journey.'
+            },
+            feature2: {
+              title: 'Freedom Journey',
+              desc: 'No hotel booking restrictions. Go wherever you want with your own itinerary.'
+            },
+            feature3: {
+              title: 'Professional Maintenance',
+              desc: 'Regular maintenance and inspections ensure vehicle safety for peace of mind.'
+            }
           },
-          legal: {
-            title: 'Licensed & Insured',
-            desc: 'Fully insured passenger liability coverage to protect every journey.'
-          }
-        },
-
-        // Services Section
-        services: {
-          title: 'Our Services',
-          subtitle: 'Whether for business travel, family trips, or cargo transport, 利盟 (V-LIMO) provides the perfect solution for you.'
-        },
-        service: {
-          airport: {
-            title: 'Airport Transfer',
-            desc: 'Private car service, punctual arrival, comfortable and worry-free.',
-            cta: 'Book Now'
+          vehicles: {
+            title: 'Featured RV Fleet',
+            subtitle: 'Every vehicle is your perfect adventure partner'
           },
-          tour: {
-            title: 'Charter Service',
-            desc: 'Customized itineraries with flexible planning to explore Taiwan with ease.',
-            cta: 'Online Booking'
+          vehicle1: {
+            name: 'A180 - Happy Edition',
+            slogan: 'Cute design, fully equipped for mountains and coastlines!',
+            type: 'Model: A180',
+            mileage: 'Mileage: 400 km/day',
+            deposit: 'Deposit: NT$ 10,000'
           },
-          rv: {
-            title: 'RV Rental',
-            desc: 'Travel with your home, enjoy the freedom of the road.',
-            cta: 'View RVs'
+          vehicle2: {
+            name: 'CMC Veryca A180 - Easy Edition',
+            slogan: 'Cute design, fully equipped for mountains and coastlines!',
+            type: 'Model: CMC Veryca A180',
+            mileage: 'Mileage: 400 km/day',
+            deposit: 'Deposit: NT$ 10,000'
           },
-          truck: {
-            title: 'Truck Rental',
-            desc: 'Your best partner for self-moving and cargo transportation.',
-            cta: 'Learn More'
-          }
-        },
-
-        // Vehicles Section
-        vehicles: {
-          title: 'Featured Vehicles',
-          subtitle: 'We offer diverse, high-quality vehicles to meet your different needs.',
-          filter: {
-            all: 'All',
-            business: 'Business',
-            rv: 'Camping',
-            truck: 'Cargo'
+          location: {
+            title: 'Pickup Locations',
+            taichung: 'Taichung Pickup:',
+            taichung_address: 'No. 22, Ln. 131, Shenzhou Rd., Shengang Dist., Taichung City',
+            search: '(Google Maps Search: Limo Car/Truck/Rutrip Rental Pickup Point)'
           },
-          more: 'More Vehicles'
-        },
-        vehicle: {
-          granvia: {
-            category: 'Luxury Business Choice',
-            seats: '6–8 Seats',
-            use: 'Airport Transfer / Business Charter'
+          pricing: {
+            title: 'Rental Pricing',
+            weekday: 'Weekday Rate',
+            weekend: 'Weekend Rate',
+            per24h: '/24H (2 Days 1 Night)',
+            'weekday.note': 'Monday to Thursday',
+            'weekend.note': 'Friday, Saturday, Sunday, and Public Holidays',
+            overtime: 'Late Return Fee:',
+            overtime_val: 'NT$ 400 / hour',
+            overdue: 'Overdue Charge:',
+            overdue_val: 'Under 1 hour charged as 1 hour; over 6 hours charged as 24 hours',
+            insurance: 'Insurance:',
+            insurance_val: 'Extra fee applies; compulsory insurance provided'
           },
-          rv: {
-            title: 'RV',
-            category: 'Outdoor Explorer',
-            features: 'Double Beds | A/C | Kitchenette',
-            use: 'Family Travel / Camping'
+          interior: {
+            title: 'Interior & Equipment'
+          },
+          equipment: {
+            title: 'Included Equipment',
+            basic: 'Basic Equipment',
+            power: 'Power System',
+            lighting: 'Lighting System',
+            camping: 'Camping Gear',
+            items: {
+              rack: 'Travellife Silent Roof Rack',
+              awning: 'FIMMA Awning',
+              bed_area: 'Flat Mid-Rear Bed & Living Area',
+              sofa_bed: 'Bi-Fold Sofa Bed',
+              battery: '12V 280Ah LiFePO4 Battery',
+              charger: '50A LiFePO4 Battery Charger',
+              inlet: 'Mains Power Inlet & Extension Cable',
+              ac: 'Parking Air Conditioner',
+              inverter: 'AC 110V 2000W Inverter',
+              tesla_adapter: 'Tesla Destination Charger Adapter',
+              panel: 'Multifunction Control Panel (USB-PD, Coulomb Meter, Master Switches)',
+              interior_lights: 'Interior Lights × 6',
+              tail_lights: 'Tailgate Lights × 2',
+              ambient_lights: 'Ambient & Night Lights',
+              multi_sockets: 'Multi-Sockets × 2 (AC 110V / USB / PD)',
+              fridge: '15L Portable Car Refrigerator',
+              lanterns: 'USB Vintage LED Camping Lanterns × 2',
+              induction: 'AC 110V Induction Cooker × 1',
+              cookware: 'Complete Cookware Set (Pots, Spatula, Ladles)',
+              cups: 'Stainless Steel Cups × 4',
+              sink_table: 'Tailgate External Table & Sink',
+              faucet: 'Portable Water Bucket & Electric Faucet',
+              table_chairs: 'Roll-Top Camping Table × 1 / High-Back Chairs × 2'
+            }
+          },
+          actions: {
+            book: 'Book Now',
+            rules: 'View Rental Terms'
+          },
+          bottom_pricing: {
+            title: 'Rental Pricing',
+            subtitle: 'Transparent and reasonable rates with flexible rental plans',
+            perday: '/ Day',
+            card1: {
+              title: 'Weekday Rental',
+              desc: 'Monday to Thursday, ideal for weekday getaways',
+              cta: 'Book Weekday'
+            },
+            card2: {
+              title: 'Weekend Rental',
+              desc: 'Friday to Sunday & Public Holidays',
+              cta: 'Book Weekend'
+            },
+            card3: {
+              title: 'Long-term Rental',
+              desc: 'Discounted rates for multi-day rentals',
+              cta: 'Contact Agent'
+            }
+          },
+          specs: {
+            title: 'Vehicle Specifications',
+            model: 'Model:',
+            mileage: 'Mileage:',
+            deposit: 'Deposit:',
+            passengers: 'Passengers:',
+            beds: 'Beds:'
           },
           truck: {
             title: 'Cargo Truck',
@@ -999,10 +1113,25 @@ class I18nManager {
             title: 'Featured RV Fleet',
             subtitle: 'Every vehicle is your perfect adventure partner'
           },
+          vehicle1: {
+            name: 'A180 - Happy Edition',
+            slogan: 'Cute design, fully equipped for mountains and coastlines!',
+            type: 'Model: A180',
+            mileage: 'Mileage: 400 km/day',
+            deposit: 'Deposit: NT$ 10,000'
+          },
+          vehicle2: {
+            name: 'CMC Veryca A180 - Easy Edition',
+            slogan: 'Cute design, fully equipped for mountains and coastlines!',
+            type: 'Model: CMC Veryca A180',
+            mileage: 'Mileage: 400 km/day',
+            deposit: 'Deposit: NT$ 10,000'
+          },
           location: {
             title: 'Pickup Locations',
             taichung: 'Taichung Pickup:',
-            search: 'Google Maps Search: 利盟小客車/小貨車/Rutrip Rental Pickup Point'
+            taichung_address: 'No. 22, Ln. 131, Shenzhou Rd., Shengang Dist., Taichung City',
+            search: '(Google Maps Search: Limo Car/Truck/Rutrip Rental Pickup Point)'
           },
           pricing: {
             title: 'Rental Pricing',
@@ -1012,10 +1141,11 @@ class I18nManager {
             'weekday.note': 'Monday to Thursday',
             'weekend.note': 'Friday, Saturday, Sunday, and Public Holidays',
             overtime: 'Late Return Fee:',
-            overdue: 'Overdue Fee:',
-            'overdue.note': 'Less than 1 hour charged as 1 hour, over 6 hours charged as 24 hours',
+            overtime_val: 'NT$ 400 / hour',
+            overdue: 'Overdue Charge:',
+            overdue_val: 'Under 1 hour charged as 1 hour; over 6 hours charged as 24 hours',
             insurance: 'Insurance:',
-            'insurance.note': 'Additional charge required, we only provide compulsory insurance'
+            insurance_val: 'Extra fee applies; compulsory insurance provided'
           },
           interior: {
             title: 'Interior & Equipment'
@@ -1024,9 +1154,57 @@ class I18nManager {
             title: 'Included Equipment',
             basic: 'Basic Equipment',
             power: 'Power System',
-            kitchen: 'Kitchen Equipment',
-            bathroom: 'Bathroom Facilities',
-            other: 'Other Equipment'
+            lighting: 'Lighting System',
+            camping: 'Camping Gear',
+            items: {
+              rack: 'Travellife Silent Roof Rack',
+              awning: 'FIMMA Awning',
+              bed_area: 'Flat Mid-Rear Bed & Living Area',
+              sofa_bed: 'Bi-Fold Sofa Bed',
+              battery: '12V 280Ah LiFePO4 Battery',
+              charger: '50A LiFePO4 Battery Charger',
+              inlet: 'Mains Power Inlet & Extension Cable',
+              ac: 'Parking Air Conditioner',
+              inverter: 'AC 110V 2000W Inverter',
+              tesla_adapter: 'Tesla Destination Charger Adapter',
+              panel: 'Multifunction Control Panel (USB-PD, Coulomb Meter, Master Switches)',
+              interior_lights: 'Interior Lights × 6',
+              tail_lights: 'Tailgate Lights × 2',
+              ambient_lights: 'Ambient & Night Lights',
+              multi_sockets: 'Multi-Sockets × 2 (AC 110V / USB / PD)',
+              fridge: '15L Portable Car Refrigerator',
+              lanterns: 'USB Vintage LED Camping Lanterns × 2',
+              induction: 'AC 110V Induction Cooker × 1',
+              cookware: 'Complete Cookware Set (Pots, Spatula, Ladles)',
+              cups: 'Stainless Steel Cups × 4',
+              sink_table: 'Tailgate External Table & Sink',
+              faucet: 'Portable Water Bucket & Electric Faucet',
+              table_chairs: 'Roll-Top Camping Table × 1 / High-Back Chairs × 2'
+            }
+          },
+          actions: {
+            book: 'Book Now',
+            rules: 'View Rental Terms'
+          },
+          bottom_pricing: {
+            title: 'Rental Pricing',
+            subtitle: 'Transparent and reasonable rates with flexible rental plans',
+            perday: '/ Day',
+            card1: {
+              title: 'Weekday Rental',
+              desc: 'Monday to Thursday, ideal for weekday getaways',
+              cta: 'Book Weekday'
+            },
+            card2: {
+              title: 'Weekend Rental',
+              desc: 'Friday to Sunday & Public Holidays',
+              cta: 'Book Weekend'
+            },
+            card3: {
+              title: 'Long-term Rental',
+              desc: 'Discounted rates for multi-day rentals',
+              cta: 'Contact Agent'
+            }
           },
           specs: {
             title: 'Vehicle Specifications',
